@@ -20,6 +20,13 @@ const HeroSection = () => {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
+  // Set default volume
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.25;
+    }
+  }, []);
+
   // Typewriter: starts immediately on mount
   useEffect(() => {
     let cancelled = false;
@@ -88,6 +95,7 @@ const HeroSection = () => {
     if (soundOn) {
       audio.pause();
     } else {
+      audio.volume = 0.25;
       audio.play().catch(() => {});
     }
     setSoundOn((s) => !s);
@@ -171,7 +179,7 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* Sound Toggle */}
+      {/* Sound Toggle - animated */}
       <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -180,7 +188,16 @@ const HeroSection = () => {
         className="absolute bottom-8 right-8 z-10 p-3 rounded-full hyper-glass text-primary hover:text-foreground transition-colors"
         aria-label="Sound toggle"
       >
-        {soundOn ? <Volume2 size={20} /> : <VolumeX size={20} />}
+        {soundOn ? (
+          <motion.div
+            animate={{ scale: [1, 1.15, 1] }}
+            transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+          >
+            <Volume2 size={20} />
+          </motion.div>
+        ) : (
+          <VolumeX size={20} />
+        )}
       </motion.button>
     </section>
   );
