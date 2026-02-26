@@ -8,6 +8,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import deadpoolImg from "@/assets/portfolio-deadpool.jpg";
+import brainImg from "@/assets/portfolio-brain.jpg";
 
 interface PortfolioItem {
   id: number;
@@ -49,9 +50,9 @@ Do not alter the face, do not beautify, do not stylize the face, do not change i
   },
   {
     id: 2,
-    title: "Neon Főnix Ébredése",
-    image: "https://images.unsplash.com/photo-1614854262318-831574f15f1f?w=800&q=80",
-    prompt: `A majestic phoenix made entirely of neon light and digital particles, rising from a pool of liquid chrome in a dark void. Wings spread wide, trailing streams of cyan and magenta energy. Bioluminescent feathers, fractal patterns, hyperrealistic CGI. --ar 16:9 --v 6`,
+    title: "A Michelin-csillagos anomália",
+    image: brainImg,
+    prompt: `An ultra-high resolution, 8k photo-realistic close-up. In a dark, elegant, high-tech kitchen with neon-blue backlighting. A pair of manicured, tattooed chef hands use small tweezers to place a tiny, neon-pink cocktail umbrella as a decoration. The object of decoration is not food; it is a miniature, perfectly formed, glistening, pulsating human brain, made to look like a delicacy in a pool of dark, viscous sauce on a black ceramic plate. The depth of field is very shallow. The texture of the brain, the skin of the hands, and the chrome tools are extremely detailed. Unsettling, sterile, high-end grotesque. Shot on a Sony A1, sharp focus.`,
   },
   {
     id: 3,
