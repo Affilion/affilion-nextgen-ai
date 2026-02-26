@@ -284,9 +284,6 @@ const PortfolioModal = ({
           <X size={18} strokeWidth={2.5} />
         </button>
 
-        {/* Cracked glass overlay on entire modal */}
-        <CrackedGlassOverlay />
-
         {/* Image side */}
         <div className="relative h-64 w-full lg:h-auto lg:min-h-[420px] lg:w-1/2">
           <img
@@ -294,7 +291,6 @@ const PortfolioModal = ({
             alt={item.title}
             className="h-full w-full object-cover"
           />
-          <CrackedGlassOverlay />
         </div>
 
         {/* Prompt side */}
