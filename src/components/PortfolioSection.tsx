@@ -161,8 +161,7 @@ const PortfolioCard = ({
         {/* Cracked glass overlay */}
         <CrackedGlassOverlay />
 
-        {/* Glass tint layer */}
-        <div className="absolute inset-0 z-10 bg-background/10 backdrop-blur-[1px]" />
+        {/* Glass tint layer - only behind text area, NOT over image */}
 
         {/* Hover dark overlay + title */}
         <div className="absolute inset-0 z-30 flex items-end bg-background/0 transition-all duration-500 group-hover:bg-background/50">
@@ -258,7 +257,7 @@ const PortfolioModal = ({
             A Varázslat (Prompt)
           </p>
 
-          <div className="relative mb-5 max-h-[240px] overflow-y-auto rounded-lg border border-primary/20 bg-background/60 p-4 backdrop-blur-sm">
+          <div className="premium-scrollbar relative mb-5 max-h-[240px] overflow-y-auto rounded-lg border border-primary/20 bg-background/60 p-4 backdrop-blur-sm">
             <pre className="whitespace-pre-wrap font-mono text-xs leading-relaxed text-muted-foreground">
               <code>{item.prompt}</code>
             </pre>
