@@ -202,11 +202,12 @@ const PortfolioModal = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      className="fixed inset-0 flex items-center justify-center p-4"
+      style={{ zIndex: 9999 }}
       onClick={onClose}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-background/80 backdrop-blur-md" />
+      <div className="absolute inset-0 bg-background/70 backdrop-blur-xl" />
 
       {/* Content */}
       <motion.div
@@ -215,18 +216,31 @@ const PortfolioModal = ({
         exit={{ scale: 0.92, opacity: 0 }}
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
         onClick={(e) => e.stopPropagation()}
-        className="relative z-10 flex w-full max-w-4xl flex-col overflow-hidden rounded-2xl hyper-glass lg:flex-row"
+        className="relative flex w-full max-w-4xl flex-col overflow-hidden rounded-2xl lg:flex-row"
+        style={{
+          zIndex: 10000,
+          background: "hsl(228 14% 14% / 0.35)",
+          backdropFilter: "blur(20px) saturate(1.4)",
+          WebkitBackdropFilter: "blur(20px) saturate(1.4)",
+          border: "1px solid hsl(190 95% 55% / 0.3)",
+          boxShadow:
+            "0 0 40px hsl(190 95% 55% / 0.12), 0 0 0 1px hsl(190 95% 55% / 0.08), 0 16px 48px -8px hsl(228 12% 4% / 0.6), inset 0 1px 0 0 hsl(0 0% 100% / 0.08)",
+        }}
       >
-        {/* Close button */}
+        {/* Close button - highly visible */}
         <button
           onClick={onClose}
-          className="absolute right-3 top-3 z-20 rounded-full p-2 text-foreground/70 transition-colors hover:bg-muted hover:text-foreground"
+          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 bg-background/80 text-primary backdrop-blur-sm transition-all hover:border-primary hover:bg-primary/20 hover:shadow-[0_0_15px_hsl(190_95%_55%/0.4)]"
+          style={{ zIndex: 10001 }}
         >
-          <X size={20} />
+          <X size={18} strokeWidth={2.5} />
         </button>
 
+        {/* Cracked glass overlay on entire modal */}
+        <CrackedGlassOverlay />
+
         {/* Image side */}
-        <div className="relative h-64 w-full lg:h-auto lg:w-1/2">
+        <div className="relative h-64 w-full lg:h-auto lg:min-h-[420px] lg:w-1/2">
           <img
             src={item.image}
             alt={item.title}
@@ -244,11 +258,16 @@ const PortfolioModal = ({
             A Varázslat (Prompt)
           </p>
 
-          <div className="code-block mb-5 text-muted-foreground text-xs leading-relaxed whitespace-pre-wrap">
-            {item.prompt}
+          <div className="relative mb-5 max-h-[240px] overflow-y-auto rounded-lg border border-primary/20 bg-background/60 p-4 backdrop-blur-sm">
+            <pre className="whitespace-pre-wrap font-mono text-xs leading-relaxed text-muted-foreground">
+              <code>{item.prompt}</code>
+            </pre>
           </div>
 
-          <button onClick={handleCopy} className="neon-button flex items-center justify-center gap-2 text-sm">
+          <button
+            onClick={handleCopy}
+            className="neon-button flex items-center justify-center gap-2 text-sm"
+          >
             {copied ? (
               <>
                 <Check size={16} /> Másolva!
