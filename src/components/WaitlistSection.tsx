@@ -25,7 +25,7 @@ const WaitlistSection = () => {
         >
           <GlassCard className="p-8 md:p-12 text-center">
             <h2 className="section-title mb-4">
-              Saját weboldal <span className="glow-text">1 nap alatt</span>, Lovable segítségével
+              Saját weboldal <span className="glow-text">1 nap alatt</span>, AI segítségével
             </h2>
             <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
               A kurzus hamarosan indul. Iratkozz fel a várólistára, és csapj le a{" "}
