@@ -1,25 +1,29 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 
 const sequence = [
-  { action: "type", text: "A jövő... marketingje... nem," },
-  { action: "pause", duration: 800 },
-  { action: "delete", count: 28 },
-  { action: "pause", duration: 400 },
-  { action: "type", text: "A jövő TARTALOMGYÁRTÁSA. Affilion AI." },
+  { action: "type" as const, text: "A jövő... marketingje... nem," },
+  { action: "pause" as const, duration: 800 },
+  { action: "delete" as const, count: 28 },
+  { action: "pause" as const, duration: 400 },
+  { action: "type" as const, text: "A jövő TARTALOMGYÁRTÁSA. Affilion AI." },
 ];
+
+const TEST_AUDIO_URL = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
 
 const HeroSection = () => {
   const [displayed, setDisplayed] = useState("");
   const [done, setDone] = useState(false);
   const [soundOn, setSoundOn] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  // Load music URL from localStorage (admin panel)
-  const heroMusicUrl = localStorage.getItem("affilion_hero_music") || "";
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const hasRun = useRef(false);
 
   useEffect(() => {
+    // StrictMode guard: only run once
+    if (hasRun.current) return;
+    hasRun.current = true;
+
     let cancelled = false;
     let current = "";
 
@@ -50,27 +54,35 @@ const HeroSection = () => {
     return () => { cancelled = true; };
   }, []);
 
-  const toggleSound = () => {
-    if (!audioRef.current && heroMusicUrl) {
-      audioRef.current = new Audio(heroMusicUrl);
-      audioRef.current.loop = true;
-    }
+  const toggleSound = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
     if (soundOn) {
-      audioRef.current?.pause();
+      audio.pause();
     } else {
-      audioRef.current?.play();
+      audio.play().catch(() => {});
     }
-    setSoundOn(!soundOn);
-  };
+    setSoundOn((s) => !s);
+  }, [soundOn]);
 
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center px-4 text-center overflow-hidden">
+      {/* Hidden audio element */}
+      <audio ref={audioRef} src={localStorage.getItem("affilion_hero_music") || TEST_AUDIO_URL} loop preload="auto" />
+
       {/* YouTube Video Background */}
       <div className="absolute inset-0 z-0 overflow-hidden" style={{ filter: "brightness(0.3) saturate(1.2)" }}>
         <iframe
-          src={`https://www.youtube.com/embed/MuHibWqua8Y?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&loop=1&playlist=MuHibWqua8Y&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1`}
-          className="absolute top-1/2 left-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-          style={{ border: "none" }}
+          src="https://www.youtube.com/embed/MuHibWqua8Y?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&loop=1&playlist=MuHibWqua8Y&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+          style={{
+            border: "none",
+            width: "100vw",
+            height: "100vh",
+            minWidth: "120%",
+            minHeight: "120%",
+            transform: "translate(-50%, -50%) scale(1.2)",
+          }}
           allow="autoplay; encrypted-media"
           title="Hero background video"
         />
