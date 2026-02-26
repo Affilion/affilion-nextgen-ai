@@ -18,6 +18,7 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between px-4 py-3">
         <a href="#" className="flex items-center gap-2">
           <img src={logoUrl} alt="Affilion AI" className="h-8 w-auto rounded-full" />
+          <span className="text-xl font-bold glow-text">Affilion AI</span>
         </a>
 
         {/* Desktop */}
