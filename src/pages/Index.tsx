@@ -7,6 +7,7 @@ import ProductsSection from "@/components/ProductsSection";
 import WaitlistSection from "@/components/WaitlistSection";
 import Footer from "@/components/Footer";
 import AdminPanel from "@/components/AdminPanel";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const Index = () => (
   <>
@@ -20,6 +21,7 @@ const Index = () => (
       <WaitlistSection />
     </main>
     <Footer />
+    <ScrollToTop />
     <AdminPanel />
   </>
 );
