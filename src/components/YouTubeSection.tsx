@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import GlassCard from "./GlassCard";
 
 const videos = [
-  { id: "dQw4w9WgXcQ", title: "AI Zene generálás bemutató" },
-  { id: "dQw4w9WgXcQ", title: "Midjourney tippek és trükkök" },
-  { id: "dQw4w9WgXcQ", title: "Automatizáció a mindennapokban" },
+  { id: "e_q8YOyD1vc", title: "AI Zene generálás bemutató" },
+  { id: "V_KrbdjRoAI", title: "Midjourney tippek és trükkök" },
+  { id: "MuHibWqua8Y", title: "Automatizáció a mindennapokban" },
 ];
 
 const YouTubeSection = () => (
