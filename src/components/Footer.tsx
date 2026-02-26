@@ -1,9 +1,19 @@
-const Footer = () => (
-  <footer className="border-t border-glass-border/20 py-8 px-4 text-center">
-    <p className="text-sm text-muted-foreground">
-      © 2026 <span className="glow-text font-semibold">Affilion AI</span>. Minden jog fenntartva.
-    </p>
-  </footer>
-);
+const Footer = () => {
+  const logoUrl = localStorage.getItem("affilion_logo_url");
+
+  return (
+    <footer className="border-t border-glass-border/20 py-8 px-4 text-center">
+      <div className="flex items-center justify-center gap-2 mb-2">
+        {logoUrl && (
+          <img src={logoUrl} alt="Affilion AI" className="h-6 w-auto bg-transparent" />
+        )}
+        <span className="glow-text font-semibold text-sm">Affilion AI</span>
+      </div>
+      <p className="text-xs text-muted-foreground">
+        © 2026 Affilion AI. Minden jog fenntartva.
+      </p>
+    </footer>
+  );
+};
 
 export default Footer;

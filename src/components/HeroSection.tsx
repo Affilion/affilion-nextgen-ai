@@ -179,13 +179,13 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* Sound Toggle - animated */}
+      {/* Sound Toggle - fixed, follows scroll */}
       <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 6 }}
         onClick={toggleSound}
-        className="absolute bottom-8 right-8 z-10 p-3 rounded-full hyper-glass text-primary hover:text-foreground transition-colors"
+        className="fixed bottom-8 right-8 z-50 p-3 rounded-full hyper-glass text-primary hover:text-foreground transition-colors"
         aria-label="Sound toggle"
       >
         {soundOn ? (
