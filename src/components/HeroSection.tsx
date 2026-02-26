@@ -11,7 +11,7 @@ const sequence = [
 ];
 
 const FINAL_SUFFIX = "Affilion AI.";
-const TEST_AUDIO_URL = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+const HERO_MUSIC_URL = "/music/hero-bg.mp3";
 
 const HeroSection = () => {
   const [displayed, setDisplayed] = useState("");
@@ -107,7 +107,7 @@ const HeroSection = () => {
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center px-4 text-center overflow-hidden">
       {/* Hidden audio element */}
-      <audio ref={audioRef} src={TEST_AUDIO_URL} loop preload="auto" />
+      <audio ref={audioRef} src={HERO_MUSIC_URL} loop preload="auto" />
 
       {/* YouTube Video Background */}
       <div
