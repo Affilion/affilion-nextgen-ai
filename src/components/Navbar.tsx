@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import defaultLogo from "@/assets/logo.jpg";
 
 const links = [
+  { label: "Munkáim", href: "#munkak" },
   { label: "Videók", href: "#youtube" },
   { label: "Prompt Labor", href: "#prompt-labor" },
   { label: "Termékek", href: "#termekek" },

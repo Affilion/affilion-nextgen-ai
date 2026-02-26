@@ -1,6 +1,7 @@
 import ParticleEffect from "@/components/ParticleEffect";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import PortfolioSection from "@/components/PortfolioSection";
 import YouTubeSection from "@/components/YouTubeSection";
 import PromptLabSection from "@/components/PromptLabSection";
 import ProductsSection from "@/components/ProductsSection";
@@ -14,6 +15,7 @@ const Index = () => (
     <Navbar />
     <main>
       <HeroSection />
+      <PortfolioSection />
       <YouTubeSection />
       <PromptLabSection />
       <ProductsSection />
