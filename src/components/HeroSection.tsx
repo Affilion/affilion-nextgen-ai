@@ -17,9 +17,13 @@ const HeroSection = () => {
   const [displayed, setDisplayed] = useState("");
   const [done, setDone] = useState(false);
   const [soundOn, setSoundOn] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
+  // Typewriter: only starts when video is loaded
   useEffect(() => {
+    if (!isVideoLoaded) return;
+
     let cancelled = false;
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
     let current = "";
@@ -36,19 +40,14 @@ const HeroSection = () => {
 
     const run = () => {
       if (cancelled) return;
-
       const step = sequence[stepIndex];
-      if (!step) {
-        setDone(true);
-        return;
-      }
+      if (!step) { setDone(true); return; }
 
       if (step.action === "pause") {
         stepIndex += 1;
         schedule(run, step.duration);
         return;
       }
-
       if (step.action === "type" && step.text) {
         if (typeIndex < step.text.length) {
           current += step.text[typeIndex];
@@ -62,7 +61,6 @@ const HeroSection = () => {
         }
         return;
       }
-
       if (step.action === "delete" && step.count) {
         if (deleteIndex < step.count && current.length > 0) {
           current = current.slice(0, -1);
@@ -77,13 +75,15 @@ const HeroSection = () => {
       }
     };
 
-    run();
+    // Small delay after fade-in starts so text appears over visible video
+    const startDelay = setTimeout(() => run(), 800);
 
     return () => {
       cancelled = true;
+      clearTimeout(startDelay);
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, []);
+  }, [isVideoLoaded]);
 
   const toggleSound = useCallback(() => {
     const audio = audioRef.current;
@@ -105,7 +105,14 @@ const HeroSection = () => {
       <audio ref={audioRef} src={localStorage.getItem("affilion_hero_music") || TEST_AUDIO_URL} loop preload="auto" />
 
       {/* YouTube Video Background */}
-      <div className="absolute inset-0 z-0 overflow-hidden" style={{ filter: "brightness(0.3) saturate(1.2)" }}>
+      <div
+        className="absolute inset-0 z-0 overflow-hidden"
+        style={{
+          filter: "brightness(0.3) saturate(1.2)",
+          opacity: isVideoLoaded ? 1 : 0,
+          transition: "opacity 1.5s ease-in-out",
+        }}
+      >
         <iframe
           src="https://www.youtube.com/embed/MuHibWqua8Y?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&loop=1&playlist=MuHibWqua8Y&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1"
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
@@ -119,6 +126,7 @@ const HeroSection = () => {
           }}
           allow="autoplay; encrypted-media"
           title="Hero background video"
+          onLoad={() => setIsVideoLoaded(true)}
         />
       </div>
 
