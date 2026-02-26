@@ -1,6 +1,19 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
+const FAVICON_KEY = "affilion_favicon_url";
+
+const applyFavicon = (url: string) => {
+  if (!url) return;
+  let link = document.querySelector<HTMLLinkElement>("link[rel*='icon']");
+  if (!link) {
+    link = document.createElement("link");
+    link.rel = "icon";
+    document.head.appendChild(link);
+  }
+  link.href = url;
+};
+
 const AdminPanel = () => {
   const [open, setOpen] = useState(false);
   const [videoUrl, setVideoUrl] = useState(
@@ -9,6 +22,15 @@ const AdminPanel = () => {
   const [musicUrl, setMusicUrl] = useState(
     () => localStorage.getItem("affilion_hero_music") || ""
   );
+  const [faviconUrl, setFaviconUrl] = useState(
+    () => localStorage.getItem(FAVICON_KEY) || ""
+  );
+
+  // Apply saved favicon on mount
+  useEffect(() => {
+    const saved = localStorage.getItem(FAVICON_KEY);
+    if (saved) applyFavicon(saved);
+  }, []);
 
   useEffect(() => {
     const pressed = new Set<string>();
@@ -30,6 +52,8 @@ const AdminPanel = () => {
   const save = () => {
     localStorage.setItem("affilion_hero_video", videoUrl);
     localStorage.setItem("affilion_hero_music", musicUrl);
+    localStorage.setItem(FAVICON_KEY, faviconUrl);
+    if (faviconUrl) applyFavicon(faviconUrl);
     setOpen(false);
     window.location.reload();
   };
@@ -48,7 +72,7 @@ const AdminPanel = () => {
         </button>
 
         <h2 className="glow-text text-xl font-bold mb-1">Admin Panel</h2>
-        <p className="text-sm text-muted-foreground mb-6">Hero videó és zene URL beállítása</p>
+        <p className="text-sm text-muted-foreground mb-6">Hero videó, zene és favicon beállítása</p>
 
         <div className="space-y-4">
           <div>
@@ -66,6 +90,15 @@ const AdminPanel = () => {
               value={musicUrl}
               onChange={(e) => setMusicUrl(e.target.value)}
               placeholder="https://example.com/music.mp3"
+              className="w-full rounded-lg border border-glass-border/40 bg-muted/30 px-4 py-2.5 text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+            />
+          </div>
+          <div>
+            <label className="text-sm text-muted-foreground mb-1 block">Favicon URL (Átlátszó PNG vagy SVG)</label>
+            <input
+              value={faviconUrl}
+              onChange={(e) => setFaviconUrl(e.target.value)}
+              placeholder="https://example.com/favicon.png"
               className="w-full rounded-lg border border-glass-border/40 bg-muted/30 px-4 py-2.5 text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
           </div>
