@@ -3,13 +3,14 @@ import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 
 const sequence = [
-  { action: "type" as const, text: "A jövő... marketingje... nem," },
-  { action: "pause" as const, duration: 800 },
-  { action: "delete" as const, count: 28 },
-  { action: "pause" as const, duration: 400 },
-  { action: "type" as const, text: "A jövő TARTALOMGYÁRTÁSA. Affilion AI." },
+  { action: "type" as const, text: "Szórakozz az AI-val... nem," },
+  { action: "pause" as const, duration: 900 },
+  { action: "delete" as const, count: 27 },
+  { action: "pause" as const, duration: 350 },
+  { action: "type" as const, text: "ÉPÍTS ÖNMŰKÖDŐ BIRODALMAT. Affilion AI." },
 ];
 
+const FINAL_SUFFIX = "Affilion AI.";
 const TEST_AUDIO_URL = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
 
 const HeroSection = () => {
@@ -17,41 +18,71 @@ const HeroSection = () => {
   const [done, setDone] = useState(false);
   const [soundOn, setSoundOn] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const hasRun = useRef(false);
 
   useEffect(() => {
-    // StrictMode guard: only run once
-    if (hasRun.current) return;
-    hasRun.current = true;
-
     let cancelled = false;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
     let current = "";
+    let stepIndex = 0;
+    let typeIndex = 0;
+    let deleteIndex = 0;
 
-    const run = async () => {
-      for (const step of sequence) {
-        if (cancelled) return;
-        if (step.action === "pause") {
-          await new Promise((r) => setTimeout(r, step.duration));
-        } else if (step.action === "type" && step.text) {
-          for (const char of step.text) {
-            if (cancelled) return;
-            current += char;
-            setDisplayed(current);
-            await new Promise((r) => setTimeout(r, 70));
-          }
-        } else if (step.action === "delete" && step.count) {
-          for (let i = 0; i < step.count; i++) {
-            if (cancelled) return;
-            current = current.slice(0, -1);
-            setDisplayed(current);
-            await new Promise((r) => setTimeout(r, 40));
-          }
+    setDisplayed("");
+    setDone(false);
+
+    const schedule = (fn: () => void, delay: number) => {
+      timeoutId = setTimeout(fn, delay);
+    };
+
+    const run = () => {
+      if (cancelled) return;
+
+      const step = sequence[stepIndex];
+      if (!step) {
+        setDone(true);
+        return;
+      }
+
+      if (step.action === "pause") {
+        stepIndex += 1;
+        schedule(run, step.duration);
+        return;
+      }
+
+      if (step.action === "type" && step.text) {
+        if (typeIndex < step.text.length) {
+          current += step.text[typeIndex];
+          typeIndex += 1;
+          setDisplayed(current);
+          schedule(run, 70);
+        } else {
+          typeIndex = 0;
+          stepIndex += 1;
+          schedule(run, 120);
+        }
+        return;
+      }
+
+      if (step.action === "delete" && step.count) {
+        if (deleteIndex < step.count && current.length > 0) {
+          current = current.slice(0, -1);
+          deleteIndex += 1;
+          setDisplayed(current);
+          schedule(run, 40);
+        } else {
+          deleteIndex = 0;
+          stepIndex += 1;
+          schedule(run, 80);
         }
       }
-      setDone(true);
     };
+
     run();
-    return () => { cancelled = true; };
+
+    return () => {
+      cancelled = true;
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, []);
 
   const toggleSound = useCallback(() => {
@@ -64,6 +95,9 @@ const HeroSection = () => {
     }
     setSoundOn((s) => !s);
   }, [soundOn]);
+
+  const hasFinalSuffix = displayed.endsWith(FINAL_SUFFIX);
+  const headlinePrefix = hasFinalSuffix ? displayed.slice(0, -FINAL_SUFFIX.length) : displayed;
 
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center px-4 text-center overflow-hidden">
@@ -99,7 +133,8 @@ const HeroSection = () => {
           transition={{ duration: 0.8 }}
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-4xl leading-tight"
         >
-          <span className="glow-text">{displayed}</span>
+          <span>{headlinePrefix}</span>
+          {hasFinalSuffix ? <span className="glow-text">{FINAL_SUFFIX}</span> : null}
           <span
             className={`inline-block w-[3px] h-[0.85em] bg-primary ml-1 align-text-bottom ${
               done ? "cursor-blink" : ""
