@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/carousel";
 import deadpoolImg from "@/assets/portfolio-deadpool.jpg";
 import brainImg from "@/assets/portfolio-brain.jpg";
+import sithImg from "@/assets/portfolio-sith.jpg";
 
 interface PortfolioItem {
   id: number;
@@ -50,15 +51,62 @@ Do not alter the face, do not beautify, do not stylize the face, do not change i
   },
   {
     id: 2,
-    title: "A Michelin-csillagos anomália",
-    image: brainImg,
-    prompt: `An ultra-high resolution, 8k photo-realistic close-up. In a dark, elegant, high-tech kitchen with neon-blue backlighting. A pair of manicured, tattooed chef hands use small tweezers to place a tiny, neon-pink cocktail umbrella as a decoration. The object of decoration is not food; it is a miniature, perfectly formed, glistening, pulsating human brain, made to look like a delicacy in a pool of dark, viscous sauce on a black ceramic plate. The depth of field is very shallow. The texture of the brain, the skin of the hands, and the chrome tools are extremely detailed. Unsettling, sterile, high-end grotesque. Shot on a Sony A1, sharp focus.`,
+    title: "Sith Portré – Az Árnyék Ereje",
+    image: sithImg,
+    prompt: `Photorealistic cinematic portrait of the person from the uploaded reference image reimagined as a Sith Knight from a dark sci-fi universe.
+
+IMPORTANT:
+Use the uploaded image as the strict identity reference.
+
+The face must remain 100% identical to the original.
+
+Do NOT alter:
+– facial structure
+– skin texture
+– wrinkles
+– pores
+– jawline
+– eye shape
+– nose
+– lips
+– asymmetry
+– proportions
+
+No beautification. No smoothing. No reshaping. No reinterpretation. No enhancement.
+
+Do NOT make the face: more handsome, younger, slimmer, cleaner, more symmetrical.
+
+Identity must remain EXACT.
+
+Allowed changes only:
+
+Framing: Close-up cinematic portrait
+Lighting: Dark dramatic lighting with red Sith glow reflections
+Background: Dark atmospheric sci-fi environment
+Depth of field: Cinematic shallow depth
+Color grading: Moody, high contrast
+
+Scene details:
+The person appears as a Sith Knight
+– wearing dark Sith-style robes
+– holding a glowing red lightsaber
+– red light subtly illuminating the face
+– ominous, intimidating expression
+– cinematic shadowing
+
+Lighting should create depth without altering facial geometry.
+No stylization of the face.
+Professional photography realism.
+Natural skin texture must remain visible.
+Ultra detailed. 8K quality.
+
+This is an identity-preservation task, not a reinterpretation.`,
   },
   {
     id: 3,
-    title: "Holografikus Portré",
-    image: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=800&q=80",
-    prompt: `A holographic portrait of a woman dissolving into thousands of glowing data fragments, half her face is photorealistic and the other half is wireframe mesh with floating geometric shapes. Teal and purple color palette, studio lighting, depth of field. --ar 1:1 --v 6`,
+    title: "A Michelin-csillagos anomália",
+    image: brainImg,
+    prompt: `An ultra-high resolution, 8k photo-realistic close-up. In a dark, elegant, high-tech kitchen with neon-blue backlighting. A pair of manicured, tattooed chef hands use small tweezers to place a tiny, neon-pink cocktail umbrella as a decoration. The object of decoration is not food; it is a miniature, perfectly formed, glistening, pulsating human brain, made to look like a delicacy in a pool of dark, viscous sauce on a black ceramic plate. The depth of field is very shallow. The texture of the brain, the skin of the hands, and the chrome tools are extremely detailed. Unsettling, sterile, high-end grotesque. Shot on a Sony A1, sharp focus.`,
   },
 ];
 
