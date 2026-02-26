@@ -2,10 +2,11 @@ import { motion } from "framer-motion";
 import productPrompts from "@/assets/product-prompts.png";
 import productSuno from "@/assets/product-suno.png";
 import productAuto from "@/assets/product-auto.png";
+import GlassCard from "./GlassCard";
 
 const products = [
   {
-    title: "50 AI Prompt Kezdőknek",
+    title: "100 AI Prompt Pack",
     description: "Azonnal használható promptok Midjourney-hez, ChatGPT-hez és DALL·E-hoz.",
     price: "2 990 Ft",
     image: productPrompts,
@@ -28,7 +29,7 @@ const products = [
 ];
 
 const ProductsSection = () => (
-  <section id="termekek" className="py-24 px-4">
+  <section id="termekek" className="py-24 px-4" style={{ perspective: "1000px" }}>
     <div className="container mx-auto max-w-6xl">
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
@@ -47,25 +48,26 @@ const ProductsSection = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.15 }}
-            className="glass-card-hover group flex flex-col overflow-hidden"
           >
-            <div className="relative overflow-hidden aspect-square bg-muted/20">
-              <img
-                src={p.image}
-                alt={p.title}
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-            <div className="p-6 flex flex-col flex-1">
-              <h3 className="text-lg font-bold text-foreground mb-2">{p.title}</h3>
-              <p className="text-sm text-muted-foreground mb-4 flex-1">{p.description}</p>
-              <div className="flex items-center justify-between">
-                <span className="text-xl font-bold glow-text">{p.price}</span>
-                <a href={p.link} className="neon-button text-sm py-2 px-4">
-                  Megveszem
-                </a>
+            <GlassCard className="flex flex-col h-full" parallaxStrength={25}>
+              <div className="relative overflow-hidden aspect-square bg-muted/20">
+                <img
+                  src={p.image}
+                  alt={p.title}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
               </div>
-            </div>
+              <div className="p-6 flex flex-col flex-1">
+                <h3 className="text-lg font-bold text-foreground mb-2">{p.title}</h3>
+                <p className="text-sm text-muted-foreground mb-4 flex-1">{p.description}</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-xl font-bold glow-text">{p.price}</span>
+                  <a href={p.link} className="neon-button text-sm py-2 px-4">
+                    Megveszem
+                  </a>
+                </div>
+              </div>
+            </GlassCard>
           </motion.div>
         ))}
       </div>
