@@ -20,10 +20,8 @@ const HeroSection = () => {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // Typewriter: only starts when video is loaded
+  // Typewriter: starts immediately on mount
   useEffect(() => {
-    if (!isVideoLoaded) return;
-
     let cancelled = false;
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
     let current = "";
@@ -75,15 +73,14 @@ const HeroSection = () => {
       }
     };
 
-    // Small delay after fade-in starts so text appears over visible video
-    const startDelay = setTimeout(() => run(), 800);
+    const startDelay = setTimeout(() => run(), 400);
 
     return () => {
       cancelled = true;
       clearTimeout(startDelay);
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [isVideoLoaded]);
+  }, []);
 
   const toggleSound = useCallback(() => {
     const audio = audioRef.current;
