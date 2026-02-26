@@ -15,11 +15,8 @@ const HeroSection = () => {
   const [done, setDone] = useState(false);
   const [soundOn, setSoundOn] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Load URLs from localStorage (admin panel)
-  const heroVideoUrl = localStorage.getItem("affilion_hero_video") || 
-    "https://cdn.pixabay.com/video/2024/02/23/201629-916429498_large.mp4";
+  // Load music URL from localStorage (admin panel)
   const heroMusicUrl = localStorage.getItem("affilion_hero_music") || "";
 
   useEffect(() => {
@@ -68,18 +65,16 @@ const HeroSection = () => {
 
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center px-4 text-center overflow-hidden">
-      {/* Video Background */}
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 h-full w-full object-cover z-0"
-        style={{ filter: "brightness(0.3) saturate(1.2)" }}
-      >
-        <source src={heroVideoUrl} type="video/mp4" />
-      </video>
+      {/* YouTube Video Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden" style={{ filter: "brightness(0.3) saturate(1.2)" }}>
+        <iframe
+          src={`https://www.youtube.com/embed/MuHibWqua8Y?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&loop=1&playlist=MuHibWqua8Y&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1`}
+          className="absolute top-1/2 left-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+          style={{ border: "none" }}
+          allow="autoplay; encrypted-media"
+          title="Hero background video"
+        />
+      </div>
 
       {/* Gradient overlay */}
       <div className="absolute inset-0 z-[1] bg-gradient-to-b from-background/40 via-background/60 to-background" />
