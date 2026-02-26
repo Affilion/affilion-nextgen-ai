@@ -7,6 +7,7 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
+import deadpoolImg from "@/assets/portfolio-deadpool.jpg";
 
 interface PortfolioItem {
   id: number;
@@ -18,9 +19,33 @@ interface PortfolioItem {
 const portfolioItems: PortfolioItem[] = [
   {
     id: 1,
-    title: "Kiber-Szamuráj Koncepció",
-    image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80",
-    prompt: `A cyberpunk samurai standing on a neon-lit Tokyo rooftop at night, wearing futuristic armor with glowing blue circuit patterns, katana drawn and crackling with electricity. Rain falling, reflections on wet surfaces, volumetric fog. Cinematic composition, Unreal Engine 5 render, 8K, ultra detailed. --ar 16:9 --v 6`,
+    title: "Idén én leszek Deadpool a Farsangon...",
+    image: deadpoolImg,
+    prompt: `Create an 8K ultra-realistic cinematic image of the person from the uploaded reference photo dressed as Deadpool.
+
+The character should be wearing a highly detailed Deadpool suit and standing in a dramatic, cinematic environment while looking at the camera with a dark, ominous expression.
+
+IMPORTANT — IDENTITY PRESERVATION:
+
+Use the uploaded image as the strict identity reference.
+
+Do NOT alter the face in any way.
+
+The facial structure, skin texture, wrinkles, pores, jawline, eye shape, nose, lips, asymmetry, and proportions must remain 100% identical to the original.
+
+No beautification. No smoothing. No reshaping. No reinterpretation. No AI enhancement of facial features.
+
+Do not make the face more handsome, younger, slimmer, cleaner, or more symmetrical.
+
+The face must remain EXACTLY the same person and geometry as in the reference image.
+
+This is an identity-preservation task, not a reinterpretation.
+
+Allowed adjustments: framing, lighting, background, depth of field, color grading
+
+Style: Photorealistic, Natural skin texture, Professional photography look, Cinematic lighting, 8K quality, Shallow depth of field, Moody atmosphere
+
+Do not alter the face, do not beautify, do not stylize the face, do not change identity, do not smooth the skin, no symmetry correction, no face reshaping, no jawline change, no nose change, no eye enlargement, no lip change, no aging change, no gender shift.`,
   },
   {
     id: 2,
