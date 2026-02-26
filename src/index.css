@@ -83,6 +83,65 @@
     border-color: hsl(var(--primary) / 0.2);
   }
 
+  /* Hyper-realistic glass */
+  .hyper-glass {
+    @apply relative rounded-xl;
+    background: hsl(var(--glass-bg) / 0.35);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border: 1px solid hsl(0 0% 100% / 0.08);
+    box-shadow:
+      0 0 0 1px hsl(var(--glass-border) / 0.05),
+      0 8px 32px -8px hsl(228 12% 4% / 0.6),
+      inset 0 1px 0 0 hsl(0 0% 100% / 0.06),
+      inset 0 -1px 0 0 hsl(0 0% 0% / 0.1);
+  }
+  .hyper-glass:hover {
+    border-color: hsl(var(--primary) / 0.2);
+    box-shadow:
+      0 0 0 1px hsl(var(--primary) / 0.1),
+      0 16px 48px -8px hsl(var(--primary) / 0.12),
+      inset 0 1px 0 0 hsl(0 0% 100% / 0.08),
+      inset 0 -1px 0 0 hsl(0 0% 0% / 0.1);
+  }
+
+  /* Chromatic aberration border on hover */
+  .chromatic-border {
+    box-shadow:
+      -1px 0 0 hsl(0 100% 60% / 0.15),
+      1px 0 0 hsl(200 100% 60% / 0.15),
+      0 -1px 0 hsl(120 100% 60% / 0.1),
+      0 1px 0 hsl(280 100% 60% / 0.1);
+  }
+
+  /* Hero glass buttons */
+  .hero-glass-button {
+    @apply relative overflow-hidden rounded-lg px-6 py-3 font-semibold transition-all duration-300;
+    background: hsl(var(--primary) / 0.15);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--primary) / 0.3);
+    color: hsl(var(--primary));
+  }
+  .hero-glass-button:hover {
+    background: hsl(var(--primary) / 0.25);
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.3);
+    transform: translateY(-2px);
+  }
+
+  .hero-glass-button-outline {
+    @apply relative overflow-hidden rounded-lg px-6 py-3 font-semibold transition-all duration-300;
+    background: hsl(0 0% 100% / 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(0 0% 100% / 0.15);
+    color: hsl(var(--foreground));
+  }
+  .hero-glass-button-outline:hover {
+    background: hsl(0 0% 100% / 0.1);
+    border-color: hsl(var(--primary) / 0.4);
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.15);
+    transform: translateY(-2px);
+  }
+
   .glow-text {
     background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
     -webkit-background-clip: text;
