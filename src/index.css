@@ -192,6 +192,25 @@
   }
 }
 
+/* Premium thin scrollbar */
+.premium-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.premium-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.premium-scrollbar::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.4);
+  border-radius: 9999px;
+}
+.premium-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.7);
+}
+.premium-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--primary) / 0.4) transparent;
+}
+
 /* Aurora background animation */
 @keyframes aurora-shift {
   0%, 100% { transform: translate(0, 0) scale(1); }
