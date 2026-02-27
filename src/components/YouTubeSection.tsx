@@ -121,7 +121,7 @@ const YouTubeSection = () => (
           <GlassCard className="h-full">
             <VideoCard video={videos[0]} large />
             <div className="p-4">
-              <h3 className="font-semibold text-foreground">{videos[0].title}</h3>
+              <h3 className="font-semibold text-foreground">{videos[0].overlay}</h3>
             </div>
           </GlassCard>
         </motion.div>
@@ -137,7 +137,7 @@ const YouTubeSection = () => (
             <GlassCard parallaxStrength={20}>
               <VideoCard video={v} />
               <div className="p-4">
-                <h3 className="text-sm font-semibold text-foreground">{v.title}</h3>
+                <h3 className="text-sm font-semibold text-foreground">{v.overlay}</h3>
               </div>
             </GlassCard>
           </motion.div>
