@@ -6,19 +6,16 @@ import { useState } from "react";
 const videos = [
   {
     id: "e_q8YOyD1vc",
-    title: "AI Zene generálás bemutató",
     overlay: "ÍGY SZEREPELJ A FILMSZTÁROKKAL",
     badge: "AFFILION AI",
   },
   {
     id: "V_KrbdjRoAI",
-    title: "Midjourney tippek és trükkök",
     overlay: "KIADTAM A SAJÁT AI ZENÉM",
     badge: "AFFILION AI",
   },
   {
     id: "MuHibWqua8Y",
-    title: "Automatizáció a mindennapokban",
     overlay: "BURN IT ALL",
     badge: "AFFILION AI",
   },
@@ -39,7 +36,7 @@ const VideoCard = ({
         <iframe
           className="h-full w-full rounded-xl"
           src={`https://www.youtube.com/embed/${video.id}?autoplay=1`}
-          title={video.title}
+          title={video.overlay}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         />
@@ -49,50 +46,21 @@ const VideoCard = ({
 
   return (
     <div
-      className="relative aspect-video w-full cursor-pointer group overflow-hidden rounded-xl"
+      className="relative aspect-video w-full cursor-pointer group overflow-hidden rounded-t-xl"
       onClick={() => setPlaying(true)}
     >
-      {/* YouTube thumbnail */}
       <img
         src={`https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`}
-        alt={video.title}
+        alt={video.overlay}
         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
       />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
-      {/* Dark gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-      {/* Play button */}
+      {/* Glass play button */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-red-600 flex items-center justify-center shadow-lg shadow-red-600/40 transition-transform duration-300 group-hover:scale-110">
-          <Play className="w-6 h-6 md:w-7 md:h-7 text-white fill-white ml-1" />
+        <div className="w-14 h-14 md:w-16 md:h-16 rounded-full backdrop-blur-md bg-white/10 border border-white/20 flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.1)] transition-all duration-300 group-hover:scale-110 group-hover:bg-white/20">
+          <Play className="w-6 h-6 md:w-7 md:h-7 text-white/80 fill-white/80 ml-1" />
         </div>
-      </div>
-
-      {/* Badge + overlay text */}
-      <div className="absolute bottom-0 left-0 right-0 p-3 md:p-5">
-        <span
-          className="inline-block px-2 py-0.5 rounded text-[10px] md:text-xs font-bold tracking-wider mb-1 md:mb-2"
-          style={{
-            background: "linear-gradient(135deg, hsl(270 80% 60%), hsl(200 80% 60%))",
-            color: "white",
-          }}
-        >
-          {video.badge}
-        </span>
-        <h3
-          className={`font-black uppercase leading-tight tracking-wide text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] ${
-            large
-              ? "text-lg md:text-2xl lg:text-3xl"
-              : "text-xs md:text-sm lg:text-base"
-          }`}
-          style={{
-            textShadow:
-              "0 0 20px rgba(0,0,0,0.9), 0 2px 4px rgba(0,0,0,0.8)",
-          }}
-        >
-          {video.overlay}
-        </h3>
       </div>
     </div>
   );
@@ -121,7 +89,20 @@ const YouTubeSection = () => (
           <GlassCard className="h-full">
             <VideoCard video={videos[0]} large />
             <div className="p-4">
-              <h3 className="font-semibold text-foreground">{videos[0].overlay}</h3>
+              <span
+                className="inline-block px-2 py-0.5 rounded text-[10px] md:text-xs font-bold tracking-wider mb-1"
+                style={{
+                  background: "linear-gradient(135deg, hsl(270 80% 60%), hsl(200 80% 60%))",
+                  color: "white",
+                }}
+              >
+                {videos[0].badge}
+              </span>
+              <h3 className="font-black uppercase leading-tight tracking-wide text-foreground text-base md:text-xl"
+                style={{ textShadow: "0 0 20px rgba(0,0,0,0.5)" }}
+              >
+                {videos[0].overlay}
+              </h3>
             </div>
           </GlassCard>
         </motion.div>
@@ -136,8 +117,21 @@ const YouTubeSection = () => (
           >
             <GlassCard parallaxStrength={20}>
               <VideoCard video={v} />
-              <div className="p-4">
-                <h3 className="text-sm font-semibold text-foreground">{v.overlay}</h3>
+              <div className="p-3">
+                <span
+                  className="inline-block px-2 py-0.5 rounded text-[9px] md:text-[10px] font-bold tracking-wider mb-1"
+                  style={{
+                    background: "linear-gradient(135deg, hsl(270 80% 60%), hsl(200 80% 60%))",
+                    color: "white",
+                  }}
+                >
+                  {v.badge}
+                </span>
+                <h3 className="font-black uppercase leading-tight tracking-wide text-foreground text-xs md:text-sm"
+                  style={{ textShadow: "0 0 20px rgba(0,0,0,0.5)" }}
+                >
+                  {v.overlay}
+                </h3>
               </div>
             </GlassCard>
           </motion.div>
