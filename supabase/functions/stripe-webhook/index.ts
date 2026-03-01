@@ -29,26 +29,26 @@ async function createSzamlazzInvoice(
   const productName = PRODUCT_NAMES[productId] || productId;
   const unitPrice = PRODUCT_PRICES[productId] || amount;
 
+  const today = new Date().toISOString().split("T")[0];
   const xmlBody = `<?xml version="1.0" encoding="UTF-8"?>
 <xmlszamla xmlns="http://www.szamlazz.hu/xmlszamla" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.szamlazz.hu/xmlszamla https://www.szamlazz.hu/szamla/docs/xsds/agent/xmlszamla.xsd">
-  <bepiegyformationnfo>
-    <felpiegyformationnfo>0</felpiegyformationnfo>
-    <szamlaszam></szamlaszam>
-  </bepiegyformationnfo>
+  <beallitasok>
+    <szamlaagentkulcs>${agentKey}</szamlaagentkulcs>
+    <eszamla>true</eszamla>
+    <szamlaLetoltes>false</szamlaLetoltes>
+  </beallitasok>
   <fejlec>
-    <keltDatum>${new Date().toISOString().split("T")[0]}</keltDatum>
-    <teljesitesDatum>${new Date().toISOString().split("T")[0]}</teljesitesDatum>
-    <fizetesiHataridoDatum>${new Date().toISOString().split("T")[0]}</fizetesiHataridoDatum>
+    <keltDatum>${today}</keltDatum>
+    <teljesitesDatum>${today}</teljesitesDatum>
+    <fizetesiHataridoDatum>${today}</fizetesiHataridoDatum>
     <fizmod>Bankkártya (Stripe)</fizmod>
-    <ppiegyformationnz>HUF</ppiegyformationnz>
-    <szpiegyformationnyelv>hu</szpiegyformationnyelv>
+    <penznem>HUF</penznem>
+    <szamlaNyelv>hu</szamlaNyelv>
     <megjegyzes>Stripe online fizetés</megjegyzes>
-    <rendpiegyformationnSzam></rendpiegyformationnSzam>
-    <epiegyformationnSzamla>true</epiegyformationnSzamla>
-    <szpiegyformationnTipus>SZ</szpiegyformationnTipus>
+    <rendelesSzam></rendelesSzam>
+    <szamlaTipus>SZ</szamlaTipus>
   </fejlec>
-  <elado>
-  </elado>
+  <elado/>
   <vevo>
     <nev>${escapeXml(customerName || customerEmail)}</nev>
     <email>${escapeXml(customerEmail)}</email>
@@ -69,12 +69,14 @@ async function createSzamlazzInvoice(
 </xmlszamla>`;
 
   try {
+    // Számlázz.hu expects multipart/form-data with the XML as a file
+    const formData = new FormData();
+    const xmlBlob = new Blob([xmlBody], { type: "application/xml" });
+    formData.append("action-xmlagentxmlfile", xmlBlob, "xmlszamla.xml");
+
     const response = await fetch("https://www.szamlazz.hu/szamla/", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/xml",
-      },
-      body: `szamlaagentkulcs=${agentKey}&action-xmlagentxmlfile=SZAMLA&${xmlBody}`,
+      body: formData,
     });
 
     // Számlázz.hu returns the invoice number in the szlahu_szamlaszam header
