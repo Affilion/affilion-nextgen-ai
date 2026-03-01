@@ -9,15 +9,15 @@ const corsHeaders = {
 
 const PRODUCTS: Record<string, { price_id: string; name: string }> = {
   "prompt-pack": {
-    price_id: "price_1T6Cy7HpS2EmCo1uaELBhhXK",
+    price_id: "price_1T6FLRHpS2EmCo1uByrbHyBp",
     name: "100 AI Prompt Pack",
   },
   "suno-guide": {
-    price_id: "price_1T6CySHpS2EmCo1uSYIjqUWV",
+    price_id: "price_1T6FLfHpS2EmCo1uItSjd9SM",
     name: "Suno AI Dalszövegírási Titkok",
   },
   "auto-guide": {
-    price_id: "price_1T6CzZHpS2EmCo1uTsUcthA2",
+    price_id: "price_1T6FMDHpS2EmCo1uEP6oJSbK",
     name: "AI Automatizációs Útmutató",
   },
 };
