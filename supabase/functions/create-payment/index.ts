@@ -51,6 +51,7 @@ serve(async (req) => {
       customer_email: user.email,
       line_items: [{ price: product.price_id, quantity: 1 }],
       mode: "payment",
+      automatic_tax: { enabled: false },
       metadata: {
         user_id: user.id,
         product_id: productId,
