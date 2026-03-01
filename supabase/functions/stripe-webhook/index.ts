@@ -62,6 +62,7 @@ async function createSzamlazzInvoice(
     <helyesbitoszamla>false</helyesbitoszamla>
     <helyesbitettSzamlaszam></helyesbitettSzamlaszam>
     <dijbekero>false</dijbekero>
+    <szamlaszamElotag>E-FZ</szamlaszamElotag>
   </fejlec>
   <elado/>
   <vevo>
