@@ -13,21 +13,32 @@ const PRODUCT_NAMES: Record<string, string> = {
   "auto-guide": "AI Automatizációs Útmutató",
 };
 
-const PRODUCT_PRICES: Record<string, number> = {
+const PRODUCT_PRICES_NETTO: Record<string, number> = {
   "prompt-pack": 2990,
   "suno-guide": 3990,
   "auto-guide": 4990,
 };
+
+function escapeXml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
 
 async function createSzamlazzInvoice(
   agentKey: string,
   customerEmail: string,
   customerName: string,
   productId: string,
-  amount: number
+  _amountFromStripe: number
 ): Promise<string | null> {
   const productName = PRODUCT_NAMES[productId] || productId;
-  const unitPrice = PRODUCT_PRICES[productId] || amount;
+  const nettoPrice = PRODUCT_PRICES_NETTO[productId] || Math.round(_amountFromStripe / 1.27);
+  const afaErtek = Math.round(nettoPrice * 0.27);
+  const bruttoErtek = nettoPrice + afaErtek;
 
   const today = new Date().toISOString().split("T")[0];
   const xmlBody = `<?xml version="1.0" encoding="UTF-8"?>
@@ -46,7 +57,13 @@ async function createSzamlazzInvoice(
     <szamlaNyelv>hu</szamlaNyelv>
     <megjegyzes>Stripe online fizetés</megjegyzes>
     <rendelesSzam></rendelesSzam>
-    <szamlaTipus>SZ</szamlaTipus>
+    <dijbekeroSzamlaszam></dijbekeroSzamlaszam>
+    <elolegszamla>false</elolegszamla>
+    <vegszamla>false</vegszamla>
+    <helyesbitoszamla>false</helyesbitoszamla>
+    <helyesbitettSzamlaszam></helyesbitettSzamlaszam>
+    <dijbekero>false</dijbekero>
+    <szamlaszamElotag></szamlaszamElotag>
   </fejlec>
   <elado/>
   <vevo>
@@ -56,23 +73,35 @@ async function createSzamlazzInvoice(
     <cim>Online vásárlás</cim>
     <email>${escapeXml(customerEmail)}</email>
     <sendEmail>true</sendEmail>
+    <adoszam></adoszam>
+    <postazasiNev></postazasiNev>
+    <postazasiIrsz></postazasiIrsz>
+    <postazasiTelepules></postazasiTelepules>
+    <postazasiCim></postazasiCim>
+    <azonosito></azonosito>
+    <telefonszam></telefonszam>
+    <megjegyzes></megjegyzes>
   </vevo>
+  <fuvarlevel>
+    <uticel></uticel>
+    <futarSzolgalat></futarSzolgalat>
+  </fuvarlevel>
   <tetelek>
     <tetel>
       <megnevezes>${escapeXml(productName)}</megnevezes>
       <mennyiseg>1</mennyiseg>
       <mennyisegiEgyseg>db</mennyisegiEgyseg>
-      <nettoEgysegar>${unitPrice}</nettoEgysegar>
+      <nettoEgysegar>${nettoPrice}</nettoEgysegar>
       <afakulcs>27</afakulcs>
-      <nettoErtek>${unitPrice}</nettoErtek>
-      <afaErtek>${Math.round(unitPrice * 0.27)}</afaErtek>
-      <bruttoErtek>${Math.round(unitPrice * 1.27)}</bruttoErtek>
+      <nettoErtek>${nettoPrice}</nettoErtek>
+      <afaErtek>${afaErtek}</afaErtek>
+      <bruttoErtek>${bruttoErtek}</bruttoErtek>
+      <megjegyzes></megjegyzes>
     </tetel>
   </tetelek>
 </xmlszamla>`;
 
   try {
-    // Számlázz.hu expects multipart/form-data with the XML as a file
     const formData = new FormData();
     const xmlBlob = new Blob([xmlBody], { type: "application/xml" });
     formData.append("action-xmlagentxmlfile", xmlBlob, "xmlszamla.xml");
@@ -82,7 +111,6 @@ async function createSzamlazzInvoice(
       body: formData,
     });
 
-    // Számlázz.hu returns the invoice number in the szlahu_szamlaszam header
     const invoiceNumber = response.headers.get("szlahu_szamlaszam");
     const responseText = await response.text();
     console.log("[SZAMLAZZ] Response:", responseText.substring(0, 500));
@@ -94,13 +122,45 @@ async function createSzamlazzInvoice(
   }
 }
 
-function escapeXml(str: string): string {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&apos;");
+async function markInvoiceAsPaid(
+  agentKey: string,
+  invoiceNumber: string,
+  amount: number
+): Promise<boolean> {
+  const today = new Date().toISOString().split("T")[0];
+  const xmlBody = `<?xml version="1.0" encoding="UTF-8"?>
+<xmlszamlakifiz xmlns="http://www.szamlazz.hu/xmlszamlakifiz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.szamlazz.hu/xmlszamlakifiz https://www.szamlazz.hu/szamla/docs/xsds/agentkifiz/xmlszamlakifiz.xsd">
+  <beallitasok>
+    <szamlaagentkulcs>${agentKey}</szamlaagentkulcs>
+    <szamlaszam>${escapeXml(invoiceNumber)}</szamlaszam>
+    <adoszam></adoszam>
+    <additiv>false</additiv>
+  </beallitasok>
+  <kifizetes>
+    <datum>${today}</datum>
+    <jogcim>Bankkártya (Stripe)</jogcim>
+    <osszeg>${amount}</osszeg>
+    <leiras>Stripe online fizetés</leiras>
+  </kifizetes>
+</xmlszamlakifiz>`;
+
+  try {
+    const formData = new FormData();
+    const xmlBlob = new Blob([xmlBody], { type: "application/xml" });
+    formData.append("action-szamla_agent_kifiz", xmlBlob, "xmlszamlakifiz.xml");
+
+    const response = await fetch("https://www.szamlazz.hu/szamla/", {
+      method: "POST",
+      body: formData,
+    });
+
+    const responseText = await response.text();
+    console.log("[SZAMLAZZ] Credit entry response:", responseText.substring(0, 500));
+    return response.ok;
+  } catch (err) {
+    console.error("[SZAMLAZZ] Error marking invoice as paid:", err);
+    return false;
+  }
 }
 
 serve(async (req) => {
@@ -122,14 +182,12 @@ serve(async (req) => {
     const body = await req.text();
     const sig = req.headers.get("stripe-signature");
 
-    // If we have a webhook secret, verify the signature
     const webhookSecret = Deno.env.get("STRIPE_WEBHOOK_SECRET");
     let event: Stripe.Event;
 
     if (webhookSecret && sig) {
       event = await stripe.webhooks.constructEventAsync(body, sig, webhookSecret);
     } else {
-      // For testing without webhook secret
       event = JSON.parse(body);
     }
 
@@ -181,6 +239,14 @@ serve(async (req) => {
               .update({ szamlazz_invoice_id: invoiceId })
               .eq("stripe_session_id", session.id);
             console.log(`[WEBHOOK] Invoice created: ${invoiceId}`);
+
+            // 3. Mark invoice as paid (Stripe already charged the customer)
+            const nettoPrice = PRODUCT_PRICES_NETTO[productId] || Math.round((session.amount_total || 0) / 100 / 1.27);
+            const bruttoAmount = nettoPrice + Math.round(nettoPrice * 0.27);
+            const paidOk = await markInvoiceAsPaid(agentKey, invoiceId, bruttoAmount);
+            if (paidOk) {
+              console.log(`[WEBHOOK] Invoice ${invoiceId} marked as paid`);
+            }
           }
         } else {
           console.warn("[WEBHOOK] SZAMLAZZ_AGENT_KEY not set, skipping invoice");
