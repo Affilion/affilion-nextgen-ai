@@ -15,27 +15,21 @@ const products = [
     id: "prompt-pack",
     title: "100 AI Prompt Pack",
     description: "Azonnal használható promptok Midjourney-hez, ChatGPT-hez és DALL·E-hoz.",
-    nettoPrice: "2 990 Ft",
-    bruttoPrice: "3 798 Ft",
-    vatAmount: "808 Ft",
+    price: "2 990 Ft",
     image: productPrompts,
   },
   {
     id: "suno-guide",
     title: "Suno AI Dalszövegírási Titkok",
     description: "Tanulj meg professzionális dalokat generálni mesterséges intelligenciával.",
-    nettoPrice: "3 990 Ft",
-    bruttoPrice: "5 068 Ft",
-    vatAmount: "1 078 Ft",
+    price: "3 990 Ft",
     image: productSuno,
   },
   {
     id: "auto-guide",
     title: "AI Automatizációs Útmutató",
     description: "Automatizáld a munkafolyamataidat Make, Zapier és AI eszközökkel.",
-    nettoPrice: "4 990 Ft",
-    bruttoPrice: "6 338 Ft",
-    vatAmount: "1 348 Ft",
+    price: "4 990 Ft",
     image: productAuto,
   },
 ];
@@ -139,13 +133,8 @@ const ProductsSection = () => {
                   <div className="p-6 flex flex-col flex-1">
                     <h3 className="text-lg font-bold text-foreground mb-2">{p.title}</h3>
                     <p className="text-sm text-muted-foreground mb-4 flex-1">{p.description}</p>
-                    <div className="flex flex-col gap-1 mb-3">
-                      <span className="text-xl font-bold glow-text">{p.bruttoPrice}</span>
-                      <span className="text-xs text-muted-foreground">
-                        Nettó: {p.nettoPrice} + ÁFA (27%): {p.vatAmount}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-end">
+                    <div className="flex items-center justify-between">
+                    <span className="text-xl font-bold glow-text">{p.price}</span>
                       {purchased ? (
                         <span className="text-sm font-semibold text-primary flex items-center gap-1">
                           <CheckCircle className="w-4 h-4" /> Megvásárolva

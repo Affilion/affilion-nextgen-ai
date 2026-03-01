@@ -13,7 +13,7 @@ const PRODUCT_NAMES: Record<string, string> = {
   "auto-guide": "AI Automatizációs Útmutató",
 };
 
-const PRODUCT_PRICES_NETTO: Record<string, number> = {
+const PRODUCT_PRICES: Record<string, number> = {
   "prompt-pack": 2990,
   "suno-guide": 3990,
   "auto-guide": 4990,
@@ -36,11 +36,10 @@ async function createSzamlazzInvoice(
   _amountFromStripe: number
 ): Promise<string | null> {
   const productName = PRODUCT_NAMES[productId] || productId;
-  const nettoPrice = PRODUCT_PRICES_NETTO[productId] || Math.round(_amountFromStripe / 1.27);
-  const afaErtek = Math.round(nettoPrice * 0.27);
-  const bruttoErtek = nettoPrice + afaErtek;
+  const price = PRODUCT_PRICES[productId] || _amountFromStripe;
 
   const today = new Date().toISOString().split("T")[0];
+  // AAM = Alanyi adómentes (KATA egyéni vállalkozó, ÁFA-mentes)
   const xmlBody = `<?xml version="1.0" encoding="UTF-8"?>
 <xmlszamla xmlns="http://www.szamlazz.hu/xmlszamla" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.szamlazz.hu/xmlszamla https://www.szamlazz.hu/szamla/docs/xsds/agent/xmlszamla.xsd">
   <beallitasok>
@@ -91,11 +90,11 @@ async function createSzamlazzInvoice(
       <megnevezes>${escapeXml(productName)}</megnevezes>
       <mennyiseg>1</mennyiseg>
       <mennyisegiEgyseg>db</mennyisegiEgyseg>
-      <nettoEgysegar>${nettoPrice}</nettoEgysegar>
-      <afakulcs>27</afakulcs>
-      <nettoErtek>${nettoPrice}</nettoErtek>
-      <afaErtek>${afaErtek}</afaErtek>
-      <bruttoErtek>${bruttoErtek}</bruttoErtek>
+      <nettoEgysegar>${price}</nettoEgysegar>
+      <afakulcs>AAM</afakulcs>
+      <nettoErtek>${price}</nettoErtek>
+      <afaErtek>0</afaErtek>
+      <bruttoErtek>${price}</bruttoErtek>
       <megjegyzes></megjegyzes>
     </tetel>
   </tetelek>
@@ -222,7 +221,7 @@ serve(async (req) => {
           console.log("[WEBHOOK] Purchase saved successfully");
         }
 
-        // 2. Create invoice via Számlázz.hu
+        // 2. Create invoice via Számlázz.hu (AAM - alanyi adómentes)
         const agentKey = Deno.env.get("SZAMLAZZ_AGENT_KEY");
         if (agentKey) {
           const invoiceId = await createSzamlazzInvoice(
@@ -240,10 +239,9 @@ serve(async (req) => {
               .eq("stripe_session_id", session.id);
             console.log(`[WEBHOOK] Invoice created: ${invoiceId}`);
 
-            // 3. Mark invoice as paid (Stripe already charged the customer)
-            const nettoPrice = PRODUCT_PRICES_NETTO[productId] || Math.round((session.amount_total || 0) / 100 / 1.27);
-            const bruttoAmount = nettoPrice + Math.round(nettoPrice * 0.27);
-            const paidOk = await markInvoiceAsPaid(agentKey, invoiceId, bruttoAmount);
+            // 3. Mark invoice as paid (Stripe already charged)
+            const price = PRODUCT_PRICES[productId] || (session.amount_total || 0) / 100;
+            const paidOk = await markInvoiceAsPaid(agentKey, invoiceId, price);
             if (paidOk) {
               console.log(`[WEBHOOK] Invoice ${invoiceId} marked as paid`);
             }
