@@ -47,15 +47,8 @@ serve(async (req) => {
       apiVersion: "2025-08-27.basil",
     });
 
-    const customers = await stripe.customers.list({ email: user.email, limit: 1 });
-    let customerId: string | undefined;
-    if (customers.data.length > 0) {
-      customerId = customers.data[0].id;
-    }
-
     const session = await stripe.checkout.sessions.create({
-      customer: customerId,
-      customer_email: customerId ? undefined : user.email,
+      customer_email: user.email,
       line_items: [{ price: product.price_id, quantity: 1 }],
       mode: "payment",
       metadata: {
