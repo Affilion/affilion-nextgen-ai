@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Menu, X, LogIn, LogOut, User } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import defaultLogo from "@/assets/logo.jpg";
 
 const links = [
@@ -12,6 +15,13 @@ const links = [
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setOpen(false);
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-card border-0 border-b border-glass-border/20">
@@ -32,6 +42,27 @@ const Navbar = () => {
               {l.label}
             </a>
           ))}
+          {user ? (
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-muted-foreground flex items-center gap-1">
+                <User size={14} />
+                {user.email?.split("@")[0]}
+              </span>
+              <button
+                onClick={handleLogout}
+                className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"
+              >
+                <LogOut size={14} /> Kilépés
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => navigate("/auth")}
+              className="hero-glass-button text-xs py-2 px-4 flex items-center gap-1"
+            >
+              <LogIn size={14} /> Belépés
+            </button>
+          )}
         </div>
 
         {/* Mobile toggle */}
@@ -57,6 +88,21 @@ const Navbar = () => {
               {l.label}
             </a>
           ))}
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1"
+            >
+              <LogOut size={14} /> Kilépés
+            </button>
+          ) : (
+            <button
+              onClick={() => { navigate("/auth"); setOpen(false); }}
+              className="text-sm text-primary flex items-center gap-1"
+            >
+              <LogIn size={14} /> Belépés
+            </button>
+          )}
         </div>
       )}
     </nav>
