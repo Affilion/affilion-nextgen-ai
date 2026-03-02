@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu, X, LogIn, LogOut, User } from "lucide-react";
+import { Menu, X, LogIn, LogOut, User, BookOpen, Shield } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useAdmin } from "@/hooks/useAdmin";
 import { supabase } from "@/integrations/supabase/client";
 import defaultLogo from "@/assets/logo.jpg";
 
@@ -16,6 +17,7 @@ const links = [
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user } = useAuth();
+  const { isAdmin } = useAdmin();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -44,6 +46,20 @@ const Navbar = () => {
           ))}
           {user ? (
             <div className="flex items-center gap-3">
+              <button
+                onClick={() => navigate("/dashboard")}
+                className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"
+              >
+                <BookOpen size={14} /> Tartalmaim
+              </button>
+              {isAdmin && (
+                <button
+                  onClick={() => navigate("/admin")}
+                  className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"
+                >
+                  <Shield size={14} /> Admin
+                </button>
+              )}
               <span className="text-xs text-muted-foreground flex items-center gap-1">
                 <User size={14} />
                 {user.email?.split("@")[0]}
@@ -89,12 +105,28 @@ const Navbar = () => {
             </a>
           ))}
           {user ? (
-            <button
-              onClick={handleLogout}
-              className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1"
-            >
-              <LogOut size={14} /> Kilépés
-            </button>
+            <>
+              <button
+                onClick={() => { navigate("/dashboard"); setOpen(false); }}
+                className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1"
+              >
+                <BookOpen size={14} /> Saját Tartalmaim
+              </button>
+              {isAdmin && (
+                <button
+                  onClick={() => { navigate("/admin"); setOpen(false); }}
+                  className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1"
+                >
+                  <Shield size={14} /> Admin Panel
+                </button>
+              )}
+              <button
+                onClick={handleLogout}
+                className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1"
+              >
+                <LogOut size={14} /> Kilépés
+              </button>
+            </>
           ) : (
             <button
               onClick={() => { navigate("/auth"); setOpen(false); }}
