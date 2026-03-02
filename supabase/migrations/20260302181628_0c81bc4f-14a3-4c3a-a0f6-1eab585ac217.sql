@@ -1,0 +1,1 @@
+DELETE FROM public.purchases WHERE customer_email = 'kriptoszkop@gmail.com';
