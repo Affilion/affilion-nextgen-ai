@@ -1,17 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Copy, Check, ChevronDown, ChevronUp } from "lucide-react";
-import jediBanana from "@/assets/jedi-banana.png";
 import GlassCard from "./GlassCard";
+import { supabase } from "@/integrations/supabase/client";
 
-const samplePrompt = `A Jedi warrior in a dark Star Wars corridor, wielding a giant glowing banana instead of a lightsaber, fighting Darth Vader. The banana emits bright yellow-green neon light. Cinematic composition, dramatic lighting, 8K, photorealistic. --ar 16:9 --v 6`;
+interface PromptLabItem {
+  id: string;
+  title: string;
+  image_url: string;
+  prompt_text: string;
+  description: string | null;
+}
 
 const PromptLabSection = () => {
+  const [items, setItems] = useState<PromptLabItem[]>([]);
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
 
+  useEffect(() => {
+    const fetchItems = async () => {
+      const { data } = await supabase
+        .from("prompt_lab_items")
+        .select("id, title, image_url, prompt_text, description")
+        .order("sort_order", { ascending: true });
+      if (data) setItems(data);
+    };
+    fetchItems();
+  }, []);
+
+  if (items.length === 0) return null;
+
+  const item = items[0];
+
   const handleCopy = () => {
-    navigator.clipboard.writeText(samplePrompt);
+    navigator.clipboard.writeText(item.prompt_text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -37,18 +59,18 @@ const PromptLabSection = () => {
             <div className="flex flex-col lg:flex-row">
               <div className="lg:w-1/2 overflow-hidden">
                 <img
-                  src={jediBanana}
-                  alt="Jedi harcol Darth Vaderrel egy világító banánnal"
+                  src={item.image_url}
+                  alt={item.title}
                   className="h-full w-full object-cover"
                 />
               </div>
               <div className="lg:w-1/2 p-6 md:p-8 flex flex-col justify-center">
                 <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                  A Birodalom Visszavág... egy banánnal? 🍌
+                  {item.title}
                 </h3>
-                <p className="text-muted-foreground mb-6">
-                  Igen, jól látod. Ez egy AI-generált kép, és alább megtalálod a promptot hozzá!
-                </p>
+                {item.description && (
+                  <p className="text-muted-foreground mb-6">{item.description}</p>
+                )}
 
                 <button
                   onClick={() => setExpanded(!expanded)}
@@ -60,7 +82,7 @@ const PromptLabSection = () => {
 
                 {expanded && (
                   <div className="relative mb-6">
-                    <div className="code-block text-muted-foreground">{samplePrompt}</div>
+                    <div className="code-block text-muted-foreground">{item.prompt_text}</div>
                     <button
                       onClick={handleCopy}
                       className="absolute top-2 right-2 p-2 rounded-md bg-muted/50 hover:bg-muted transition-colors text-foreground"
