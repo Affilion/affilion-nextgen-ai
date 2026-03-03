@@ -5,14 +5,14 @@ import { useAdmin } from "@/hooks/useAdmin";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import { ArrowLeft, Users, Image, Video, FileText, Link, Trash2, Plus, Save, Pencil, Mail, Download } from "lucide-react";
+import { ArrowLeft, Users, Image, Video, FileText, Link, Trash2, Plus, Save, Pencil, Mail, Download, ShoppingBag } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { optimizeImageForUpload } from "@/lib/imageOptimization";
 
-type Tab = "users" | "portfolio" | "experiments" | "prompts" | "content" | "waitlist";
-type UploadFolder = "portfolio" | "prompts";
+type Tab = "users" | "products" | "portfolio" | "experiments" | "prompts" | "content" | "waitlist";
+type UploadFolder = "portfolio" | "prompts" | "products";
 
 const uploadCmsImage = async (file: File, folder: UploadFolder) => {
   const optimizedFile = await optimizeImageForUpload(file, {
@@ -62,6 +62,7 @@ const Admin = () => {
 
   const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
     { id: "users", label: "Felhasználók", icon: <Users size={16} /> },
+    { id: "products", label: "Termékek", icon: <ShoppingBag size={16} /> },
     { id: "portfolio", label: "Portfólió", icon: <Image size={16} /> },
     { id: "experiments", label: "AI Kísérletek", icon: <Video size={16} /> },
     { id: "prompts", label: "Prompt Labor", icon: <FileText size={16} /> },
@@ -100,6 +101,7 @@ const Admin = () => {
 
           <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
             {activeTab === "users" && <UsersPanel />}
+            {activeTab === "products" && <ProductsPanel />}
             {activeTab === "portfolio" && <PortfolioPanel />}
             {activeTab === "experiments" && <ExperimentsPanel />}
             {activeTab === "prompts" && <PromptsPanel />}
@@ -169,6 +171,307 @@ const UsersPanel = () => {
             ))}
           </tbody>
         </table>
+      </div>
+    </div>
+  );
+};
+
+/* ── Products Panel ── */
+const ProductsPanel = () => {
+  type Product = {
+    id: string;
+    name: string;
+    description: string | null;
+    price: number;
+    image_url: string | null;
+    stripe_price_id: string;
+    notion_url: string | null;
+    sort_order: number | null;
+    is_active: boolean | null;
+  };
+
+  const [items, setItems] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  // New product form
+  const [newId, setNewId] = useState("");
+  const [newName, setNewName] = useState("");
+  const [newDesc, setNewDesc] = useState("");
+  const [newPrice, setNewPrice] = useState("");
+  const [newStripePriceId, setNewStripePriceId] = useState("");
+  const [newNotionUrl, setNewNotionUrl] = useState("");
+  const [newFile, setNewFile] = useState<File | null>(null);
+
+  // Edit state
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editName, setEditName] = useState("");
+  const [editDesc, setEditDesc] = useState("");
+  const [editPrice, setEditPrice] = useState("");
+  const [editStripePriceId, setEditStripePriceId] = useState("");
+  const [editNotionUrl, setEditNotionUrl] = useState("");
+  const [editFile, setEditFile] = useState<File | null>(null);
+  const [editIsActive, setEditIsActive] = useState(true);
+  const [savingId, setSavingId] = useState<string | null>(null);
+
+  const fetchItems = async () => {
+    const { data } = await supabase
+      .from("products")
+      .select("*")
+      .order("sort_order", { ascending: true });
+    setItems((data || []) as Product[]);
+  };
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
+  const handleAdd = async () => {
+    if (!newId.trim() || !newName.trim() || !newPrice.trim() || !newStripePriceId.trim()) {
+      return toast({ title: "ID, név, ár és Stripe Price ID kötelező!", variant: "destructive" });
+    }
+
+    setLoading(true);
+    try {
+      let imageUrl: string | null = null;
+      if (newFile) {
+        imageUrl = await uploadCmsImage(newFile, "products");
+      }
+
+      const { error } = await supabase.from("products").insert({
+        id: newId.trim(),
+        name: newName.trim(),
+        description: newDesc.trim() || null,
+        price: parseInt(newPrice),
+        stripe_price_id: newStripePriceId.trim(),
+        notion_url: newNotionUrl.trim() || null,
+        image_url: imageUrl,
+        sort_order: items.length,
+        is_active: true,
+      });
+
+      if (error) throw error;
+
+      // Also create product_content entry if notion_url is provided
+      if (newNotionUrl.trim()) {
+        await supabase.from("product_content").upsert({
+          product_id: newId.trim(),
+          notion_url: newNotionUrl.trim(),
+          title: newName.trim(),
+        }, { onConflict: "product_id" });
+      }
+
+      setNewId("");
+      setNewName("");
+      setNewDesc("");
+      setNewPrice("");
+      setNewStripePriceId("");
+      setNewNotionUrl("");
+      setNewFile(null);
+      await fetchItems();
+      toast({ title: "Termék hozzáadva!" });
+    } catch (error) {
+      toast({
+        title: "Hiba",
+        description: error instanceof Error ? error.message : "Ismeretlen hiba.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleStartEdit = (item: Product) => {
+    setEditingId(item.id);
+    setEditName(item.name);
+    setEditDesc(item.description || "");
+    setEditPrice(String(item.price));
+    setEditStripePriceId(item.stripe_price_id);
+    setEditNotionUrl(item.notion_url || "");
+    setEditFile(null);
+    setEditIsActive(item.is_active ?? true);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+  };
+
+  const handleSaveEdit = async (itemId: string) => {
+    if (!editName.trim() || !editPrice.trim() || !editStripePriceId.trim()) {
+      return toast({ title: "Név, ár és Stripe Price ID kötelező!", variant: "destructive" });
+    }
+
+    setSavingId(itemId);
+    try {
+      let nextImageUrl: string | undefined;
+      if (editFile) {
+        nextImageUrl = await uploadCmsImage(editFile, "products");
+      }
+
+      const { error } = await supabase
+        .from("products")
+        .update({
+          name: editName.trim(),
+          description: editDesc.trim() || null,
+          price: parseInt(editPrice),
+          stripe_price_id: editStripePriceId.trim(),
+          notion_url: editNotionUrl.trim() || null,
+          is_active: editIsActive,
+          ...(nextImageUrl ? { image_url: nextImageUrl } : {}),
+        })
+        .eq("id", itemId);
+
+      if (error) throw error;
+
+      // Sync product_content
+      if (editNotionUrl.trim()) {
+        await supabase.from("product_content").upsert({
+          product_id: itemId,
+          notion_url: editNotionUrl.trim(),
+          title: editName.trim(),
+        }, { onConflict: "product_id" });
+      }
+
+      await fetchItems();
+      handleCancelEdit();
+      toast({ title: "Termék frissítve!" });
+    } catch (error) {
+      toast({
+        title: "Mentési hiba",
+        description: error instanceof Error ? error.message : "Ismeretlen hiba.",
+        variant: "destructive",
+      });
+    } finally {
+      setSavingId(null);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    const { error } = await supabase.from("products").delete().eq("id", id);
+    if (error) {
+      toast({ title: "Törlési hiba", description: error.message, variant: "destructive" });
+      return;
+    }
+    await fetchItems();
+    toast({ title: "Termék törölve!" });
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Add new product form */}
+      <div className="hyper-glass rounded-xl p-6 space-y-4">
+        <h3 className="font-bold text-foreground flex items-center gap-2">
+          <Plus size={16} /> Új Termék
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Input
+            placeholder="Termék ID (pl: prompt-pack-v2)"
+            value={newId}
+            onChange={(e) => setNewId(e.target.value)}
+            className="bg-muted/50 border-border"
+          />
+          <Input
+            placeholder="Termék neve"
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            className="bg-muted/50 border-border"
+          />
+          <Input
+            placeholder="Ár (HUF, pl: 2990)"
+            type="number"
+            value={newPrice}
+            onChange={(e) => setNewPrice(e.target.value)}
+            className="bg-muted/50 border-border"
+          />
+          <Input
+            placeholder="Stripe Price ID (pl: price_1T6Cy7...)"
+            value={newStripePriceId}
+            onChange={(e) => setNewStripePriceId(e.target.value)}
+            className="bg-muted/50 border-border"
+          />
+        </div>
+        <Textarea
+          placeholder="Leírás"
+          value={newDesc}
+          onChange={(e) => setNewDesc(e.target.value)}
+          className="bg-muted/50 border-border"
+        />
+        <Input
+          placeholder="Notion embed URL (a vásárlás utáni tartalom)"
+          value={newNotionUrl}
+          onChange={(e) => setNewNotionUrl(e.target.value)}
+          className="bg-muted/50 border-border"
+        />
+        <div>
+          <label className="text-sm text-muted-foreground block mb-1">Borítókép</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setNewFile(e.target.files?.[0] || null)}
+            className="text-sm text-muted-foreground"
+          />
+        </div>
+        <Button onClick={handleAdd} disabled={loading} className="neon-button border-0">
+          {loading ? "Feltöltés..." : "Termék hozzáadása"}
+        </Button>
+      </div>
+
+      {/* Existing products */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {items.map((item) => {
+          const isEditing = editingId === item.id;
+
+          return (
+            <div key={item.id} className={`hyper-glass rounded-xl overflow-hidden ${!item.is_active ? "opacity-50" : ""}`}>
+              {item.image_url ? (
+                <img src={item.image_url} alt={item.name} className="w-full h-48 object-cover" />
+              ) : (
+                <div className="w-full h-48 bg-muted/40 flex items-center justify-center text-sm text-muted-foreground">
+                  Nincs kép
+                </div>
+              )}
+
+              <div className="p-4 space-y-3">
+                {isEditing ? (
+                  <>
+                    <Input value={editName} onChange={(e) => setEditName(e.target.value)} placeholder="Név" className="bg-muted/50 border-border" />
+                    <Textarea value={editDesc} onChange={(e) => setEditDesc(e.target.value)} placeholder="Leírás" className="bg-muted/50 border-border" />
+                    <Input value={editPrice} onChange={(e) => setEditPrice(e.target.value)} placeholder="Ár (HUF)" type="number" className="bg-muted/50 border-border" />
+                    <Input value={editStripePriceId} onChange={(e) => setEditStripePriceId(e.target.value)} placeholder="Stripe Price ID" className="bg-muted/50 border-border" />
+                    <Input value={editNotionUrl} onChange={(e) => setEditNotionUrl(e.target.value)} placeholder="Notion URL" className="bg-muted/50 border-border" />
+                    <input type="file" accept="image/*" onChange={(e) => setEditFile(e.target.files?.[0] || null)} className="text-sm text-muted-foreground" />
+                    <label className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <input type="checkbox" checked={editIsActive} onChange={(e) => setEditIsActive(e.target.checked)} />
+                      Aktív (látható a frontenden)
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <Button size="sm" onClick={() => handleSaveEdit(item.id)} disabled={savingId === item.id} className="neon-button border-0">
+                        {savingId === item.id ? "Mentés..." : "Mentés"}
+                      </Button>
+                      <Button size="sm" variant="outline" onClick={handleCancelEdit}>Mégse</Button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div>
+                      <span className="text-sm font-medium text-foreground">{item.name}</span>
+                      <p className="text-xs text-muted-foreground mt-1">{item.price.toLocaleString("hu")} Ft</p>
+                      <p className="text-xs text-muted-foreground mt-0.5 truncate">Stripe: {item.stripe_price_id}</p>
+                      {!item.is_active && <span className="text-xs text-destructive font-semibold">Inaktív</span>}
+                    </div>
+                    <div className="flex items-center justify-end gap-2">
+                      <Button size="icon" variant="outline" onClick={() => handleStartEdit(item)} aria-label="Szerkesztés">
+                        <Pencil size={16} />
+                      </Button>
+                      <Button size="icon" variant="outline" onClick={() => handleDelete(item.id)} aria-label="Törlés">
+                        <Trash2 size={16} />
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -615,6 +918,7 @@ const PromptsPanel = () => {
 /* ── Content URLs Panel ── */
 const ContentPanel = () => {
   const [items, setItems] = useState<any[]>([]);
+  const [products, setProducts] = useState<any[]>([]);
   const [productId, setProductId] = useState("");
   const [notionUrl, setNotionUrl] = useState("");
   const [title, setTitle] = useState("");
@@ -625,7 +929,15 @@ const ContentPanel = () => {
     setItems(data || []);
   };
 
-  useEffect(() => { fetchItems(); }, []);
+  const fetchProducts = async () => {
+    const { data } = await supabase.from("products").select("id, name").order("sort_order");
+    setProducts(data || []);
+  };
+
+  useEffect(() => {
+    fetchItems();
+    fetchProducts();
+  }, []);
 
   const handleSave = async () => {
     if (!productId || !notionUrl || !title) return toast({ title: "Minden mező kötelező!", variant: "destructive" });
@@ -644,12 +956,6 @@ const ContentPanel = () => {
     toast({ title: "Törölve!" });
   };
 
-  const productOptions = [
-    { id: "prompt-pack", label: "100 AI Prompt Pack" },
-    { id: "suno-guide", label: "Suno AI Dalszövegírási Titkok" },
-    { id: "auto-guide", label: "AI Automatizációs Útmutató" },
-  ];
-
   return (
     <div className="space-y-6">
       <div className="hyper-glass rounded-xl p-6 space-y-4">
@@ -658,14 +964,14 @@ const ContentPanel = () => {
           value={productId}
           onChange={(e) => {
             setProductId(e.target.value);
-            const found = productOptions.find((p) => p.id === e.target.value);
-            if (found) setTitle(found.label);
+            const found = products.find((p) => p.id === e.target.value);
+            if (found) setTitle(found.name);
           }}
           className="w-full rounded-lg border border-border bg-muted/50 px-3 py-2 text-sm text-foreground"
         >
           <option value="">Válassz terméket...</option>
-          {productOptions.map((p) => (
-            <option key={p.id} value={p.id}>{p.label}</option>
+          {products.map((p) => (
+            <option key={p.id} value={p.id}>{p.name}</option>
           ))}
         </select>
         <Input placeholder="Notion embed URL" value={notionUrl} onChange={(e) => setNotionUrl(e.target.value)} className="bg-muted/50 border-border" />

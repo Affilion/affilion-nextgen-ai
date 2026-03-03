@@ -92,6 +92,48 @@ export type Database = {
         }
         Relationships: []
       }
+      products: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          name: string
+          notion_url: string | null
+          price: number
+          sort_order: number | null
+          stripe_price_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id: string
+          image_url?: string | null
+          is_active?: boolean | null
+          name: string
+          notion_url?: string | null
+          price: number
+          sort_order?: number | null
+          stripe_price_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          name?: string
+          notion_url?: string | null
+          price?: number
+          sort_order?: number | null
+          stripe_price_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string

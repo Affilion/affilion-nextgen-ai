@@ -7,21 +7,6 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const PRODUCTS: Record<string, { price_id: string; name: string }> = {
-  "prompt-pack": {
-    price_id: "price_1T6Cy7HpS2EmCo1uaELBhhXK",
-    name: "100 AI Prompt Pack",
-  },
-  "suno-guide": {
-    price_id: "price_1T6CySHpS2EmCo1uSYIjqUWV",
-    name: "Suno AI Dalszövegírási Titkok",
-  },
-  "auto-guide": {
-    price_id: "price_1T6CzZHpS2EmCo1uTsUcthA2",
-    name: "AI Automatizációs Útmutató",
-  },
-};
-
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -32,6 +17,12 @@ serve(async (req) => {
     Deno.env.get("SUPABASE_ANON_KEY") ?? ""
   );
 
+  // Service role client for reading products (bypasses RLS for admin-only fields)
+  const supabaseAdmin = createClient(
+    Deno.env.get("SUPABASE_URL") ?? "",
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+  );
+
   try {
     const authHeader = req.headers.get("Authorization")!;
     const token = authHeader.replace("Bearer ", "");
@@ -40,8 +31,16 @@ serve(async (req) => {
     if (!user?.email) throw new Error("Nem vagy bejelentkezve.");
 
     const { productId } = await req.json();
-    const product = PRODUCTS[productId];
-    if (!product) throw new Error("Érvénytelen termék.");
+
+    // Fetch product from database dynamically
+    const { data: product, error: productError } = await supabaseAdmin
+      .from("products")
+      .select("id, name, stripe_price_id, is_active")
+      .eq("id", productId)
+      .single();
+
+    if (productError || !product) throw new Error("Érvénytelen termék.");
+    if (!product.is_active) throw new Error("Ez a termék jelenleg nem elérhető.");
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
       apiVersion: "2025-08-27.basil",
@@ -49,9 +48,10 @@ serve(async (req) => {
 
     const session = await stripe.checkout.sessions.create({
       customer_email: user.email,
-      line_items: [{ price: product.price_id, quantity: 1 }],
+      line_items: [{ price: product.stripe_price_id, quantity: 1 }],
       mode: "payment",
       automatic_tax: { enabled: false },
+      billing_address_collection: "required",
       metadata: {
         user_id: user.id,
         product_id: productId,
