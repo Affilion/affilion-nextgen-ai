@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="border-t border-glass-border/20 py-8 px-4 text-center">
       <div className="flex items-center justify-center gap-2 mb-2">
-        <img src={defaultLogo} alt="Affilion AI" className="h-6 w-6 rounded-full object-cover" />
+        <img src={defaultLogo} alt="Affilion AI" className="h-6 w-6 object-cover" style={{ clipPath: "circle(50%)" }} />
         <span className="glow-text font-semibold text-sm">Affilion AI</span>
       </div>
       <p className="text-xs text-muted-foreground">
