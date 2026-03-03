@@ -5,13 +5,13 @@ import { useAdmin } from "@/hooks/useAdmin";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import { ArrowLeft, Users, Image, Video, FileText, Link, Trash2, Plus, Save, Pencil } from "lucide-react";
+import { ArrowLeft, Users, Image, Video, FileText, Link, Trash2, Plus, Save, Pencil, Mail, Download } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { optimizeImageForUpload } from "@/lib/imageOptimization";
 
-type Tab = "users" | "portfolio" | "experiments" | "prompts" | "content";
+type Tab = "users" | "portfolio" | "experiments" | "prompts" | "content" | "waitlist";
 type UploadFolder = "portfolio" | "prompts";
 
 const uploadCmsImage = async (file: File, folder: UploadFolder) => {
@@ -66,6 +66,7 @@ const Admin = () => {
     { id: "experiments", label: "AI Kísérletek", icon: <Video size={16} /> },
     { id: "prompts", label: "Prompt Labor", icon: <FileText size={16} /> },
     { id: "content", label: "Tartalom URL-ek", icon: <Link size={16} /> },
+    { id: "waitlist", label: "Várólista", icon: <Mail size={16} /> },
   ];
 
   return (
@@ -103,6 +104,7 @@ const Admin = () => {
             {activeTab === "experiments" && <ExperimentsPanel />}
             {activeTab === "prompts" && <PromptsPanel />}
             {activeTab === "content" && <ContentPanel />}
+            {activeTab === "waitlist" && <WaitlistPanel />}
           </motion.div>
         </div>
       </div>
@@ -680,6 +682,85 @@ const ContentPanel = () => {
             <button onClick={() => handleDelete(item.id)} className="text-destructive hover:text-destructive/80"><Trash2 size={16} /></button>
           </div>
         ))}
+      </div>
+    </div>
+  );
+};
+
+/* ── Waitlist Panel ── */
+const WaitlistPanel = () => {
+  const [subscribers, setSubscribers] = useState<{ id: string; email: string; created_at: string }[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchSubscribers = async () => {
+    const { data } = await supabase
+      .from("waitlist_subscribers")
+      .select("id, email, created_at")
+      .order("created_at", { ascending: false });
+    setSubscribers((data || []) as { id: string; email: string; created_at: string }[]);
+    setLoading(false);
+  };
+
+  useEffect(() => { fetchSubscribers(); }, []);
+
+  const handleExportCsv = () => {
+    if (subscribers.length === 0) return;
+    const header = "Email,Feliratkozás dátuma";
+    const rows = subscribers.map((s) => `${s.email},${new Date(s.created_at).toLocaleString("hu")}`);
+    const csv = [header, ...rows].join("\n");
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `varolista_${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleDelete = async (id: string) => {
+    await supabase.from("waitlist_subscribers").delete().eq("id", id);
+    await fetchSubscribers();
+    toast({ title: "Törölve!" });
+  };
+
+  if (loading) return <div className="text-muted-foreground">Betöltés...</div>;
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h3 className="font-bold text-foreground">Várólista ({subscribers.length} feliratkozó)</h3>
+        <Button onClick={handleExportCsv} disabled={subscribers.length === 0} className="neon-button border-0 flex items-center gap-2">
+          <Download size={16} /> Exportálás CSV-be
+        </Button>
+      </div>
+
+      <div className="hyper-glass rounded-xl overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border text-left text-muted-foreground">
+                <th className="p-4">Email</th>
+                <th className="p-4">Feliratkozás</th>
+                <th className="p-4 w-16"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {subscribers.length === 0 ? (
+                <tr><td colSpan={3} className="p-8 text-center text-muted-foreground">Még nincs feliratkozó.</td></tr>
+              ) : (
+                subscribers.map((s) => (
+                  <tr key={s.id} className="border-b border-border/50 hover:bg-muted/20">
+                    <td className="p-4 text-foreground">{s.email}</td>
+                    <td className="p-4 text-muted-foreground">{new Date(s.created_at).toLocaleString("hu")}</td>
+                    <td className="p-4">
+                      <button onClick={() => handleDelete(s.id)} className="text-destructive hover:text-destructive/80"><Trash2 size={16} /></button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
