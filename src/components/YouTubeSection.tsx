@@ -25,7 +25,7 @@ const VideoCard = ({
       <div className="aspect-video w-full">
         <iframe
           className="h-full w-full rounded-xl"
-          src={`https://www.youtube.com/embed/${video.video_id}?autoplay=1`}
+          src={`https://www.youtube.com/embed/${video.video_id}?autoplay=1&rel=0&modestbranding=1`}
           title={video.title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
