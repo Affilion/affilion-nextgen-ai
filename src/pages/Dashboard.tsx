@@ -5,9 +5,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Lock, Unlock, ShoppingCart, X, BookOpen, Sparkles } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
-import productPrompts from "@/assets/product-prompts.png";
-import productSuno from "@/assets/product-suno.png";
-import productAuto from "@/assets/product-auto.png";
 
 interface ProductContent {
   product_id: string;
@@ -15,35 +12,20 @@ interface ProductContent {
   title: string;
 }
 
-const ALL_PRODUCTS = [
-  {
-    id: "prompt-pack",
-    title: "100 AI Prompt Pack",
-    description: "Azonnal használható promptok Midjourney-hez, ChatGPT-hez és DALL·E-hoz.",
-    price: "2 990 Ft",
-    image: productPrompts,
-  },
-  {
-    id: "suno-guide",
-    title: "Suno AI Dalszövegírási Titkok",
-    description: "Tanulj meg professzionális dalokat generálni mesterséges intelligenciával.",
-    price: "3 990 Ft",
-    image: productSuno,
-  },
-  {
-    id: "auto-guide",
-    title: "AI Automatizációs Útmutató",
-    description: "Automatizáld a munkafolyamataidat Make, Zapier és AI eszközökkel.",
-    price: "4 990 Ft",
-    image: productAuto,
-  },
-];
+interface Product {
+  id: string;
+  name: string;
+  description: string | null;
+  price: number;
+  image_url: string | null;
+}
 
 const Dashboard = () => {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [content, setContent] = useState<ProductContent[]>([]);
   const [purchasedIds, setPurchasedIds] = useState<Set<string>>(new Set());
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeContent, setActiveContent] = useState<ProductContent | null>(null);
   const [loadingBuyId, setLoadingBuyId] = useState<string | null>(null);
@@ -56,13 +38,15 @@ const Dashboard = () => {
     }
 
     const fetchData = async () => {
-      const [contentRes, purchaseRes] = await Promise.all([
+      const [contentRes, purchaseRes, productsRes] = await Promise.all([
         supabase.from("product_content").select("product_id, notion_url, title"),
         supabase.from("purchases").select("product_id").eq("user_id", user.id).eq("status", "completed"),
+        supabase.from("products").select("id, name, description, price, image_url").eq("is_active", true).order("sort_order"),
       ]);
 
       if (contentRes.data) setContent(contentRes.data);
       if (purchaseRes.data) setPurchasedIds(new Set(purchaseRes.data.map((p) => p.product_id)));
+      if (productsRes.data) setAllProducts(productsRes.data as Product[]);
       setLoading(false);
     };
 
@@ -96,11 +80,13 @@ const Dashboard = () => {
     );
   }
 
-  const purchasedProducts = ALL_PRODUCTS.filter((p) => purchasedIds.has(p.id));
-  const lockedProducts = ALL_PRODUCTS.filter((p) => !purchasedIds.has(p.id));
+  const purchasedProducts = allProducts.filter((p) => purchasedIds.has(p.id));
+  const lockedProducts = allProducts.filter((p) => !purchasedIds.has(p.id));
 
   const getContentForProduct = (productId: string) =>
     content.find((c) => c.product_id === productId);
+
+  const formatPrice = (price: number) => price.toLocaleString("hu") + " Ft";
 
   return (
     <div className="min-h-screen bg-background">
@@ -163,11 +149,17 @@ const Dashboard = () => {
                     >
                       <div className="hyper-glass rounded-xl overflow-hidden transition-all duration-300 hover:border-primary/30 hover:shadow-[0_0_30px_hsl(var(--primary)/0.15)]">
                         <div className="relative aspect-[16/10] overflow-hidden">
-                          <img
-                            src={product.image}
-                            alt={product.title}
-                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          />
+                          {product.image_url ? (
+                            <img
+                              src={product.image_url}
+                              alt={product.name}
+                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                          ) : (
+                            <div className="h-full w-full bg-muted/30 flex items-center justify-center text-muted-foreground text-sm">
+                              {product.name}
+                            </div>
+                          )}
                           <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
                           <div className="absolute bottom-3 left-3 right-3">
                             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary/20 text-primary border border-primary/30 backdrop-blur-sm">
@@ -177,7 +169,7 @@ const Dashboard = () => {
                         </div>
                         <div className="p-5">
                           <h4 className="font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
-                            {product.title}
+                            {product.name}
                           </h4>
                           <p className="text-xs text-muted-foreground mb-3">{product.description}</p>
                           <div className="flex items-center gap-2 text-xs text-primary font-semibold">
@@ -215,11 +207,17 @@ const Dashboard = () => {
                   >
                     <div className="hyper-glass rounded-xl overflow-hidden opacity-70 hover:opacity-90 transition-all duration-300">
                       <div className="relative aspect-[16/10] overflow-hidden">
-                        <img
-                          src={product.image}
-                          alt={product.title}
-                          className="h-full w-full object-cover grayscale"
-                        />
+                        {product.image_url ? (
+                          <img
+                            src={product.image_url}
+                            alt={product.name}
+                            className="h-full w-full object-cover grayscale"
+                          />
+                        ) : (
+                          <div className="h-full w-full bg-muted/30 flex items-center justify-center text-muted-foreground text-sm grayscale">
+                            {product.name}
+                          </div>
+                        )}
                         <div className="absolute inset-0 bg-background/60 flex items-center justify-center">
                           <div className="w-14 h-14 rounded-full bg-muted/60 backdrop-blur-sm border border-border flex items-center justify-center">
                             <Lock size={22} className="text-muted-foreground" />
@@ -227,10 +225,10 @@ const Dashboard = () => {
                         </div>
                       </div>
                       <div className="p-5">
-                        <h4 className="font-bold text-foreground mb-1">{product.title}</h4>
+                        <h4 className="font-bold text-foreground mb-1">{product.name}</h4>
                         <p className="text-xs text-muted-foreground mb-4">{product.description}</p>
                         <div className="flex items-center justify-between">
-                          <span className="text-lg font-bold glow-text">{product.price}</span>
+                          <span className="text-lg font-bold glow-text">{formatPrice(product.price)}</span>
                           <button
                             onClick={() => handleBuy(product.id)}
                             disabled={loadingBuyId === product.id}
@@ -268,7 +266,6 @@ const Dashboard = () => {
               className="w-full max-w-5xl h-[85vh] hyper-glass rounded-2xl overflow-hidden flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Modal header */}
               <div className="flex items-center justify-between px-5 py-3 border-b border-border/30">
                 <h3 className="font-bold text-foreground text-sm md:text-base truncate pr-4">
                   {activeContent.title}
@@ -280,7 +277,6 @@ const Dashboard = () => {
                   <X size={16} />
                 </button>
               </div>
-              {/* Notion iframe */}
               <div className="flex-1 overflow-hidden">
                 <iframe
                   src={activeContent.notion_url}

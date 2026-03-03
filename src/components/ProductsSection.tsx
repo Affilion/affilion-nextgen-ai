@@ -3,42 +3,36 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import productPrompts from "@/assets/product-prompts.png";
-import productSuno from "@/assets/product-suno.png";
-import productAuto from "@/assets/product-auto.png";
 import GlassCard from "./GlassCard";
 import { useState, useEffect } from "react";
 import { CheckCircle } from "lucide-react";
 
-const products = [
-  {
-    id: "prompt-pack",
-    title: "100 AI Prompt Pack",
-    description: "Azonnal használható promptok Midjourney-hez, ChatGPT-hez és DALL·E-hoz.",
-    price: "2 990 Ft",
-    image: productPrompts,
-  },
-  {
-    id: "suno-guide",
-    title: "Suno AI Dalszövegírási Titkok",
-    description: "Tanulj meg professzionális dalokat generálni mesterséges intelligenciával.",
-    price: "3 990 Ft",
-    image: productSuno,
-  },
-  {
-    id: "auto-guide",
-    title: "AI Automatizációs Útmutató",
-    description: "Automatizáld a munkafolyamataidat Make, Zapier és AI eszközökkel.",
-    price: "4 990 Ft",
-    image: productAuto,
-  },
-];
+interface Product {
+  id: string;
+  name: string;
+  description: string | null;
+  price: number;
+  image_url: string | null;
+}
 
 const ProductsSection = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [purchasedIds, setPurchasedIds] = useState<Set<string>>(new Set());
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const { data } = await supabase
+        .from("products")
+        .select("id, name, description, price, image_url")
+        .eq("is_active", true)
+        .order("sort_order", { ascending: true });
+      setProducts((data || []) as Product[]);
+    };
+    fetchProducts();
+  }, []);
 
   useEffect(() => {
     if (!user) {
@@ -94,6 +88,12 @@ const ProductsSection = () => {
     }
   };
 
+  const formatPrice = (price: number) => {
+    return price.toLocaleString("hu") + " Ft";
+  };
+
+  if (products.length === 0) return null;
+
   return (
     <section id="termekek" className="py-24 px-4" style={{ perspective: "1000px" }}>
       <div className="container mx-auto max-w-6xl">
@@ -119,11 +119,17 @@ const ProductsSection = () => {
               >
                 <GlassCard className="flex flex-col h-full" parallaxStrength={25}>
                   <div className="relative overflow-hidden aspect-square bg-muted/20">
-                    <img
-                      src={p.image}
-                      alt={p.title}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
+                    {p.image_url ? (
+                      <img
+                        src={p.image_url}
+                        alt={p.name}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="h-full w-full flex items-center justify-center text-muted-foreground text-sm">
+                        Nincs kép
+                      </div>
+                    )}
                     {purchased && (
                       <div className="absolute inset-0 bg-background/60 flex items-center justify-center">
                         <CheckCircle className="w-12 h-12 text-primary" />
@@ -131,10 +137,10 @@ const ProductsSection = () => {
                     )}
                   </div>
                   <div className="p-6 flex flex-col flex-1">
-                    <h3 className="text-lg font-bold text-foreground mb-2">{p.title}</h3>
+                    <h3 className="text-lg font-bold text-foreground mb-2">{p.name}</h3>
                     <p className="text-sm text-muted-foreground mb-4 flex-1">{p.description}</p>
                     <div className="flex items-center justify-between">
-                    <span className="text-xl font-bold glow-text">{p.price}</span>
+                      <span className="text-xl font-bold glow-text">{formatPrice(p.price)}</span>
                       {purchased ? (
                         <span className="text-sm font-semibold text-primary flex items-center gap-1">
                           <CheckCircle className="w-4 h-4" /> Megvásárolva
