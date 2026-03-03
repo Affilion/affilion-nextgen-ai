@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,16 @@ const Auth = () => {
   const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirectTo = searchParams.get("redirect");
+  const { user, loading: authLoading } = useAuth();
+
+  // If already logged in and there's a redirect param, go there
+  useEffect(() => {
+    if (!authLoading && user && redirectTo === "dashboard") {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [user, authLoading, redirectTo, navigate]);
 
   const handleGoogleLogin = async () => {
     setLoading(true);
@@ -42,7 +53,7 @@ const Auth = () => {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
         toast({ title: "Sikeres bejelentkezés!" });
-        navigate("/");
+        navigate(redirectTo === "dashboard" ? "/dashboard" : "/");
       } else {
         const { error } = await supabase.auth.signUp({
           email,
