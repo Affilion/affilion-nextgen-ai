@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import GlassCard from "./GlassCard";
-import { Play } from "lucide-react";
+import { Play, ExternalLink } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -109,6 +109,14 @@ const YouTubeSection = () => {
                 >
                   {first.title}
                 </h3>
+                <a
+                  href={`https://www.youtube.com/watch?v=${first.video_id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 mt-2 text-xs text-primary hover:text-primary/80 transition-colors font-medium"
+                >
+                  <ExternalLink size={13} /> Megnézem YouTube-on
+                </a>
               </div>
             </GlassCard>
           </motion.div>
@@ -138,6 +146,14 @@ const YouTubeSection = () => {
                   >
                     {v.title}
                   </h3>
+                  <a
+                    href={`https://www.youtube.com/watch?v=${v.video_id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 mt-1.5 text-[10px] md:text-xs text-primary hover:text-primary/80 transition-colors font-medium"
+                  >
+                    <ExternalLink size={11} /> YouTube
+                  </a>
                 </div>
               </GlassCard>
             </motion.div>
