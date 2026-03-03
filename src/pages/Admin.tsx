@@ -395,14 +395,22 @@ const PortfolioPanel = () => {
 
 /* ── Experiments Panel ── */
 const ExperimentsPanel = () => {
-  const [items, setItems] = useState<any[]>([]);
+  type ExperimentItem = { id: string; title: string; video_id: string; badge: string | null; sort_order: number | null };
+
+  const [items, setItems] = useState<ExperimentItem[]>([]);
   const [title, setTitle] = useState("");
   const [videoId, setVideoId] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editVideoId, setEditVideoId] = useState("");
+  const [editBadge, setEditBadge] = useState("");
+  const [savingId, setSavingId] = useState<string | null>(null);
+
   const fetchItems = async () => {
     const { data } = await supabase.from("experiments").select("*").order("sort_order");
-    setItems(data || []);
+    setItems((data || []) as ExperimentItem[]);
   };
 
   useEffect(() => { fetchItems(); }, []);
@@ -415,6 +423,45 @@ const ExperimentsPanel = () => {
     await fetchItems();
     setLoading(false);
     toast({ title: "Kísérlet hozzáadva!" });
+  };
+
+  const handleStartEdit = (item: ExperimentItem) => {
+    setEditingId(item.id);
+    setEditTitle(item.title);
+    setEditVideoId(item.video_id);
+    setEditBadge(item.badge || "");
+  };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setEditTitle("");
+    setEditVideoId("");
+    setEditBadge("");
+  };
+
+  const handleSaveEdit = async (itemId: string) => {
+    if (!editTitle.trim() || !editVideoId.trim()) {
+      return toast({ title: "Cím és videó ID kötelező!", variant: "destructive" });
+    }
+    setSavingId(itemId);
+    try {
+      const { error } = await supabase
+        .from("experiments")
+        .update({
+          title: editTitle.trim(),
+          video_id: editVideoId.trim(),
+          badge: editBadge.trim() || null,
+        })
+        .eq("id", itemId);
+      if (error) throw error;
+      await fetchItems();
+      handleCancelEdit();
+      toast({ title: "Kísérlet frissítve!" });
+    } catch (error) {
+      toast({ title: "Mentési hiba", description: error instanceof Error ? error.message : "Ismeretlen hiba.", variant: "destructive" });
+    } finally {
+      setSavingId(null);
+    }
   };
 
   const handleDelete = async (id: string) => {
@@ -433,15 +480,44 @@ const ExperimentsPanel = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {items.map((item) => (
-          <div key={item.id} className="hyper-glass rounded-xl overflow-hidden">
-            <img src={`https://img.youtube.com/vi/${item.video_id}/maxresdefault.jpg`} alt={item.title} className="w-full h-40 object-cover" />
-            <div className="p-4 flex items-center justify-between">
-              <span className="text-sm font-medium text-foreground">{item.title}</span>
-              <button onClick={() => handleDelete(item.id)} className="text-destructive hover:text-destructive/80"><Trash2 size={16} /></button>
+        {items.map((item) => {
+          const isEditing = editingId === item.id;
+          return (
+            <div key={item.id} className="hyper-glass rounded-xl overflow-hidden">
+              <img src={`https://img.youtube.com/vi/${item.video_id}/maxresdefault.jpg`} alt={item.title} className="w-full h-40 object-cover" />
+              <div className="p-4 space-y-3">
+                {isEditing ? (
+                  <>
+                    <Input value={editTitle} onChange={(e) => setEditTitle(e.target.value)} placeholder="Cím" className="bg-muted/50 border-border" />
+                    <Input value={editVideoId} onChange={(e) => setEditVideoId(e.target.value)} placeholder="YouTube Video ID" className="bg-muted/50 border-border" />
+                    <Input value={editBadge} onChange={(e) => setEditBadge(e.target.value)} placeholder="Badge (pl: AFFILION AI)" className="bg-muted/50 border-border" />
+                    <div className="flex items-center gap-2">
+                      <Button size="sm" onClick={() => handleSaveEdit(item.id)} disabled={savingId === item.id} className="neon-button border-0">
+                        {savingId === item.id ? "Mentés..." : "Mentés"}
+                      </Button>
+                      <Button size="sm" variant="outline" onClick={handleCancelEdit}>Mégse</Button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div>
+                      <span className="text-sm font-medium text-foreground">{item.title}</span>
+                      {item.badge && <p className="text-xs text-muted-foreground mt-1">{item.badge}</p>}
+                    </div>
+                    <div className="flex items-center justify-end gap-2">
+                      <Button size="icon" variant="outline" onClick={() => handleStartEdit(item)} aria-label="Szerkesztés">
+                        <Pencil size={16} />
+                      </Button>
+                      <Button size="icon" variant="outline" onClick={() => handleDelete(item.id)} aria-label="Törlés">
+                        <Trash2 size={16} />
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
