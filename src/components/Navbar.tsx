@@ -29,7 +29,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 glass-card border-0 border-b border-glass-border/20">
       <div className="container mx-auto flex items-center justify-between px-4 py-3">
         <a href="#" className="flex items-center gap-2">
-          <img src={defaultLogo} alt="Affilion AI" className="h-8 w-auto rounded-full" />
+          <img src={defaultLogo} alt="Affilion AI" className="h-8 w-8 rounded-full object-cover" />
           <span className="text-xl font-bold glow-text">Affilion AI</span>
         </a>
 
