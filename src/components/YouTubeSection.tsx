@@ -26,23 +26,13 @@ const VideoCard = ({
   return (
     <div className="relative aspect-video w-full overflow-hidden rounded-t-xl">
       {playing ? (
-        <>
-          <iframe
-            className="h-full w-full"
-            src={`https://www.youtube-nocookie.com/embed/${video.video_id}?autoplay=1&rel=0&modestbranding=1&playsinline=1${origin ? `&origin=${origin}` : ""}`}
-            title={video.title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          />
-          <a
-            href={watchUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute top-2 right-2 inline-flex items-center gap-1 rounded bg-background/80 px-2 py-1 text-[10px] md:text-xs font-semibold text-foreground backdrop-blur-sm border border-border hover:bg-background transition-colors"
-          >
-            <ExternalLink size={12} /> YouTube
-          </a>
-        </>
+        <iframe
+          className="h-full w-full"
+          src={`https://www.youtube-nocookie.com/embed/${video.video_id}?autoplay=1&rel=0&modestbranding=1&playsinline=1${origin ? `&origin=${origin}` : ""}`}
+          title={video.title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
       ) : (
         <div
           className="relative h-full w-full cursor-pointer group"
@@ -59,15 +49,6 @@ const VideoCard = ({
               <Play className="w-6 h-6 md:w-7 md:h-7 text-white/80 fill-white/80 ml-1" />
             </div>
           </div>
-          <a
-            href={watchUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="absolute top-2 right-2 inline-flex items-center gap-1 rounded bg-background/80 px-2 py-1 text-[10px] md:text-xs font-semibold text-foreground backdrop-blur-sm border border-border hover:bg-background transition-colors"
-          >
-            <ExternalLink size={12} /> YouTube
-          </a>
         </div>
       )}
     </div>
