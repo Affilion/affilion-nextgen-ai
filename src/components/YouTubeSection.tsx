@@ -20,36 +20,34 @@ const VideoCard = ({
 }) => {
   const [playing, setPlaying] = useState(false);
 
-  if (playing) {
-    return (
-      <div className="aspect-video w-full">
+  return (
+    <div className="relative aspect-video w-full overflow-hidden rounded-t-xl">
+      {playing ? (
         <iframe
-          className="h-full w-full rounded-xl"
-          src={`https://www.youtube.com/embed/${video.video_id}?autoplay=1&rel=0&modestbranding=1`}
+          className="h-full w-full"
+          src={`https://www.youtube.com/embed/${video.video_id}?autoplay=1&rel=0&modestbranding=1&disablekb=0`}
           title={video.title}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         />
-      </div>
-    );
-  }
-
-  return (
-    <div
-      className="relative aspect-video w-full cursor-pointer group overflow-hidden rounded-t-xl"
-      onClick={() => setPlaying(true)}
-    >
-      <img
-        src={`https://img.youtube.com/vi/${video.video_id}/maxresdefault.jpg`}
-        alt={video.title}
-        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-14 h-14 md:w-16 md:h-16 rounded-full backdrop-blur-md bg-white/10 border border-white/20 flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.1)] transition-all duration-300 group-hover:scale-110 group-hover:bg-white/20">
-          <Play className="w-6 h-6 md:w-7 md:h-7 text-white/80 fill-white/80 ml-1" />
+      ) : (
+        <div
+          className="relative h-full w-full cursor-pointer group"
+          onClick={() => setPlaying(true)}
+        >
+          <img
+            src={`https://img.youtube.com/vi/${video.video_id}/maxresdefault.jpg`}
+            alt={video.title}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-14 h-14 md:w-16 md:h-16 rounded-full backdrop-blur-md bg-white/10 border border-white/20 flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.1)] transition-all duration-300 group-hover:scale-110 group-hover:bg-white/20">
+              <Play className="w-6 h-6 md:w-7 md:h-7 text-white/80 fill-white/80 ml-1" />
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
