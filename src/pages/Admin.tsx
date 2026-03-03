@@ -1,16 +1,41 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdmin } from "@/hooks/useAdmin";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import { ArrowLeft, Users, Image, Video, FileText, Link, Trash2, Plus, Save } from "lucide-react";
+import { ArrowLeft, Users, Image, Video, FileText, Link, Trash2, Plus, Save, Pencil } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { optimizeImageForUpload } from "@/lib/imageOptimization";
 
 type Tab = "users" | "portfolio" | "experiments" | "prompts" | "content";
+type UploadFolder = "portfolio" | "prompts";
+
+const uploadCmsImage = async (file: File, folder: UploadFolder) => {
+  const optimizedFile = await optimizeImageForUpload(file, {
+    maxWidth: 1920,
+    maxHeight: 1920,
+    targetMaxSizeMB: 2,
+    outputType: "image/webp",
+  });
+
+  const path = `${folder}/${Date.now()}-${crypto.randomUUID()}.webp`;
+  const { error: uploadErr } = await supabase.storage.from("cms-assets").upload(path, optimizedFile, {
+    contentType: "image/webp",
+    upsert: false,
+  });
+
+  if (uploadErr) throw uploadErr;
+
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from("cms-assets").getPublicUrl(path);
+
+  return publicUrl;
+};
 
 const Admin = () => {
   const { user, loading: authLoading } = useAuth();
@@ -149,36 +174,141 @@ const UsersPanel = () => {
 
 /* ── Portfolio Panel ── */
 const PortfolioPanel = () => {
-  const [items, setItems] = useState<any[]>([]);
+  type PortfolioItem = {
+    id: string;
+    title: string;
+    prompt: string | null;
+    image_url: string;
+    sort_order: number | null;
+  };
+
+  const [items, setItems] = useState<PortfolioItem[]>([]);
   const [title, setTitle] = useState("");
   const [prompt, setPrompt] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editPrompt, setEditPrompt] = useState("");
+  const [editFile, setEditFile] = useState<File | null>(null);
+  const [savingId, setSavingId] = useState<string | null>(null);
+  const [brokenImages, setBrokenImages] = useState<Record<string, boolean>>({});
+
   const fetchItems = async () => {
-    const { data } = await supabase.from("portfolio_items").select("*").order("sort_order");
-    setItems(data || []);
+    const { data } = await supabase
+      .from("portfolio_items")
+      .select("id, title, prompt, image_url, sort_order")
+      .order("sort_order", { ascending: true });
+
+    setItems((data || []) as PortfolioItem[]);
   };
 
-  useEffect(() => { fetchItems(); }, []);
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
+  const handleFileSelect = (e: ChangeEvent<HTMLInputElement>) => {
+    setFile(e.target.files?.[0] || null);
+  };
+
+  const handleEditFileSelect = (e: ChangeEvent<HTMLInputElement>) => {
+    setEditFile(e.target.files?.[0] || null);
+  };
 
   const handleAdd = async () => {
-    if (!title || !file) return toast({ title: "Cím és kép kötelező!", variant: "destructive" });
+    if (!title.trim() || !file) {
+      return toast({ title: "Cím és kép kötelező!", variant: "destructive" });
+    }
+
     setLoading(true);
-    const ext = file.name.split(".").pop();
-    const path = `portfolio/${Date.now()}.${ext}`;
-    const { error: uploadErr } = await supabase.storage.from("cms-assets").upload(path, file);
-    if (uploadErr) { toast({ title: "Feltöltési hiba", description: uploadErr.message, variant: "destructive" }); setLoading(false); return; }
-    const { data: { publicUrl } } = supabase.storage.from("cms-assets").getPublicUrl(path);
-    await supabase.from("portfolio_items").insert({ title, image_url: publicUrl, prompt, sort_order: items.length });
-    setTitle(""); setPrompt(""); setFile(null);
-    await fetchItems();
-    setLoading(false);
-    toast({ title: "Portfólió elem hozzáadva!" });
+    try {
+      const publicUrl = await uploadCmsImage(file, "portfolio");
+
+      const { error } = await supabase.from("portfolio_items").insert({
+        title: title.trim(),
+        image_url: publicUrl,
+        prompt: prompt.trim() || null,
+        sort_order: items.length,
+      });
+
+      if (error) throw error;
+
+      setTitle("");
+      setPrompt("");
+      setFile(null);
+      await fetchItems();
+      toast({ title: "Portfólió elem hozzáadva!" });
+    } catch (error) {
+      toast({
+        title: "Feltöltési hiba",
+        description: error instanceof Error ? error.message : "Ismeretlen hiba történt.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleStartEdit = (item: PortfolioItem) => {
+    setEditingId(item.id);
+    setEditTitle(item.title);
+    setEditPrompt(item.prompt || "");
+    setEditFile(null);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setEditTitle("");
+    setEditPrompt("");
+    setEditFile(null);
+  };
+
+  const handleSaveEdit = async (itemId: string) => {
+    if (!editTitle.trim()) {
+      return toast({ title: "A cím nem lehet üres.", variant: "destructive" });
+    }
+
+    setSavingId(itemId);
+    try {
+      let nextImageUrl: string | undefined;
+
+      if (editFile) {
+        nextImageUrl = await uploadCmsImage(editFile, "portfolio");
+      }
+
+      const { error } = await supabase
+        .from("portfolio_items")
+        .update({
+          title: editTitle.trim(),
+          prompt: editPrompt.trim() || null,
+          ...(nextImageUrl ? { image_url: nextImageUrl } : {}),
+        })
+        .eq("id", itemId);
+
+      if (error) throw error;
+
+      await fetchItems();
+      handleCancelEdit();
+      toast({ title: "Portfólió elem frissítve!" });
+    } catch (error) {
+      toast({
+        title: "Mentési hiba",
+        description: error instanceof Error ? error.message : "Ismeretlen hiba történt.",
+        variant: "destructive",
+      });
+    } finally {
+      setSavingId(null);
+    }
   };
 
   const handleDelete = async (id: string) => {
-    await supabase.from("portfolio_items").delete().eq("id", id);
+    const { error } = await supabase.from("portfolio_items").delete().eq("id", id);
+    if (error) {
+      toast({ title: "Törlési hiba", description: error.message, variant: "destructive" });
+      return;
+    }
+
     await fetchItems();
     toast({ title: "Törölve!" });
   };
@@ -189,20 +319,75 @@ const PortfolioPanel = () => {
         <h3 className="font-bold text-foreground flex items-center gap-2"><Plus size={16} /> Új Portfólió Elem</h3>
         <Input placeholder="Cím" value={title} onChange={(e) => setTitle(e.target.value)} className="bg-muted/50 border-border" />
         <Textarea placeholder="Prompt (opcionális)" value={prompt} onChange={(e) => setPrompt(e.target.value)} className="bg-muted/50 border-border" />
-        <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0] || null)} className="text-sm text-muted-foreground" />
+        <input type="file" accept="image/*" onChange={handleFileSelect} className="text-sm text-muted-foreground" />
+        <p className="text-xs text-muted-foreground">A feltöltött képeket automatikusan optimalizáljuk (max 1920px, tömörítés) a gyors oldalbetöltéshez.</p>
         <Button onClick={handleAdd} disabled={loading} className="neon-button border-0">{loading ? "Feltöltés..." : "Hozzáadás"}</Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {items.map((item) => (
-          <div key={item.id} className="hyper-glass rounded-xl overflow-hidden">
-            <img src={item.image_url} alt={item.title} className="w-full h-48 object-cover" />
-            <div className="p-4 flex items-center justify-between">
-              <span className="text-sm font-medium text-foreground">{item.title}</span>
-              <button onClick={() => handleDelete(item.id)} className="text-destructive hover:text-destructive/80"><Trash2 size={16} /></button>
+        {items.map((item) => {
+          const isEditing = editingId === item.id;
+
+          return (
+            <div key={item.id} className="hyper-glass rounded-xl overflow-hidden">
+              {brokenImages[item.id] ? (
+                <div className="w-full h-48 bg-muted/40 flex items-center justify-center text-sm text-muted-foreground">
+                  Kép nem elérhető
+                </div>
+              ) : (
+                <img
+                  src={item.image_url}
+                  alt={item.title}
+                  className="w-full h-48 object-cover"
+                  onError={() => setBrokenImages((prev) => ({ ...prev, [item.id]: true }))}
+                />
+              )}
+
+              <div className="p-4 space-y-3">
+                {isEditing ? (
+                  <>
+                    <Input value={editTitle} onChange={(e) => setEditTitle(e.target.value)} className="bg-muted/50 border-border" />
+                    <Textarea
+                      value={editPrompt}
+                      onChange={(e) => setEditPrompt(e.target.value)}
+                      placeholder="Prompt (opcionális)"
+                      className="bg-muted/50 border-border min-h-[100px]"
+                    />
+                    <input type="file" accept="image/*" onChange={handleEditFileSelect} className="text-sm text-muted-foreground" />
+                    <div className="flex items-center gap-2">
+                      <Button
+                        size="sm"
+                        onClick={() => handleSaveEdit(item.id)}
+                        disabled={savingId === item.id}
+                        className="neon-button border-0"
+                      >
+                        {savingId === item.id ? "Mentés..." : "Mentés"}
+                      </Button>
+                      <Button size="sm" variant="outline" onClick={handleCancelEdit}>
+                        Mégse
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div>
+                      <span className="text-sm font-medium text-foreground">{item.title}</span>
+                      {item.prompt && <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{item.prompt}</p>}
+                    </div>
+                    <div className="flex items-center justify-end gap-2">
+                      <Button size="icon" variant="outline" onClick={() => handleStartEdit(item)} aria-label="Szerkesztés">
+                        <Pencil size={16} />
+                      </Button>
+                      <Button size="icon" variant="outline" onClick={() => handleDelete(item.id)} aria-label="Törlés">
+                        <Trash2 size={16} />
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
@@ -279,18 +464,39 @@ const PromptsPanel = () => {
   useEffect(() => { fetchItems(); }, []);
 
   const handleAdd = async () => {
-    if (!title || !promptText || !file) return toast({ title: "Cím, prompt és kép kötelező!", variant: "destructive" });
+    if (!title.trim() || !promptText.trim() || !file) {
+      return toast({ title: "Cím, prompt és kép kötelező!", variant: "destructive" });
+    }
+
     setLoading(true);
-    const ext = file.name.split(".").pop();
-    const path = `prompts/${Date.now()}.${ext}`;
-    const { error: uploadErr } = await supabase.storage.from("cms-assets").upload(path, file);
-    if (uploadErr) { toast({ title: "Feltöltési hiba", description: uploadErr.message, variant: "destructive" }); setLoading(false); return; }
-    const { data: { publicUrl } } = supabase.storage.from("cms-assets").getPublicUrl(path);
-    await supabase.from("prompt_lab_items").insert({ title, image_url: publicUrl, prompt_text: promptText, description, sort_order: items.length });
-    setTitle(""); setPromptText(""); setDescription(""); setFile(null);
-    await fetchItems();
-    setLoading(false);
-    toast({ title: "Prompt Labor elem hozzáadva!" });
+    try {
+      const publicUrl = await uploadCmsImage(file, "prompts");
+
+      const { error } = await supabase.from("prompt_lab_items").insert({
+        title: title.trim(),
+        image_url: publicUrl,
+        prompt_text: promptText.trim(),
+        description: description.trim() || null,
+        sort_order: items.length,
+      });
+
+      if (error) throw error;
+
+      setTitle("");
+      setPromptText("");
+      setDescription("");
+      setFile(null);
+      await fetchItems();
+      toast({ title: "Prompt Labor elem hozzáadva!" });
+    } catch (error) {
+      toast({
+        title: "Feltöltési hiba",
+        description: error instanceof Error ? error.message : "Ismeretlen hiba történt.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleDelete = async (id: string) => {
