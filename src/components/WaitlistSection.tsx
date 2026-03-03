@@ -2,17 +2,38 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Send } from "lucide-react";
 import GlassCard from "./GlassCard";
+import { supabase } from "@/integrations/supabase/client";
 
 const WaitlistSection = () => {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setSubmitted(true);
-      setEmail("");
+    if (!email.trim()) return;
+
+    setLoading(true);
+    setError("");
+
+    const { error: dbError } = await supabase
+      .from("waitlist_subscribers")
+      .insert({ email: email.trim().toLowerCase() });
+
+    if (dbError) {
+      if (dbError.code === "23505") {
+        setError("Ez az e-mail cím már feliratkozott!");
+      } else {
+        setError("Hiba történt, próbáld újra később.");
+      }
+      setLoading(false);
+      return;
     }
+
+    setSubmitted(true);
+    setEmail("");
+    setLoading(false);
   };
 
   return (
@@ -38,21 +59,24 @@ const WaitlistSection = () => {
                 animate={{ scale: 1, opacity: 1 }}
                 className="text-primary font-semibold text-lg"
               >
-                ✅ Sikeresen feliratkoztál! Hamarosan értesítünk.
+                Sikeres feliratkozás! 🎉 Hamarosan értesítünk.
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                <input
-                  type="email"
-                  required
-                  placeholder="pelda@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 rounded-lg border border-glass-border/40 bg-muted/30 px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                />
-                <button type="submit" className="neon-button flex items-center justify-center gap-2">
+                <div className="flex-1 space-y-1">
+                  <input
+                    type="email"
+                    required
+                    placeholder="pelda@email.com"
+                    value={email}
+                    onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                    className="w-full rounded-lg border border-glass-border/40 bg-muted/30 px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                  />
+                  {error && <p className="text-xs text-destructive text-left">{error}</p>}
+                </div>
+                <button type="submit" disabled={loading} className="neon-button flex items-center justify-center gap-2 disabled:opacity-50">
                   <Send size={16} />
-                  Feliratkozom
+                  {loading ? "Küldés..." : "Feliratkozom"}
                 </button>
               </form>
             )}
