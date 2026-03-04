@@ -86,7 +86,7 @@ const Admin = () => {
       <div className="pt-20 px-4 pb-8">
         <div className="container mx-auto max-w-6xl">
           {/* Tabs */}
-          <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
+          <div className="flex flex-wrap gap-2 mb-8">
             {tabs.map((t) => (
               <button
                 key={t.id}
