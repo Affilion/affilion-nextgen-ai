@@ -97,7 +97,7 @@ const PromptLabSection = () => {
                 )}
 
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <a href={DZINE_REFERRAL} target="_blank" rel="noopener noreferrer" className="neon-button text-center text-sm">
+                  <a href={DZINE_REFERRAL} target="_blank" rel="noopener noreferrer" className="neon-button text-center text-sm whitespace-nowrap">
                     Próbáld ki a Dzine-t!
                   </a>
                   <button
