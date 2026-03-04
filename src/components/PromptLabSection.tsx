@@ -3,6 +3,9 @@ import { motion } from "framer-motion";
 import { Copy, Check, ChevronDown, ChevronUp } from "lucide-react";
 import GlassCard from "./GlassCard";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
+
+const DZINE_REFERRAL = "https://www.dzine.ai/referrals/47NQZav2";
 
 interface PromptLabItem {
   id: string;
@@ -94,12 +97,15 @@ const PromptLabSection = () => {
                 )}
 
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <a href="#" className="neon-button text-center text-sm">
-                    Próbáld ki a Midjourney-t!
+                  <a href={DZINE_REFERRAL} target="_blank" rel="noopener noreferrer" className="neon-button text-center text-sm">
+                    Próbáld ki a Dzine-t!
                   </a>
-                  <a href="#" className="neon-button-outline text-center text-sm">
+                  <button
+                    onClick={() => toast({ title: "HAMAROSAN", description: "Ez a funkció hamarosan elérhető lesz!" })}
+                    className="neon-button-outline text-center text-sm"
+                  >
                     Vedd meg a Kezdő Prompt Csomagot!
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
