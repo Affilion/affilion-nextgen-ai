@@ -96,13 +96,13 @@ const PromptLabSection = () => {
                   </div>
                 )}
 
-                <div className="flex flex-col sm:flex-row gap-3">
+                <div className="flex flex-col gap-3 items-center">
                   <a href={DZINE_REFERRAL} target="_blank" rel="noopener noreferrer" className="neon-button text-center text-sm whitespace-nowrap">
                     Próbáld ki a Dzine-t!
                   </a>
                   <button
                     onClick={() => toast({ title: "HAMAROSAN", description: "Ez a funkció hamarosan elérhető lesz!" })}
-                    className="neon-button-outline text-center text-sm"
+                    className="neon-button-outline text-center text-sm whitespace-nowrap"
                   >
                     Vedd meg a Kezdő Prompt Csomagot!
                   </button>
