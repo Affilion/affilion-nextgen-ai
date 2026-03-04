@@ -39,6 +39,12 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
   const [selectedPrompt, setSelectedPrompt] = useState<PromptItem | null>(null);
   const [showTip, setShowTip] = useState(false);
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
   useEffect(() => {
     const fetch = async () => {
       const { data } = await supabase
@@ -69,7 +75,7 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-background/85 backdrop-blur-xl p-2 md:p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-background/85 backdrop-blur-xl p-2 md:p-4 overflow-hidden"
       onClick={onClose}
     >
       <motion.div
