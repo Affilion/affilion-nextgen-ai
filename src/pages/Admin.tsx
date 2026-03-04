@@ -1012,7 +1012,7 @@ const PromptManagerPanel = () => {
   const fetchProducts = async () => {
     const { data } = await supabase.from("products").select("id, name").order("sort_order");
     setProducts((data || []) as { id: string; name: string }[]);
-    if (data && data.length > 0 && !selectedProductId) setSelectedProductId(data[0].id);
+    // Don't auto-select — user must pick a product explicitly
   };
 
   const fetchItems = async () => {
@@ -1125,6 +1125,7 @@ const PromptManagerPanel = () => {
           onChange={(e) => setSelectedProductId(e.target.value)}
           className="w-full rounded-lg border border-border bg-muted/50 px-3 py-2 text-sm text-foreground"
         >
+          <option value="">-- Válassz terméket --</option>
           {products.map((p) => (
             <option key={p.id} value={p.id}>{p.name}</option>
           ))}
@@ -1171,6 +1172,12 @@ const PromptManagerPanel = () => {
       </div>
 
       {/* Existing prompts */}
+      {!selectedProductId ? (
+        <div className="hyper-glass rounded-xl p-8 text-center text-muted-foreground">
+          ⬆️ Válassz egy terméket a fenti listából a promptok megjelenítéséhez.
+        </div>
+      ) : (
+      <>
       <div className="flex items-center justify-between">
         <h3 className="font-bold text-foreground">Promptok ({items.length})</h3>
         {items.length > 0 && (
@@ -1197,6 +1204,8 @@ const PromptManagerPanel = () => {
           </div>
         ))}
       </div>
+      </>
+      )}
     </div>
   );
 };
