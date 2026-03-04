@@ -246,16 +246,16 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="flex items-center gap-2 text-xs text-primary font-semibold uppercase tracking-wider">
-                      <Tag size={12} /> Style Tags
+                   <div className="flex items-center gap-2 text-xs text-primary font-semibold uppercase tracking-wider">
+                      <Tag size={12} /> Stílus (Styles)
                     </div>
-                    <p className="text-[10px] text-muted-foreground mt-0.5">(Ezt másold a Suno 'Styles' mezőjébe)</p>
+                    <p className="text-[10px] text-muted-foreground mt-0.5">(Másold a Suno 'Styles' mezőjébe)</p>
                   </div>
                   <button
                     onClick={() => handleCopy(selectedPrompt.style_tags, selectedPrompt.id, "detail-style")}
                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 border border-primary/25 transition-colors"
                   >
-                    {copiedId === selectedPrompt.id + "detail-style" ? <><Check size={13} /> Másolva!</> : <><Copy size={13} /> Styles másolása</>}
+                    {copiedId === selectedPrompt.id + "detail-style" ? <><Check size={13} /> Másolva!</> : <><Copy size={13} /> Stílus másolása</>}
                   </button>
                 </div>
                 <div className="font-mono text-sm text-foreground bg-muted/40 rounded-xl px-4 py-3 border border-border/30 whitespace-pre-wrap">
@@ -268,16 +268,16 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="flex items-center gap-2 text-xs text-secondary font-semibold uppercase tracking-wider">
-                        <Layers size={12} /> Structure Tags
+                     <div className="flex items-center gap-2 text-xs text-secondary font-semibold uppercase tracking-wider">
+                        <Layers size={12} /> Szerkezet (Lyrics)
                       </div>
-                      <p className="text-[10px] text-muted-foreground mt-0.5">(Ezt másold a Suno 'Lyrics' mezőjébe)</p>
+                      <p className="text-[10px] text-muted-foreground mt-0.5">(Másold a Suno 'Lyrics' mezőjébe)</p>
                     </div>
                     <button
                       onClick={() => handleCopy(selectedPrompt.structure_tags, selectedPrompt.id, "detail-struct")}
                       className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-secondary/10 text-secondary hover:bg-secondary/20 border border-secondary/25 transition-colors"
                     >
-                      {copiedId === selectedPrompt.id + "detail-struct" ? <><Check size={13} /> Másolva!</> : <><Copy size={13} /> Struktúra másolása</>}
+                      {copiedId === selectedPrompt.id + "detail-struct" ? <><Check size={13} /> Másolva!</> : <><Copy size={13} /> Szerkezet másolása</>}
                     </button>
                   </div>
                   <div className="font-mono text-sm text-foreground bg-muted/40 rounded-xl px-4 py-3 border border-border/30 whitespace-pre-wrap">
@@ -295,6 +295,11 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
                   </p>
                 </div>
               )}
+
+              {/* Tip */}
+              <div className="text-[11px] text-muted-foreground bg-muted/20 rounded-lg px-3 py-2 border border-border/20">
+                💡 <strong>Tipp:</strong> Ha instrumentális dalt szeretnél, a Lyrics mezőt hagyd üresen, és csak a Szerkezet (Structure) tageket illeszd be!
+              </div>
             </motion.div>
           </motion.div>
         )}
