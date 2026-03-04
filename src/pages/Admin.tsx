@@ -119,22 +119,56 @@ const Admin = () => {
 /* ── Users Panel ── */
 const UsersPanel = () => {
   const [users, setUsers] = useState<any[]>([]);
+  const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [giftingUserId, setGiftingUserId] = useState<string | null>(null);
+  const [selectedProductId, setSelectedProductId] = useState("");
+  const [giftLoading, setGiftLoading] = useState(false);
 
-  useEffect(() => {
-    const fetch = async () => {
-      const { data: profiles } = await supabase.from("profiles").select("*");
-      const { data: purchases } = await supabase.from("purchases").select("*");
+  const fetchData = async () => {
+    const [{ data: profiles }, { data: purchases }, { data: prods }] = await Promise.all([
+      supabase.from("profiles").select("*"),
+      supabase.from("purchases").select("*"),
+      supabase.from("products").select("*").order("sort_order"),
+    ]);
 
-      const enriched = (profiles || []).map((p) => ({
-        ...p,
-        purchases: (purchases || []).filter((pu) => pu.user_id === p.user_id),
-      }));
-      setUsers(enriched);
-      setLoading(false);
-    };
-    fetch();
-  }, []);
+    const enriched = (profiles || []).map((p) => ({
+      ...p,
+      purchases: (purchases || []).filter((pu) => pu.user_id === p.user_id),
+    }));
+    setUsers(enriched);
+    setProducts(prods || []);
+    setLoading(false);
+  };
+
+  useEffect(() => { fetchData(); }, []);
+
+  const handleGift = async (userId: string) => {
+    if (!selectedProductId) return;
+    const product = products.find((p: any) => p.id === selectedProductId);
+    if (!product) return;
+
+    setGiftLoading(true);
+    try {
+      const { error } = await supabase.from("purchases").insert({
+        user_id: userId,
+        product_id: product.id,
+        amount: 0,
+        currency: "huf",
+        status: "completed",
+        customer_email: users.find((u) => u.user_id === userId)?.email || null,
+      });
+      if (error) throw error;
+      toast({ title: `${product.name} hozzáadva ajándékként!` });
+      setGiftingUserId(null);
+      setSelectedProductId("");
+      await fetchData();
+    } catch (err) {
+      toast({ title: "Hiba", description: err instanceof Error ? err.message : "Ismeretlen hiba", variant: "destructive" });
+    } finally {
+      setGiftLoading(false);
+    }
+  };
 
   if (loading) return <div className="text-muted-foreground">Betöltés...</div>;
 
@@ -148,6 +182,7 @@ const UsersPanel = () => {
               <th className="p-4">Email</th>
               <th className="p-4">Regisztráció</th>
               <th className="p-4">Vásárlások</th>
+              <th className="p-4">Művelet</th>
             </tr>
           </thead>
           <tbody>
@@ -167,6 +202,32 @@ const UsersPanel = () => {
                         </span>
                       ))}
                     </div>
+                  )}
+                </td>
+                <td className="p-4">
+                  {giftingUserId === u.user_id ? (
+                    <div className="flex items-center gap-2">
+                      <select
+                        value={selectedProductId}
+                        onChange={(e) => setSelectedProductId(e.target.value)}
+                        className="text-xs bg-muted/50 border border-border rounded px-2 py-1 text-foreground"
+                      >
+                        <option value="">Válassz terméket...</option>
+                        {products
+                          .filter((pr: any) => !u.purchases.some((pu: any) => pu.product_id === pr.id && pu.status === "completed"))
+                          .map((pr: any) => (
+                            <option key={pr.id} value={pr.id}>{pr.name}</option>
+                          ))}
+                      </select>
+                      <Button size="sm" onClick={() => handleGift(u.user_id)} disabled={!selectedProductId || giftLoading} className="neon-button border-0 text-xs h-7">
+                        {giftLoading ? "..." : "Add"}
+                      </Button>
+                      <Button size="sm" variant="ghost" onClick={() => { setGiftingUserId(null); setSelectedProductId(""); }} className="text-xs h-7">✕</Button>
+                    </div>
+                  ) : (
+                    <Button size="sm" variant="ghost" onClick={() => setGiftingUserId(u.user_id)} className="text-xs gap-1">
+                      <Plus size={14} /> Ajándék
+                    </Button>
                   )}
                 </td>
               </tr>
