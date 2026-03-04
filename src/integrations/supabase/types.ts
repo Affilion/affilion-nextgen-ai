@@ -92,6 +92,53 @@ export type Database = {
         }
         Relationships: []
       }
+      product_prompts: {
+        Row: {
+          analysis_text: string | null
+          category: string
+          cover_image: string | null
+          created_at: string
+          id: string
+          product_id: string
+          sort_order: number | null
+          structure_tags: string
+          style_tags: string
+          title: string
+        }
+        Insert: {
+          analysis_text?: string | null
+          category?: string
+          cover_image?: string | null
+          created_at?: string
+          id?: string
+          product_id: string
+          sort_order?: number | null
+          structure_tags?: string
+          style_tags?: string
+          title: string
+        }
+        Update: {
+          analysis_text?: string | null
+          category?: string
+          cover_image?: string | null
+          created_at?: string
+          id?: string
+          product_id?: string
+          sort_order?: number | null
+          structure_tags?: string
+          style_tags?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_prompts_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       products: {
         Row: {
           created_at: string
