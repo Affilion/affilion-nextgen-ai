@@ -1,7 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Copy, Check, X, Music, Tag, Layers, ChevronRight } from "lucide-react";
+import { Copy, Check, X, Music, Tag, Layers, ChevronRight, ExternalLink } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+
+const SUNO_REFERRAL = "https://suno.com/invite/@affilion";
+
+const linkifySuno = (text: string) => {
+  const parts = text.split(/(Suno)/gi);
+  return parts.map((part, i) =>
+    /^suno$/i.test(part) ? (
+      <a key={i} href={SUNO_REFERRAL} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-semibold">{part}</a>
+    ) : part
+  );
+};
 
 interface PromptItem {
   id: string;
@@ -79,12 +90,22 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
               <p className="text-[11px] text-muted-foreground">{prompts.length} prompt</p>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="w-8 h-8 rounded-lg bg-muted/50 hover:bg-muted flex items-center justify-center transition-colors"
-          >
-            <X size={16} />
-          </button>
+          <div className="flex items-center gap-3">
+            <a
+              href={SUNO_REFERRAL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="neon-button text-xs py-2 px-4 flex items-center gap-1.5 no-underline"
+            >
+              <ExternalLink size={13} /> Megnyitás a Suno AI-ban
+            </a>
+            <button
+              onClick={onClose}
+              className="w-8 h-8 rounded-lg bg-muted/50 hover:bg-muted flex items-center justify-center transition-colors"
+            >
+              <X size={16} />
+            </button>
+          </div>
         </div>
 
         {/* Category filter */}
@@ -272,7 +293,7 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
                 <div className="space-y-2">
                   <h4 className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">Elemzés</h4>
                   <p className="text-sm text-foreground/80 leading-relaxed whitespace-pre-wrap">
-                    {selectedPrompt.analysis_text}
+                    {linkifySuno(selectedPrompt.analysis_text)}
                   </p>
                 </div>
               )}
