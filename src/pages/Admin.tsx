@@ -5,13 +5,13 @@ import { useAdmin } from "@/hooks/useAdmin";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import { ArrowLeft, Users, Image, Video, FileText, Link, Trash2, Plus, Save, Pencil, Mail, Download, ShoppingBag } from "lucide-react";
+import { ArrowLeft, Users, Image, Video, FileText, Link, Trash2, Plus, Save, Pencil, Mail, Download, ShoppingBag, Upload, Music } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { optimizeImageForUpload } from "@/lib/imageOptimization";
 
-type Tab = "users" | "products" | "portfolio" | "experiments" | "prompts" | "content" | "waitlist";
+type Tab = "users" | "products" | "portfolio" | "experiments" | "prompts" | "content" | "waitlist" | "prompt-manager";
 type UploadFolder = "portfolio" | "prompts" | "products";
 
 const uploadCmsImage = async (file: File, folder: UploadFolder) => {
@@ -66,6 +66,7 @@ const Admin = () => {
     { id: "portfolio", label: "Portfólió", icon: <Image size={16} /> },
     { id: "experiments", label: "AI Kísérletek", icon: <Video size={16} /> },
     { id: "prompts", label: "Prompt Labor", icon: <FileText size={16} /> },
+    { id: "prompt-manager", label: "Prompt Player", icon: <Music size={16} /> },
     { id: "content", label: "Tartalom URL-ek", icon: <Link size={16} /> },
     { id: "waitlist", label: "Várólista", icon: <Mail size={16} /> },
   ];
@@ -105,6 +106,7 @@ const Admin = () => {
             {activeTab === "portfolio" && <PortfolioPanel />}
             {activeTab === "experiments" && <ExperimentsPanel />}
             {activeTab === "prompts" && <PromptsPanel />}
+            {activeTab === "prompt-manager" && <PromptManagerPanel />}
             {activeTab === "content" && <ContentPanel />}
             {activeTab === "waitlist" && <WaitlistPanel />}
           </motion.div>
@@ -908,6 +910,229 @@ const PromptsPanel = () => {
               </div>
               <button onClick={() => handleDelete(item.id)} className="self-end text-destructive hover:text-destructive/80"><Trash2 size={16} /></button>
             </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+/* ── Prompt Manager Panel ── */
+const PromptManagerPanel = () => {
+  type PromptItem = {
+    id: string;
+    product_id: string;
+    category: string;
+    title: string;
+    cover_image: string | null;
+    style_tags: string;
+    structure_tags: string;
+    analysis_text: string | null;
+    sort_order: number | null;
+  };
+
+  const [items, setItems] = useState<PromptItem[]>([]);
+  const [products, setProducts] = useState<{ id: string; name: string }[]>([]);
+  const [selectedProductId, setSelectedProductId] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // Single add form
+  const [newTitle, setNewTitle] = useState("");
+  const [newCategory, setNewCategory] = useState("");
+  const [newStyleTags, setNewStyleTags] = useState("");
+  const [newStructureTags, setNewStructureTags] = useState("");
+  const [newAnalysis, setNewAnalysis] = useState("");
+  const [newCoverFile, setNewCoverFile] = useState<File | null>(null);
+
+  // Bulk import
+  const [bulkFile, setBulkFile] = useState<File | null>(null);
+  const [bulkImporting, setBulkImporting] = useState(false);
+
+  const fetchProducts = async () => {
+    const { data } = await supabase.from("products").select("id, name").order("sort_order");
+    setProducts((data || []) as { id: string; name: string }[]);
+    if (data && data.length > 0 && !selectedProductId) setSelectedProductId(data[0].id);
+  };
+
+  const fetchItems = async () => {
+    if (!selectedProductId) return;
+    const { data } = await supabase
+      .from("product_prompts")
+      .select("*")
+      .eq("product_id", selectedProductId)
+      .order("sort_order");
+    setItems((data || []) as PromptItem[]);
+  };
+
+  useEffect(() => { fetchProducts(); }, []);
+  useEffect(() => { fetchItems(); }, [selectedProductId]);
+
+  const handleAdd = async () => {
+    if (!selectedProductId || !newTitle.trim() || !newStyleTags.trim()) {
+      return toast({ title: "Termék, cím és style tags kötelező!", variant: "destructive" });
+    }
+    setLoading(true);
+    try {
+      let coverUrl: string | null = null;
+      if (newCoverFile) coverUrl = await uploadCmsImage(newCoverFile, "prompts");
+
+      const { error } = await supabase.from("product_prompts").insert({
+        product_id: selectedProductId,
+        title: newTitle.trim(),
+        category: newCategory.trim() || "Általános",
+        style_tags: newStyleTags.trim(),
+        structure_tags: newStructureTags.trim(),
+        analysis_text: newAnalysis.trim() || null,
+        cover_image: coverUrl,
+        sort_order: items.length,
+      });
+      if (error) throw error;
+
+      setNewTitle(""); setNewCategory(""); setNewStyleTags(""); setNewStructureTags(""); setNewAnalysis(""); setNewCoverFile(null);
+      await fetchItems();
+      toast({ title: "Prompt hozzáadva!" });
+    } catch (err) {
+      toast({ title: "Hiba", description: err instanceof Error ? err.message : "Ismeretlen hiba.", variant: "destructive" });
+    } finally { setLoading(false); }
+  };
+
+  const handleBulkImport = async () => {
+    if (!bulkFile || !selectedProductId) return;
+    setBulkImporting(true);
+    try {
+      const text = await bulkFile.text();
+      let rows: any[] = [];
+
+      if (bulkFile.name.endsWith(".json")) {
+        rows = JSON.parse(text);
+      } else {
+        // CSV parse
+        const lines = text.split("\n").filter((l) => l.trim());
+        if (lines.length < 2) throw new Error("A CSV fájlnak fejlécet és legalább egy sort kell tartalmaznia.");
+        const headers = lines[0].split(",").map((h) => h.trim().toLowerCase());
+        for (let i = 1; i < lines.length; i++) {
+          const vals = lines[i].split(",").map((v) => v.trim());
+          const obj: any = {};
+          headers.forEach((h, idx) => { obj[h] = vals[idx] || ""; });
+          rows.push(obj);
+        }
+      }
+
+      const inserts = rows.map((r, i) => ({
+        product_id: selectedProductId,
+        title: r.title || `Prompt ${i + 1}`,
+        category: r.category || "Általános",
+        style_tags: r.style_tags || r.style || "",
+        structure_tags: r.structure_tags || r.structure || "",
+        analysis_text: r.analysis_text || r.analysis || null,
+        cover_image: r.cover_image || null,
+        sort_order: items.length + i,
+      }));
+
+      const { error } = await supabase.from("product_prompts").insert(inserts);
+      if (error) throw error;
+
+      setBulkFile(null);
+      await fetchItems();
+      toast({ title: `${inserts.length} prompt sikeresen importálva!` });
+    } catch (err) {
+      toast({ title: "Import hiba", description: err instanceof Error ? err.message : "Ismeretlen hiba.", variant: "destructive" });
+    } finally { setBulkImporting(false); }
+  };
+
+  const handleDelete = async (id: string) => {
+    await supabase.from("product_prompts").delete().eq("id", id);
+    await fetchItems();
+    toast({ title: "Prompt törölve!" });
+  };
+
+  const handleDeleteAll = async () => {
+    if (!selectedProductId) return;
+    if (!confirm("Biztosan törlöd az összes promptot ehhez a termékhez?")) return;
+    await supabase.from("product_prompts").delete().eq("product_id", selectedProductId);
+    await fetchItems();
+    toast({ title: "Összes prompt törölve!" });
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Product selector */}
+      <div className="hyper-glass rounded-xl p-4">
+        <label className="text-sm text-muted-foreground block mb-2">Termék kiválasztása</label>
+        <select
+          value={selectedProductId}
+          onChange={(e) => setSelectedProductId(e.target.value)}
+          className="w-full rounded-lg border border-border bg-muted/50 px-3 py-2 text-sm text-foreground"
+        >
+          {products.map((p) => (
+            <option key={p.id} value={p.id}>{p.name}</option>
+          ))}
+        </select>
+      </div>
+
+      {/* Bulk import */}
+      <div className="hyper-glass rounded-xl p-6 space-y-4">
+        <h3 className="font-bold text-foreground flex items-center gap-2">
+          <Upload size={16} /> Tömeges Importálás (CSV/JSON)
+        </h3>
+        <p className="text-xs text-muted-foreground">
+          CSV fejléc: <code className="text-primary">title,category,style_tags,structure_tags,analysis_text</code><br />
+          JSON: tömb objektumokkal, ugyanezekkel a mezőkkel.
+        </p>
+        <div className="flex items-center gap-3">
+          <input
+            type="file"
+            accept=".csv,.json"
+            onChange={(e) => setBulkFile(e.target.files?.[0] || null)}
+            className="text-sm text-muted-foreground"
+          />
+          <Button onClick={handleBulkImport} disabled={!bulkFile || bulkImporting} className="neon-button border-0">
+            {bulkImporting ? "Importálás..." : "Importálás"}
+          </Button>
+        </div>
+      </div>
+
+      {/* Single add */}
+      <div className="hyper-glass rounded-xl p-6 space-y-4">
+        <h3 className="font-bold text-foreground flex items-center gap-2"><Plus size={16} /> Új Prompt</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Input placeholder="Prompt címe" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} className="bg-muted/50 border-border" />
+          <Input placeholder="Kategória (pl: Pop, EDM)" value={newCategory} onChange={(e) => setNewCategory(e.target.value)} className="bg-muted/50 border-border" />
+        </div>
+        <Textarea placeholder="Style tags (a másolható stílus kód)" value={newStyleTags} onChange={(e) => setNewStyleTags(e.target.value)} className="bg-muted/50 border-border" />
+        <Textarea placeholder="Structure tags (a másolható struktúra kód)" value={newStructureTags} onChange={(e) => setNewStructureTags(e.target.value)} className="bg-muted/50 border-border" />
+        <Textarea placeholder="Elemzés / leírás (opcionális)" value={newAnalysis} onChange={(e) => setNewAnalysis(e.target.value)} className="bg-muted/50 border-border" />
+        <div>
+          <label className="text-sm text-muted-foreground block mb-1">Borítókép (opcionális)</label>
+          <input type="file" accept="image/*" onChange={(e) => setNewCoverFile(e.target.files?.[0] || null)} className="text-sm text-muted-foreground" />
+        </div>
+        <Button onClick={handleAdd} disabled={loading} className="neon-button border-0">{loading ? "Mentés..." : "Hozzáadás"}</Button>
+      </div>
+
+      {/* Existing prompts */}
+      <div className="flex items-center justify-between">
+        <h3 className="font-bold text-foreground">Promptok ({items.length})</h3>
+        {items.length > 0 && (
+          <Button variant="outline" size="sm" onClick={handleDeleteAll} className="text-destructive border-destructive/30">
+            <Trash2 size={14} className="mr-1" /> Összes törlése
+          </Button>
+        )}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {items.map((item) => (
+          <div key={item.id} className="hyper-glass rounded-xl p-4 space-y-2">
+            {item.cover_image && <img src={item.cover_image} alt={item.title} className="w-full h-32 object-cover rounded-lg" />}
+            <div className="flex items-start justify-between">
+              <div>
+                <span className="text-sm font-medium text-foreground">{item.title}</span>
+                <span className="ml-2 text-[10px] px-2 py-0.5 rounded-full bg-primary/20 text-primary">{item.category}</span>
+              </div>
+              <button onClick={() => handleDelete(item.id)} className="text-destructive hover:text-destructive/80 flex-shrink-0">
+                <Trash2 size={14} />
+              </button>
+            </div>
+            <p className="text-xs text-muted-foreground line-clamp-2 font-mono">{item.style_tags}</p>
           </div>
         ))}
       </div>
