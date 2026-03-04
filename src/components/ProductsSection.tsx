@@ -5,7 +5,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import GlassCard from "./GlassCard";
 import { useState, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
 import { CheckCircle } from "lucide-react";
+import PromptPlayer from "./PromptPlayer";
 
 interface Product {
   id: string;
@@ -21,6 +23,7 @@ const ProductsSection = () => {
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [purchasedIds, setPurchasedIds] = useState<Set<string>>(new Set());
   const [products, setProducts] = useState<Product[]>([]);
+  const [activePlayer, setActivePlayer] = useState<{ productId: string; productName: string } | null>(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -116,6 +119,8 @@ const ProductsSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15 }}
+                onClick={() => purchased && setActivePlayer({ productId: p.id, productName: p.name })}
+                className={purchased ? "cursor-pointer" : ""}
               >
                 <GlassCard className="flex flex-col h-full" parallaxStrength={25}>
                   <div className="relative overflow-hidden aspect-square bg-muted/20">
@@ -147,7 +152,7 @@ const ProductsSection = () => {
                         </span>
                       ) : (
                         <button
-                          onClick={() => handleBuy(p.id)}
+                          onClick={(e) => { e.stopPropagation(); handleBuy(p.id); }}
                           disabled={loadingId === p.id}
                           className="neon-button text-sm py-2 px-4 disabled:opacity-50"
                         >
@@ -162,6 +167,16 @@ const ProductsSection = () => {
           })}
         </div>
       </div>
+
+      <AnimatePresence>
+        {activePlayer && (
+          <PromptPlayer
+            productId={activePlayer.productId}
+            productName={activePlayer.productName}
+            onClose={() => setActivePlayer(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 };
