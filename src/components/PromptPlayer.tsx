@@ -1,6 +1,6 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Copy, Check, X, Music, Tag, Layers, ChevronRight, ExternalLink } from "lucide-react";
+import { Copy, Check, X, Music, Tag, Layers, ChevronRight, ExternalLink, Info } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 const SUNO_REFERRAL = "https://suno.com/invite/@affilion";
@@ -37,6 +37,7 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [selectedPrompt, setSelectedPrompt] = useState<PromptItem | null>(null);
+  const [showTip, setShowTip] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
@@ -108,8 +109,34 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
           </div>
         </div>
 
-        {/* Category filter */}
-        <div className="px-5 py-3 border-b border-border/20 overflow-x-auto flex gap-2">
+        {/* Tip bar */}
+        <div className="px-5 pt-3">
+          <button
+            onClick={() => setShowTip(!showTip)}
+            className="flex items-center gap-1.5 text-[11px] text-primary/70 hover:text-primary transition-colors"
+          >
+            <Info size={13} />
+            <span className="font-medium">Használati tipp</span>
+            <ChevronRight size={11} className={`transition-transform ${showTip ? "rotate-90" : ""}`} />
+          </button>
+          <AnimatePresence>
+            {showTip && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <p className="text-[11px] text-muted-foreground leading-relaxed mt-2 bg-muted/20 rounded-lg px-3 py-2 border border-border/20">
+                  💡 <strong>Tipp:</strong> Ha saját szöveget írsz, a Structure tageket a szöveg elé és közé illeszd be. Ha instrumentális dalt akarsz, hagyd a Lyrics mezőt üresen a tageken kívül!
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Category filter — flex-wrap grid */}
+        <div className="px-5 py-3 border-b border-border/20 flex flex-wrap gap-2">
           {categories.map((cat) => (
             <button
               key={cat}
@@ -125,8 +152,8 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
           ))}
         </div>
 
-        {/* Content */}
-        <div className="flex-1 overflow-y-auto p-4 md:p-5 custom-scrollbar">
+        {/* Content — premium scrollbar */}
+        <div className="flex-1 overflow-y-auto p-4 md:p-5 premium-scrollbar">
           {loading ? (
             <div className="flex items-center justify-center h-full">
               <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
@@ -154,7 +181,7 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
                     </div>
                   )}
 
-                  <div className="p-4 space-y-3">
+                  <div className="p-4 space-y-2">
                     {/* Title + category */}
                     <div className="flex items-start justify-between gap-2">
                       <h4 className="text-sm font-bold text-foreground group-hover:text-primary transition-colors leading-tight">
@@ -165,50 +192,15 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
                       </span>
                     </div>
 
-                    {/* Style tags */}
-                    <div className="space-y-1.5">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">
-                          <Tag size={10} /> Style
-                        </div>
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleCopy(prompt.style_tags, prompt.id, "style"); }}
-                          className="flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-medium bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 transition-colors"
-                        >
-                          {copiedId === prompt.id + "style" ? <><Check size={10} /> Másolva</> : <><Copy size={10} /> Másolás</>}
-                        </button>
-                      </div>
-                      <p className="text-xs text-muted-foreground font-mono bg-muted/30 rounded-md px-2.5 py-1.5 line-clamp-2 border border-border/30">
-                        {prompt.style_tags}
-                      </p>
+                    {/* Style preview — max 2 lines */}
+                    <p className="text-[11px] text-muted-foreground font-mono line-clamp-2 leading-relaxed">
+                      {prompt.style_tags}
+                    </p>
+
+                    {/* Open indicator */}
+                    <div className="flex items-center gap-1 text-[10px] text-primary/70 pt-1">
+                      <ChevronRight size={10} /> Részletek megtekintése
                     </div>
-
-                    {/* Structure tags */}
-                    {prompt.structure_tags && (
-                      <div className="space-y-1.5">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">
-                            <Layers size={10} /> Structure
-                          </div>
-                          <button
-                            onClick={(e) => { e.stopPropagation(); handleCopy(prompt.structure_tags, prompt.id, "struct"); }}
-                            className="flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-medium bg-secondary/10 text-secondary hover:bg-secondary/20 border border-secondary/20 transition-colors"
-                          >
-                            {copiedId === prompt.id + "struct" ? <><Check size={10} /> Másolva</> : <><Copy size={10} /> Másolás</>}
-                          </button>
-                        </div>
-                        <p className="text-xs text-muted-foreground font-mono bg-muted/30 rounded-md px-2.5 py-1.5 line-clamp-2 border border-border/30">
-                          {prompt.structure_tags}
-                        </p>
-                      </div>
-                    )}
-
-                    {/* Read more indicator */}
-                    {prompt.analysis_text && (
-                      <div className="flex items-center gap-1 text-[10px] text-primary/70 pt-1">
-                        <ChevronRight size={10} /> Elemzés megtekintése
-                      </div>
-                    )}
                   </div>
                 </motion.div>
               ))}
@@ -231,7 +223,7 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="w-full max-w-2xl max-h-[80vh] hyper-glass rounded-2xl overflow-y-auto p-6 space-y-5 custom-scrollbar"
+              className="w-full max-w-2xl max-h-[80vh] hyper-glass rounded-2xl overflow-y-auto p-6 space-y-5 premium-scrollbar"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-start justify-between">
@@ -253,14 +245,17 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
               {/* Style tags full */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-xs text-primary font-semibold uppercase tracking-wider">
-                    <Tag size={12} /> Style Tags
+                  <div>
+                    <div className="flex items-center gap-2 text-xs text-primary font-semibold uppercase tracking-wider">
+                      <Tag size={12} /> Style Tags
+                    </div>
+                    <p className="text-[10px] text-muted-foreground mt-0.5">(Ezt másold a Suno 'Styles' mezőjébe)</p>
                   </div>
                   <button
                     onClick={() => handleCopy(selectedPrompt.style_tags, selectedPrompt.id, "detail-style")}
-                    className="flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 border border-primary/25 transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 border border-primary/25 transition-colors"
                   >
-                    {copiedId === selectedPrompt.id + "detail-style" ? <><Check size={12} /> Másolva!</> : <><Copy size={12} /> Másolás</>}
+                    {copiedId === selectedPrompt.id + "detail-style" ? <><Check size={13} /> Másolva!</> : <><Copy size={13} /> Styles másolása</>}
                   </button>
                 </div>
                 <div className="font-mono text-sm text-foreground bg-muted/40 rounded-xl px-4 py-3 border border-border/30 whitespace-pre-wrap">
@@ -272,14 +267,17 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
               {selectedPrompt.structure_tags && (
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-xs text-secondary font-semibold uppercase tracking-wider">
-                      <Layers size={12} /> Structure Tags
+                    <div>
+                      <div className="flex items-center gap-2 text-xs text-secondary font-semibold uppercase tracking-wider">
+                        <Layers size={12} /> Structure Tags
+                      </div>
+                      <p className="text-[10px] text-muted-foreground mt-0.5">(Ezt másold a Suno 'Lyrics' mezőjébe)</p>
                     </div>
                     <button
                       onClick={() => handleCopy(selectedPrompt.structure_tags, selectedPrompt.id, "detail-struct")}
-                      className="flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-medium bg-secondary/10 text-secondary hover:bg-secondary/20 border border-secondary/25 transition-colors"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-secondary/10 text-secondary hover:bg-secondary/20 border border-secondary/25 transition-colors"
                     >
-                      {copiedId === selectedPrompt.id + "detail-struct" ? <><Check size={12} /> Másolva!</> : <><Copy size={12} /> Másolás</>}
+                      {copiedId === selectedPrompt.id + "detail-struct" ? <><Check size={13} /> Másolva!</> : <><Copy size={13} /> Struktúra másolása</>}
                     </button>
                   </div>
                   <div className="font-mono text-sm text-foreground bg-muted/40 rounded-xl px-4 py-3 border border-border/30 whitespace-pre-wrap">
