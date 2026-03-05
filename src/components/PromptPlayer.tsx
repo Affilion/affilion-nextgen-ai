@@ -39,14 +39,22 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
   const [selectedPrompt, setSelectedPrompt] = useState<PromptItem | null>(null);
   const [showTip, setShowTip] = useState(false);
 
-  // Lock body scroll when modal is open
+  // Lock body scroll when modal is open & reset inner scroll
   useEffect(() => {
+    const scrollY = window.scrollY;
     const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
     document.body.style.overflow = "hidden";
     document.body.style.paddingRight = `${scrollbarWidth}px`;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
     return () => {
       document.body.style.overflow = "";
       document.body.style.paddingRight = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      window.scrollTo(0, scrollY);
     };
   }, []);
 
