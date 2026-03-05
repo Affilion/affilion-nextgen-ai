@@ -66,7 +66,7 @@ const Admin = () => {
     { id: "products", label: "Termékek", icon: <ShoppingBag size={16} /> },
     { id: "portfolio", label: "Portfólió", icon: <Image size={16} /> },
     { id: "experiments", label: "AI Kísérletek", icon: <Video size={16} /> },
-    { id: "prompts", label: "Prompt Labor", icon: <FileText size={16} /> },
+    { id: "prompts", label: "Kreatív Stúdió", icon: <FileText size={16} /> },
     { id: "prompt-manager", label: "Prompt Player", icon: <Music size={16} /> },
     { id: "content", label: "Tartalom URL-ek", icon: <Link size={16} /> },
     { id: "waitlist", label: "Várólista", icon: <Mail size={16} /> },
@@ -963,7 +963,7 @@ const PromptsPanel = () => {
       setDescription("");
       setFile(null);
       await fetchItems();
-      toast({ title: "Prompt Labor elem hozzáadva!" });
+      toast({ title: "Kreatív Stúdió elem hozzáadva!" });
     } catch (error) {
       toast({
         title: "Feltöltési hiba",
@@ -984,7 +984,7 @@ const PromptsPanel = () => {
   return (
     <div className="space-y-6">
       <div className="hyper-glass rounded-xl p-6 space-y-4">
-        <h3 className="font-bold text-foreground flex items-center gap-2"><Plus size={16} /> Új Prompt Labor Elem</h3>
+        <h3 className="font-bold text-foreground flex items-center gap-2"><Plus size={16} /> Új Kreatív Stúdió Elem</h3>
         <Input placeholder="Cím" value={title} onChange={(e) => setTitle(e.target.value)} className="bg-muted/50 border-border" />
         <Input placeholder="Leírás (opcionális)" value={description} onChange={(e) => setDescription(e.target.value)} className="bg-muted/50 border-border" />
         <Textarea placeholder="Prompt szöveg" value={promptText} onChange={(e) => setPromptText(e.target.value)} className="bg-muted/50 border-border min-h-[120px]" />
