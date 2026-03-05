@@ -141,6 +141,7 @@ export type Database = {
       }
       products: {
         Row: {
+          coming_soon: boolean
           created_at: string
           description: string | null
           id: string
@@ -154,6 +155,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          coming_soon?: boolean
           created_at?: string
           description?: string | null
           id: string
@@ -167,6 +169,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          coming_soon?: boolean
           created_at?: string
           description?: string | null
           id?: string

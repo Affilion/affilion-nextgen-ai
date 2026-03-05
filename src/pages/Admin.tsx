@@ -252,6 +252,7 @@ const ProductsPanel = () => {
     notion_url: string | null;
     sort_order: number | null;
     is_active: boolean | null;
+    coming_soon: boolean;
   };
 
   const [items, setItems] = useState<Product[]>([]);
@@ -275,6 +276,7 @@ const ProductsPanel = () => {
   const [editNotionUrl, setEditNotionUrl] = useState("");
   const [editFile, setEditFile] = useState<File | null>(null);
   const [editIsActive, setEditIsActive] = useState(true);
+  const [editComingSoon, setEditComingSoon] = useState(false);
   const [savingId, setSavingId] = useState<string | null>(null);
 
   const fetchItems = async () => {
@@ -353,6 +355,7 @@ const ProductsPanel = () => {
     setEditNotionUrl(item.notion_url || "");
     setEditFile(null);
     setEditIsActive(item.is_active ?? true);
+    setEditComingSoon(item.coming_soon ?? false);
   };
 
   const handleCancelEdit = () => {
@@ -380,6 +383,7 @@ const ProductsPanel = () => {
           stripe_price_id: editStripePriceId.trim(),
           notion_url: editNotionUrl.trim() || null,
           is_active: editIsActive,
+          coming_soon: editComingSoon,
           ...(nextImageUrl ? { image_url: nextImageUrl } : {}),
         })
         .eq("id", itemId);
@@ -522,17 +526,32 @@ const ProductsPanel = () => {
                       <p className="text-xs text-muted-foreground mt-0.5 truncate">Stripe: {item.stripe_price_id}</p>
                     </div>
                     <div className="flex items-center justify-between">
-                      <label className="flex items-center gap-2 text-xs text-muted-foreground cursor-pointer">
-                        <Switch
-                          checked={item.is_active ?? true}
-                          onCheckedChange={async (checked) => {
-                            await supabase.from("products").update({ is_active: checked }).eq("id", item.id);
-                            await fetchItems();
-                            toast({ title: checked ? "Termék aktiválva!" : "Termék elrejtve!" });
-                          }}
-                        />
-                        {item.is_active ? "Aktív" : "Rejtett"}
-                      </label>
+                      <div className="flex flex-col gap-2">
+                        <label className="flex items-center gap-2 text-xs text-muted-foreground cursor-pointer">
+                          <Switch
+                            checked={item.is_active ?? true}
+                            onCheckedChange={async (checked) => {
+                              await supabase.from("products").update({ is_active: checked }).eq("id", item.id);
+                              await fetchItems();
+                              toast({ title: checked ? "Termék aktiválva!" : "Termék elrejtve!" });
+                            }}
+                          />
+                          {item.is_active ? "Aktív" : "Rejtett"}
+                        </label>
+                        {(item.is_active ?? true) && (
+                          <label className="flex items-center gap-2 text-xs text-muted-foreground cursor-pointer">
+                            <Switch
+                              checked={item.coming_soon}
+                              onCheckedChange={async (checked) => {
+                                await supabase.from("products").update({ coming_soon: checked }).eq("id", item.id);
+                                await fetchItems();
+                                toast({ title: checked ? "Hamarosan mód bekapcsolva!" : "Hamarosan mód kikapcsolva!" });
+                              }}
+                            />
+                            Hamarosan
+                          </label>
+                        )}
+                      </div>
                       <div className="flex items-center gap-2">
                         <Button size="icon" variant="outline" onClick={() => handleStartEdit(item)} aria-label="Szerkesztés">
                           <Pencil size={16} />

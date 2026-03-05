@@ -13,6 +13,7 @@ interface Product {
   description: string | null;
   price: number;
   image_url: string | null;
+  coming_soon: boolean;
 }
 
 const Dashboard = () => {
@@ -39,7 +40,7 @@ const Dashboard = () => {
     const fetchData = async () => {
       const [purchaseRes, productsRes] = await Promise.all([
         supabase.from("purchases").select("product_id").eq("user_id", user.id).eq("status", "completed"),
-        supabase.from("products").select("id, name, description, price, image_url").eq("is_active", true).order("sort_order"),
+        supabase.from("products").select("id, name, description, price, image_url, coming_soon").eq("is_active", true).order("sort_order"),
       ]);
 
       const pIds = new Set((purchaseRes.data || []).map((p) => p.product_id));
@@ -215,14 +216,23 @@ const Dashboard = () => {
                         <p className="text-xs text-muted-foreground mb-4">{product.description}</p>
                         <div className="flex items-center justify-between">
                           <span className="text-lg font-bold glow-text">{formatPrice(product.price)}</span>
-                          <button
-                            onClick={() => handleBuy(product.id)}
-                            disabled={loadingBuyId === product.id}
-                            className="neon-button text-xs py-2 px-4 flex items-center gap-1.5 disabled:opacity-50"
-                          >
-                            <ShoppingCart size={13} />
-                            {loadingBuyId === product.id ? "Feldolgozás..." : "Feloldás"}
-                          </button>
+                          {product.coming_soon ? (
+                            <button
+                              onClick={() => toast({ title: "Hamarosan!", description: "Ez a termék hamarosan elérhető lesz!" })}
+                              className="neon-button-outline text-xs py-2 px-4"
+                            >
+                              Hamarosan
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleBuy(product.id)}
+                              disabled={loadingBuyId === product.id}
+                              className="neon-button text-xs py-2 px-4 flex items-center gap-1.5 disabled:opacity-50"
+                            >
+                              <ShoppingCart size={13} />
+                              {loadingBuyId === product.id ? "Feldolgozás..." : "Feloldás"}
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
