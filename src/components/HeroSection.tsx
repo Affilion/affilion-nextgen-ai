@@ -173,8 +173,8 @@ const HeroSection = () => {
           <a href="#youtube" className="hero-glass-button text-center">
             Nézd a videókat
           </a>
-          <a href="#" className="hero-glass-button-outline text-center">
-            AI Eszköztár letöltése
+          <a href="#termekek" className="hero-glass-button-outline text-center">
+            Gyorsítsd fel a munkád!
           </a>
         </motion.div>
       </div>
