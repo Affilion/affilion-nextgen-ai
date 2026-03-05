@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Lock, Unlock, ShoppingCart, X, BookOpen, Sparkles, Music } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import PromptPlayer from "@/components/PromptPlayer";
+import Footer from "@/components/Footer";
 
 interface Product {
   id: string;
@@ -99,7 +100,7 @@ const Dashboard = () => {
   const formatPrice = (price: number) => price.toLocaleString("hu") + " Ft";
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 hyper-glass border-0 border-b border-border/20">
         <div className="container mx-auto flex items-center justify-between px-4 py-3">
@@ -111,7 +112,7 @@ const Dashboard = () => {
         </div>
       </header>
 
-      <div className="pt-20 px-4 pb-12">
+      <div className="flex-1 pt-20 px-4 pb-12">
         <div className="container mx-auto max-w-6xl">
           {/* Welcome */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
@@ -243,6 +244,8 @@ const Dashboard = () => {
           )}
         </div>
       </div>
+
+      <Footer />
 
       {/* Prompt Player Modal */}
       <AnimatePresence>
