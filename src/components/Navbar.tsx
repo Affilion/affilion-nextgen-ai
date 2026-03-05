@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, LogIn, LogOut, User, BookOpen, Shield } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdmin } from "@/hooks/useAdmin";
@@ -7,54 +7,96 @@ import { supabase } from "@/integrations/supabase/client";
 import defaultLogo from "@/assets/logo.jpg";
 
 const links = [
-  { label: "Munkáim", href: "#munkak" },
-  { label: "Videók", href: "#youtube" },
-  { label: "Prompt Labor", href: "#prompt-labor" },
-  { label: "Termékek", href: "#termekek" },
-  { label: "Kurzus", href: "#kurzus" },
+  { label: "Munkáim", sectionId: "munkak" },
+  { label: "Videók", sectionId: "youtube" },
+  { label: "Prompt Labor", sectionId: "prompt-labor" },
+  { label: "Termékek", sectionId: "termekek" },
+  { label: "Kurzus", sectionId: "kurzus" },
 ];
+
+const resetBodyLock = () => {
+  document.body.style.overflow = "";
+  document.body.style.paddingRight = "";
+  document.body.style.position = "";
+  document.body.style.top = "";
+  document.body.style.width = "";
+};
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user } = useAuth();
   const { isAdmin } = useAdmin();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setOpen(false);
   };
 
+  const navigateToHome = () => {
+    resetBodyLock();
+    if (location.pathname === "/") {
+      window.history.replaceState(null, "", "/");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    navigate("/");
+    setOpen(false);
+  };
+
+  const navigateToSection = (sectionId: string) => {
+    resetBodyLock();
+
+    if (location.pathname === "/") {
+      const target = document.getElementById(sectionId);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.history.replaceState(null, "", `/#${sectionId}`);
+      }
+    } else {
+      navigate(`/#${sectionId}`);
+    }
+
+    setOpen(false);
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-card border-0 border-b border-glass-border/20">
       <div className="container mx-auto flex items-center justify-between px-4 py-3">
-        <a href="#" className="flex items-center gap-2">
+        <button onClick={navigateToHome} className="flex items-center gap-2" aria-label="Főoldal">
           <img src={defaultLogo} alt="Affilion AI" className="h-8 w-8 object-cover" style={{ clipPath: "circle(50%)" }} />
           <span className="text-xl font-bold glow-text">Affilion AI</span>
-        </a>
+        </button>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
           {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
+            <button
+              key={l.sectionId}
+              onClick={() => navigateToSection(l.sectionId)}
               className="text-sm text-muted-foreground transition-colors duration-300 hover:text-primary"
             >
               {l.label}
-            </a>
+            </button>
           ))}
           {user ? (
             <div className="flex items-center gap-3">
               <button
-                onClick={() => navigate("/dashboard")}
+                onClick={() => {
+                  resetBodyLock();
+                  navigate("/dashboard");
+                }}
                 className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"
               >
                 <BookOpen size={14} /> Tartalmaim
               </button>
               {isAdmin && (
                 <button
-                  onClick={() => navigate("/admin")}
+                  onClick={() => {
+                    resetBodyLock();
+                    navigate("/admin");
+                  }}
                   className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"
                 >
                   <Shield size={14} /> Admin
@@ -73,7 +115,10 @@ const Navbar = () => {
             </div>
           ) : (
             <button
-              onClick={() => navigate("/auth")}
+              onClick={() => {
+                resetBodyLock();
+                navigate("/auth");
+              }}
               className="hero-glass-button text-xs py-2 px-4 flex items-center gap-1"
             >
               <LogIn size={14} /> Belépés
@@ -95,26 +140,33 @@ const Navbar = () => {
       {open && (
         <div className="md:hidden glass-card border-0 border-t border-glass-border/20 px-4 py-4 flex flex-col gap-4">
           {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-              onClick={() => setOpen(false)}
+            <button
+              key={l.sectionId}
+              onClick={() => navigateToSection(l.sectionId)}
+              className="text-sm text-muted-foreground hover:text-primary transition-colors text-left"
             >
               {l.label}
-            </a>
+            </button>
           ))}
           {user ? (
             <>
               <button
-                onClick={() => { navigate("/dashboard"); setOpen(false); }}
+                onClick={() => {
+                  resetBodyLock();
+                  navigate("/dashboard");
+                  setOpen(false);
+                }}
                 className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1"
               >
                 <BookOpen size={14} /> Saját Tartalmaim
               </button>
               {isAdmin && (
                 <button
-                  onClick={() => { navigate("/admin"); setOpen(false); }}
+                  onClick={() => {
+                    resetBodyLock();
+                    navigate("/admin");
+                    setOpen(false);
+                  }}
                   className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1"
                 >
                   <Shield size={14} /> Admin Panel
@@ -129,7 +181,11 @@ const Navbar = () => {
             </>
           ) : (
             <button
-              onClick={() => { navigate("/auth"); setOpen(false); }}
+              onClick={() => {
+                resetBodyLock();
+                navigate("/auth");
+                setOpen(false);
+              }}
               className="text-sm text-primary flex items-center gap-1"
             >
               <LogIn size={14} /> Belépés
