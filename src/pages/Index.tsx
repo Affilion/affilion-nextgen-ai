@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ParticleEffect from "@/components/ParticleEffect";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -9,21 +10,28 @@ import WaitlistSection from "@/components/WaitlistSection";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 
-const Index = () => (
-  <>
-    <ParticleEffect />
-    <Navbar />
-    <main>
-      <HeroSection />
-      <PortfolioSection />
-      <YouTubeSection />
-      <PromptLabSection />
-      <ProductsSection />
-      <WaitlistSection />
-    </main>
-    <Footer />
-    <ScrollToTop />
-  </>
-);
+const Index = () => {
+  useEffect(() => {
+    document.body.style.overflow = "";
+    document.body.style.paddingRight = "";
+  }, []);
+
+  return (
+    <>
+      <ParticleEffect />
+      <Navbar />
+      <main>
+        <HeroSection />
+        <PortfolioSection />
+        <YouTubeSection />
+        <PromptLabSection />
+        <ProductsSection />
+        <WaitlistSection />
+      </main>
+      <Footer />
+      <ScrollToTop />
+    </>
+  );
+};
 
 export default Index;
