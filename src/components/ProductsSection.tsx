@@ -15,6 +15,7 @@ interface Product {
   description: string | null;
   price: number;
   image_url: string | null;
+  coming_soon: boolean;
 }
 
 const ProductsSection = () => {
@@ -29,7 +30,7 @@ const ProductsSection = () => {
     const fetchProducts = async () => {
       const { data } = await supabase
         .from("products")
-        .select("id, name, description, price, image_url")
+        .select("id, name, description, price, image_url, coming_soon")
         .eq("is_active", true)
         .order("sort_order", { ascending: true });
       setProducts((data || []) as Product[]);
@@ -109,7 +110,7 @@ const ProductsSection = () => {
           Gyorsítsd fel <span className="glow-text">a munkád!</span>
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className={`grid grid-cols-1 ${products.length === 2 ? 'md:grid-cols-2 max-w-4xl mx-auto' : 'md:grid-cols-3'} gap-6`}>
           {products.map((p, i) => {
             const purchased = purchasedIds.has(p.id);
             return (
@@ -150,6 +151,13 @@ const ProductsSection = () => {
                         <span className="text-sm font-semibold text-primary flex items-center gap-1">
                           <CheckCircle className="w-4 h-4" /> Megvásárolva
                         </span>
+                      ) : p.coming_soon ? (
+                        <button
+                          onClick={(e) => { e.stopPropagation(); toast({ title: "Hamarosan!", description: "Ez a termék hamarosan elérhető lesz!" }); }}
+                          className="neon-button-outline text-sm py-2 px-4"
+                        >
+                          Hamarosan
+                        </button>
                       ) : (
                         <button
                           onClick={(e) => { e.stopPropagation(); handleBuy(p.id); }}
