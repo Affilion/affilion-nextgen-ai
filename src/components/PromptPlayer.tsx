@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Copy, Check, X, Music, Tag, Layers, ChevronRight, ExternalLink, Info } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -83,7 +84,7 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  return (
+  return createPortal(
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -323,7 +324,8 @@ const PromptPlayer = ({ productId, productName, onClose }: PromptPlayerProps) =>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 };
 
