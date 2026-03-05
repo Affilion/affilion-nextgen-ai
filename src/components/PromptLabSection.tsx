@@ -50,7 +50,7 @@ const PromptLabSection = () => {
           viewport={{ once: true }}
           className="section-title text-center mb-16"
         >
-          Prompt Labor – <span className="glow-text">Másold le a varázslatot!</span>
+          Kreatív Stúdió – <span className="glow-text">Másold le a varázslatot!</span>
         </motion.h2>
 
         <motion.div

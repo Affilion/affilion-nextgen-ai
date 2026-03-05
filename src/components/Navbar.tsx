@@ -9,7 +9,7 @@ import defaultLogo from "@/assets/logo.jpg";
 const links = [
   { label: "Munkáim", sectionId: "munkak" },
   { label: "Videók", sectionId: "youtube" },
-  { label: "Prompt Labor", sectionId: "prompt-labor" },
+  { label: "Kreatív Stúdió", sectionId: "prompt-labor" },
   { label: "Termékek", sectionId: "termekek" },
   { label: "Kurzus", sectionId: "kurzus" },
 ];
