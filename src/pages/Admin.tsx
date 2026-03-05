@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 import { ArrowLeft, Users, Image, Video, FileText, Link, Trash2, Plus, Save, Pencil, Mail, Download, ShoppingBag, Upload, Music } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -519,15 +520,27 @@ const ProductsPanel = () => {
                       <span className="text-sm font-medium text-foreground">{item.name}</span>
                       <p className="text-xs text-muted-foreground mt-1">{item.price.toLocaleString("hu")} Ft</p>
                       <p className="text-xs text-muted-foreground mt-0.5 truncate">Stripe: {item.stripe_price_id}</p>
-                      {!item.is_active && <span className="text-xs text-destructive font-semibold">Inaktív</span>}
                     </div>
-                    <div className="flex items-center justify-end gap-2">
-                      <Button size="icon" variant="outline" onClick={() => handleStartEdit(item)} aria-label="Szerkesztés">
-                        <Pencil size={16} />
-                      </Button>
-                      <Button size="icon" variant="outline" onClick={() => handleDelete(item.id)} aria-label="Törlés">
-                        <Trash2 size={16} />
-                      </Button>
+                    <div className="flex items-center justify-between">
+                      <label className="flex items-center gap-2 text-xs text-muted-foreground cursor-pointer">
+                        <Switch
+                          checked={item.is_active ?? true}
+                          onCheckedChange={async (checked) => {
+                            await supabase.from("products").update({ is_active: checked }).eq("id", item.id);
+                            await fetchItems();
+                            toast({ title: checked ? "Termék aktiválva!" : "Termék elrejtve!" });
+                          }}
+                        />
+                        {item.is_active ? "Aktív" : "Rejtett"}
+                      </label>
+                      <div className="flex items-center gap-2">
+                        <Button size="icon" variant="outline" onClick={() => handleStartEdit(item)} aria-label="Szerkesztés">
+                          <Pencil size={16} />
+                        </Button>
+                        <Button size="icon" variant="outline" onClick={() => handleDelete(item.id)} aria-label="Törlés">
+                          <Trash2 size={16} />
+                        </Button>
+                      </div>
                     </div>
                   </>
                 )}
