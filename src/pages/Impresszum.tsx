@@ -21,44 +21,27 @@ const Impresszum = () => {
             <h1 className="text-3xl md:text-4xl font-bold glow-text">Impresszum</h1>
 
             <section className="space-y-4">
-              <h2 className="text-xl md:text-2xl font-bold text-foreground">Szolgáltató adatai</h2>
+              <h2 className="text-xl md:text-2xl font-bold text-foreground">Kiadó és Üzemeltető</h2>
               <div className="space-y-2 text-sm text-foreground/80 leading-relaxed">
-                <p><strong className="text-foreground">Név:</strong> [Cégnév / Egyéni vállalkozó neve]</p>
-                <p><strong className="text-foreground">Székhely:</strong> [Irányítószám, Város, Utca, Házszám]</p>
-                <p><strong className="text-foreground">Adószám:</strong> [Adószám]</p>
-                <p><strong className="text-foreground">Cégjegyzékszám:</strong> [Cégjegyzékszám]</p>
-                <p><strong className="text-foreground">E-mail:</strong> [email@pelda.hu]</p>
-                <p><strong className="text-foreground">Telefon:</strong> [+36 XX XXX XXXX]</p>
+                <p><strong className="text-foreground">Név:</strong> Affilion AI (Hivatalos cégadatok frissítés alatt)</p>
+                <p><strong className="text-foreground">Székhely:</strong> Adatok frissítés alatt</p>
+                <p><strong className="text-foreground">Adószám:</strong> Adatok frissítés alatt</p>
+                <p><strong className="text-foreground">Kapcsolat:</strong> hello@affilion.ai</p>
               </div>
             </section>
 
             <section className="space-y-4">
               <h2 className="text-xl md:text-2xl font-bold text-foreground">Tárhelyszolgáltató</h2>
               <div className="space-y-2 text-sm text-foreground/80 leading-relaxed">
-                <p><strong className="text-foreground">Név:</strong> [Tárhelyszolgáltató neve]</p>
-                <p><strong className="text-foreground">Székhely:</strong> [Tárhelyszolgáltató címe]</p>
-                <p><strong className="text-foreground">Weboldal:</strong> [Tárhelyszolgáltató weboldala]</p>
+                <p><strong className="text-foreground">Név:</strong> Rendszerfrissítés alatt</p>
+                <p><strong className="text-foreground">Kapcsolat:</strong> Rendszerfrissítés alatt</p>
               </div>
-            </section>
-
-            <section className="space-y-4">
-              <h2 className="text-xl md:text-2xl font-bold text-foreground">Felügyeleti szerv</h2>
-              <p className="text-sm text-foreground/80 leading-relaxed">
-                [Illetékes felügyeleti szerv neve és elérhetősége, ha releváns.]
-              </p>
-            </section>
-
-            <section className="space-y-4">
-              <h2 className="text-xl md:text-2xl font-bold text-foreground">Szellemi tulajdon</h2>
-              <p className="text-sm text-foreground/80 leading-relaxed">
-                Az Affilion AI weboldalon megjelenő tartalmak, szövegek, grafikai elemek, képek, logók és egyéb anyagok szerzői jogi védelem alatt állnak. Ezek bármilyen formában történő felhasználása kizárólag a szolgáltató előzetes írásbeli engedélyével lehetséges.
-              </p>
             </section>
 
             <section className="space-y-4">
               <h2 className="text-xl md:text-2xl font-bold text-foreground">Felelősségkizárás</h2>
               <p className="text-sm text-foreground/80 leading-relaxed">
-                A szolgáltató fenntartja a jogot a weboldal tartalmának bármikori megváltoztatására előzetes értesítés nélkül. A weboldalon található információk kizárólag tájékoztató jellegűek, azok teljességéért és pontosságáért a szolgáltató felelősséget nem vállal.
+                Az Affilion AI weboldalon található promptok, automatizációs útmutatók és oktatóanyagok információs célokat szolgálnak. A mesterséges intelligencia modellek (Suno, Midjourney, ChatGPT stb.) frissítései és működési sajátosságai miatt a generált eredmények eltérhetnek a bemutatott példáktól. A tartalmak és útmutatók felhasználása kizárólag a látogató saját felelősségére történik.
               </p>
             </section>
           </article>
