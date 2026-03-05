@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import ParticleEffect from "@/components/ParticleEffect";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -11,10 +12,28 @@ import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 
 const Index = () => {
+  const location = useLocation();
+
   useEffect(() => {
     document.body.style.overflow = "";
     document.body.style.paddingRight = "";
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.width = "";
   }, []);
+
+  useEffect(() => {
+    if (!location.hash) return;
+    const sectionId = location.hash.replace("#", "");
+    const target = document.getElementById(sectionId);
+    if (!target) return;
+
+    const timeout = window.setTimeout(() => {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+
+    return () => window.clearTimeout(timeout);
+  }, [location.hash]);
 
   return (
     <>
