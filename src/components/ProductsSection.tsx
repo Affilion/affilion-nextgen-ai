@@ -30,6 +30,7 @@ const ProductsSection = () => {
   const [purchasedIds, setPurchasedIds] = useState<Set<string>>(new Set());
   const [products, setProducts] = useState<Product[]>([]);
   const [activePlayer, setActivePlayer] = useState<{ productId: string; productName: string } | null>(null);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
 
   useEffect(() => {
     const fetchProducts = async () => {
