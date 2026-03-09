@@ -1,13 +1,18 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import GlassCard from "./GlassCard";
 import { useState, useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, ChevronLeft, ChevronRight } from "lucide-react";
 import PromptPlayer from "./PromptPlayer";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 interface Product {
   id: string;
@@ -25,6 +30,7 @@ const ProductsSection = () => {
   const [purchasedIds, setPurchasedIds] = useState<Set<string>>(new Set());
   const [products, setProducts] = useState<Product[]>([]);
   const [activePlayer, setActivePlayer] = useState<{ productId: string; productName: string } | null>(null);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -110,81 +116,136 @@ const ProductsSection = () => {
           Gyorsítsd fel <span className="glow-text">a munkád!</span>
         </motion.h2>
 
-        <div className={`grid grid-cols-1 ${products.length === 2 ? 'md:grid-cols-2 max-w-4xl mx-auto' : 'md:grid-cols-3'} gap-6`}>
-          {products.map((p, i) => {
-            const purchased = purchasedIds.has(p.id);
-            return (
-              <motion.div
-                key={p.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                onClick={() => purchased && setActivePlayer({ productId: p.id, productName: p.name })}
-                className={purchased ? "cursor-pointer" : ""}
-              >
-                <GlassCard className="flex flex-col h-full" parallaxStrength={25}>
-                  <div className="relative overflow-hidden aspect-square bg-muted/20">
-                    {p.image_url ? (
-                      <img
-                        src={p.image_url}
-                        alt={p.name}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="h-full w-full flex items-center justify-center text-muted-foreground text-sm">
-                        Nincs kép
-                      </div>
-                    )}
-                    {purchased && (
-                      <div className="absolute inset-0 bg-background/60 flex items-center justify-center">
-                        <CheckCircle className="w-12 h-12 text-primary" />
-                      </div>
-                    )}
-                  </div>
-                  <div className="p-6 flex flex-col flex-1">
-                    <h3 className="text-lg font-bold text-foreground mb-2">{p.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-4 flex-1">{p.description}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xl font-bold glow-text">{formatPrice(p.price)}</span>
-                      {purchased ? (
-                        <span className="text-sm font-semibold text-primary flex items-center gap-1">
-                          <CheckCircle className="w-4 h-4" /> Megvásárolva
-                        </span>
-                      ) : p.coming_soon ? (
-                        <button
-                          onClick={(e) => { e.stopPropagation(); toast({ title: "Hamarosan!", description: "Ez a termék hamarosan elérhető lesz!" }); }}
-                          className="neon-button-outline text-sm py-2 px-4"
-                        >
-                          Hamarosan
-                        </button>
+        {products.length > 3 ? (
+          <div className="relative">
+            <Carousel setApi={setCarouselApi} opts={{ align: "start", loop: true }} className="w-full">
+              <CarouselContent className="-ml-6">
+                {products.map((p, i) => {
+                  const purchased = purchasedIds.has(p.id);
+                  return (
+                    <CarouselItem key={p.id} className="pl-6 basis-full md:basis-1/2 lg:basis-1/3">
+                      <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.15 }}
+                        onClick={() => purchased && setActivePlayer({ productId: p.id, productName: p.name })}
+                        className={purchased ? "cursor-pointer h-full" : "h-full"}
+                      >
+                        <GlassCard className="flex flex-col h-full" parallaxStrength={25}>
+                          <div className="relative overflow-hidden aspect-square bg-muted/20">
+                            {p.image_url ? (
+                              <img src={p.image_url} alt={p.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                            ) : (
+                              <div className="h-full w-full flex items-center justify-center text-muted-foreground text-sm">Nincs kép</div>
+                            )}
+                            {purchased && (
+                              <div className="absolute inset-0 bg-background/60 flex items-center justify-center">
+                                <CheckCircle className="w-12 h-12 text-primary" />
+                              </div>
+                            )}
+                          </div>
+                          <div className="p-6 flex flex-col flex-1">
+                            <h3 className="text-lg font-bold text-foreground mb-2">{p.name}</h3>
+                            <p className="text-sm text-muted-foreground mb-4 flex-1">{p.description}</p>
+                            <div className="flex items-center justify-between">
+                              <span className="text-xl font-bold glow-text">{formatPrice(p.price)}</span>
+                              {purchased ? (
+                                <span className="text-sm font-semibold text-primary flex items-center gap-1">
+                                  <CheckCircle className="w-4 h-4" /> Megvásárolva
+                                </span>
+                              ) : p.coming_soon ? (
+                                <button onClick={(e) => { e.stopPropagation(); toast({ title: "Hamarosan!", description: "Ez a termék hamarosan elérhető lesz!" }); }} className="neon-button-outline text-sm py-2 px-4">Hamarosan</button>
+                              ) : (
+                                <button onClick={(e) => { e.stopPropagation(); handleBuy(p.id); }} disabled={loadingId === p.id} className="neon-button text-sm py-2 px-4 disabled:opacity-50">
+                                  {loadingId === p.id ? "Feldolgozás..." : "Megveszem"}
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        </GlassCard>
+                      </motion.div>
+                    </CarouselItem>
+                  );
+                })}
+              </CarouselContent>
+            </Carousel>
+
+            <button
+              onClick={() => carouselApi?.scrollPrev()}
+              className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full hyper-glass flex items-center justify-center text-foreground/70 hover:text-primary transition-colors"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={() => carouselApi?.scrollNext()}
+              className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full hyper-glass flex items-center justify-center text-foreground/70 hover:text-primary transition-colors"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        ) : (
+          <div className={`grid grid-cols-1 ${products.length === 2 ? 'md:grid-cols-2 max-w-4xl mx-auto' : 'md:grid-cols-3'} gap-6`}>
+            {products.map((p, i) => {
+              const purchased = purchasedIds.has(p.id);
+              return (
+                <motion.div
+                  key={p.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.15 }}
+                  onClick={() => purchased && setActivePlayer({ productId: p.id, productName: p.name })}
+                  className={purchased ? "cursor-pointer" : ""}
+                >
+                  <GlassCard className="flex flex-col h-full" parallaxStrength={25}>
+                    <div className="relative overflow-hidden aspect-square bg-muted/20">
+                      {p.image_url ? (
+                        <img src={p.image_url} alt={p.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                       ) : (
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleBuy(p.id); }}
-                          disabled={loadingId === p.id}
-                          className="neon-button text-sm py-2 px-4 disabled:opacity-50"
-                        >
-                          {loadingId === p.id ? "Feldolgozás..." : "Megveszem"}
-                        </button>
+                        <div className="h-full w-full flex items-center justify-center text-muted-foreground text-sm">Nincs kép</div>
+                      )}
+                      {purchased && (
+                        <div className="absolute inset-0 bg-background/60 flex items-center justify-center">
+                          <CheckCircle className="w-12 h-12 text-primary" />
+                        </div>
                       )}
                     </div>
-                  </div>
-                </GlassCard>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
-
-      <AnimatePresence>
-        {activePlayer && (
-          <PromptPlayer
-            productId={activePlayer.productId}
-            productName={activePlayer.productName}
-            onClose={() => setActivePlayer(null)}
-          />
+                    <div className="p-6 flex flex-col flex-1">
+                      <h3 className="text-lg font-bold text-foreground mb-2">{p.name}</h3>
+                      <p className="text-sm text-muted-foreground mb-4 flex-1">{p.description}</p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xl font-bold glow-text">{formatPrice(p.price)}</span>
+                        {purchased ? (
+                          <span className="text-sm font-semibold text-primary flex items-center gap-1">
+                            <CheckCircle className="w-4 h-4" /> Megvásárolva
+                          </span>
+                        ) : p.coming_soon ? (
+                          <button onClick={(e) => { e.stopPropagation(); toast({ title: "Hamarosan!", description: "Ez a termék hamarosan elérhető lesz!" }); }} className="neon-button-outline text-sm py-2 px-4">Hamarosan</button>
+                        ) : (
+                          <button onClick={(e) => { e.stopPropagation(); handleBuy(p.id); }} disabled={loadingId === p.id} className="neon-button text-sm py-2 px-4 disabled:opacity-50">
+                            {loadingId === p.id ? "Feldolgozás..." : "Megveszem"}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </GlassCard>
+                </motion.div>
+              );
+            })}
+          </div>
         )}
-      </AnimatePresence>
+
+        <AnimatePresence>
+          {activePlayer && (
+            <PromptPlayer
+              productId={activePlayer.productId}
+              productName={activePlayer.productName}
+              onClose={() => setActivePlayer(null)}
+            />
+          )}
+        </AnimatePresence>
+      </div>
     </section>
   );
 };
