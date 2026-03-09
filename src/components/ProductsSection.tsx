@@ -245,6 +245,7 @@ const ProductsSection = () => {
             />
           )}
         </AnimatePresence>
+      </div>
     </section>
   );
 };
