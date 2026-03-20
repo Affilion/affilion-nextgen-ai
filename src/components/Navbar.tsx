@@ -64,29 +64,22 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-card border-0 border-b border-glass-border/20">
       <div className="container mx-auto flex items-center justify-between px-4 py-3">
-        <button onClick={navigateToHome} className="flex items-center gap-2" aria-label="Főoldal">
-          <img src={defaultLogo} alt="Affilion AI" className="h-8 w-8 object-cover" style={{ clipPath: "circle(50%)" }} />
-          <span className="text-xl font-bold glow-text">Affilion AI</span>
-        </button>
-
-        {/* Desktop */}
-        <div className="hidden md:flex items-center gap-8">
-          {links.slice(0, 3).map((l) => (
-            <button
-              key={l.sectionId}
-              onClick={() => navigateToSection(l.sectionId)}
-              className="text-sm text-muted-foreground transition-colors duration-300 hover:text-primary"
-            >
-              {l.label}
-            </button>
-          ))}
+        <div className="flex items-center gap-4">
+          <button onClick={navigateToHome} className="flex items-center gap-2" aria-label="Főoldal">
+            <img src={defaultLogo} alt="Affilion AI" className="h-8 w-8 object-cover" style={{ clipPath: "circle(50%)" }} />
+            <span className="text-xl font-bold glow-text">Affilion AI</span>
+          </button>
           <button
             onClick={() => {/* TODO: funkció később */}}
-            className="relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg border border-transparent bg-transparent overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 neon-club-btn"
+            className="hidden md:inline-flex relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg border border-transparent bg-transparent overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 neon-club-btn"
           >
             AI CLUB
           </button>
-          {links.slice(3).map((l) => (
+        </div>
+
+        {/* Desktop */}
+        <div className="hidden md:flex items-center gap-8">
+          {links.map((l) => (
             <button
               key={l.sectionId}
               onClick={() => navigateToSection(l.sectionId)}
