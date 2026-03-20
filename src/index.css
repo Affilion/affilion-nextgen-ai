@@ -247,3 +247,42 @@
 .cursor-blink {
   animation: blink-cursor 0.8s step-end infinite;
 }
+
+/* Neon club button */
+@keyframes neon-border-travel {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.neon-club-btn {
+  position: relative;
+  z-index: 1;
+}
+
+.neon-club-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(270deg, hsl(var(--glow-cyan)), hsl(var(--glow-purple)), hsl(var(--glow-cyan)), hsl(var(--glow-purple)));
+  background-size: 300% 300%;
+  animation: neon-border-travel 3s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+.neon-club-btn::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  background: linear-gradient(270deg, hsl(var(--glow-cyan) / 0.3), hsl(var(--glow-purple) / 0.3), hsl(var(--glow-cyan) / 0.3));
+  background-size: 300% 300%;
+  animation: neon-border-travel 3s linear infinite;
+  filter: blur(8px);
+  z-index: -2;
+}
