@@ -12,6 +12,8 @@ import Admin from "./pages/Admin";
 import Impresszum from "./pages/Impresszum";
 import Adatvedelem from "./pages/Adatvedelem";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import AiClubSuccess from "./pages/AiClubSuccess";
+import AiClubDiscordCallback from "./pages/AiClubDiscordCallback";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +34,8 @@ const App = () => (
             <Route path="/impresszum" element={<Impresszum />} />
             <Route path="/adatvedelem" element={<Adatvedelem />} />
             <Route path="/fizetes-sikeres" element={<PaymentSuccess />} />
+            <Route path="/ai-club/success" element={<AiClubSuccess />} />
+            <Route path="/ai-club/discord-callback" element={<AiClubDiscordCallback />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
