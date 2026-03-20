@@ -145,6 +145,12 @@ const Navbar = () => {
       {/* Mobile menu */}
       {open && (
         <div className="md:hidden glass-card border-0 border-t border-glass-border/20 px-4 py-4 flex flex-col gap-4">
+          <button
+            onClick={() => {/* TODO */}}
+            className="relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg overflow-hidden neon-club-btn text-left w-fit"
+          >
+            AI CLUB
+          </button>
           {links.map((l) => (
             <button
               key={l.sectionId}
