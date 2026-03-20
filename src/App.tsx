@@ -12,6 +12,8 @@ import Admin from "./pages/Admin";
 import Impresszum from "./pages/Impresszum";
 import Adatvedelem from "./pages/Adatvedelem";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import AiClubSuccess from "./pages/AiClubSuccess";
+import AiClubDiscordCallback from "./pages/AiClubDiscordCallback";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
