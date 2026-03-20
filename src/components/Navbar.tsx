@@ -71,6 +71,12 @@ const Navbar = () => {
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
+          <button
+            onClick={() => {/* TODO: funkció később */}}
+            className="relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg border border-transparent bg-transparent overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 neon-club-btn"
+          >
+            AI CLUB
+          </button>
           {links.map((l) => (
             <button
               key={l.sectionId}
@@ -139,6 +145,12 @@ const Navbar = () => {
       {/* Mobile menu */}
       {open && (
         <div className="md:hidden glass-card border-0 border-t border-glass-border/20 px-4 py-4 flex flex-col gap-4">
+          <button
+            onClick={() => {/* TODO */}}
+            className="relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg overflow-hidden neon-club-btn text-left w-fit"
+          >
+            AI CLUB
+          </button>
           {links.map((l) => (
             <button
               key={l.sectionId}
