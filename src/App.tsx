@@ -34,6 +34,8 @@ const App = () => (
             <Route path="/impresszum" element={<Impresszum />} />
             <Route path="/adatvedelem" element={<Adatvedelem />} />
             <Route path="/fizetes-sikeres" element={<PaymentSuccess />} />
+            <Route path="/ai-club/success" element={<AiClubSuccess />} />
+            <Route path="/ai-club/discord-callback" element={<AiClubDiscordCallback />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
