@@ -71,6 +71,12 @@ const Navbar = () => {
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
+          <button
+            onClick={() => {/* TODO: funkció később */}}
+            className="relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg border border-transparent bg-transparent overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 neon-club-btn"
+          >
+            AI CLUB
+          </button>
           {links.map((l) => (
             <button
               key={l.sectionId}
