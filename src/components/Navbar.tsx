@@ -150,7 +150,7 @@ const Navbar = () => {
       {open && (
         <div className="md:hidden glass-card border-0 border-t border-glass-border/20 px-4 py-4 flex flex-col gap-4">
           <a
-            href="https://buy.stripe.com/5kQ28rfM17si7b44ro7bW00"
+            href="https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01"
             target="_blank"
             rel="noopener noreferrer"
             className="relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg overflow-hidden neon-club-btn text-left w-fit no-underline"
