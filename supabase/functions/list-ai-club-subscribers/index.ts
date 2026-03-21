@@ -8,6 +8,13 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+const toIsoString = (timestamp?: number | null) => {
+  if (!timestamp || Number.isNaN(timestamp)) return null;
+
+  const date = new Date(timestamp * 1000);
+  return Number.isNaN(date.getTime()) ? null : date.toISOString();
+};
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -58,17 +65,18 @@ serve(async (req) => {
       const subs = await stripe.subscriptions.list(params);
 
       for (const sub of subs.data) {
-        const matchesProduct = sub.items.data.some(
+        const matchingItem = sub.items.data.find(
           (item: any) => item.price.product === productId
         );
-        if (matchesProduct) {
+
+        if (matchingItem) {
           const customer = sub.customer as any;
           subscribers.push({
             id: sub.id,
             name: customer?.name || "-",
             email: customer?.email || "-",
-            created: new Date(sub.created * 1000).toISOString(),
-            current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
+            created: toIsoString(sub.created),
+            current_period_end: toIsoString(matchingItem.current_period_end),
             status: sub.status,
           });
         }
