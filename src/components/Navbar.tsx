@@ -27,11 +27,8 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user } = useAuth();
   const { isAdmin } = useAdmin();
-  const { isSubscribed } = useAiClubStatus();
   const navigate = useNavigate();
   const location = useLocation();
-
-  const STRIPE_URL = "https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01";
 
   const handleAiClubClick = () => {
     resetBodyLock();

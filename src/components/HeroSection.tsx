@@ -15,8 +15,6 @@ const HeroSection = () => {
   const [displayed, setDisplayed] = useState("");
   const [done, setDone] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const { user } = useAuth();
-  const { isSubscribed } = useAiClubStatus();
   const navigate = useNavigate();
 
   const handleAiClubClick = () => {
