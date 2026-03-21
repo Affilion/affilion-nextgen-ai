@@ -74,6 +74,17 @@ const Csatlakozas = () => {
             Csatlakozás az AI CLUB-hoz
           </button>
 
+          <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-primary/10 border border-primary/20">
+            <span className="text-primary text-lg">📋</span>
+            <p className="text-xs text-muted-foreground text-left">
+              Előfizetés után a tagságodat a{" "}
+              <button onClick={() => navigate("/tartalmaim")} className="font-bold text-primary hover:underline">
+                Tartalmaim
+              </button>{" "}
+              menüpont alatt találod és kezelheted.
+            </p>
+          </div>
+
           <div className="border-t border-glass-border/30 pt-4 space-y-3">
             <p className="text-xs text-muted-foreground leading-relaxed">
               ⚠️ <strong>Fontos:</strong> Szükséges egy ingyenes Discord fiók regisztrálása és a fizetés után azzal tudsz csatlakozni a csoporthoz. Várunk szeretettel!
