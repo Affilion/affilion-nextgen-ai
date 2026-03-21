@@ -14,6 +14,7 @@ const links = [
   { label: "Kreatív Stúdió", sectionId: "prompt-labor" },
   { label: "Termékek", sectionId: "termekek" },
   { label: "Kurzus", sectionId: "kurzus" },
+  { label: "AI Csoport", sectionId: "__link__/csatlakozas" },
 ];
 
 const resetBodyLock = () => {
