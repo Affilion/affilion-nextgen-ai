@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useAuth } from "@/hooks/useAuth";
 
 const sequence = [
   { action: "type" as const, text: "Szórakozz az AI-val... nem," },
@@ -14,6 +16,19 @@ const HeroSection = () => {
   const [displayed, setDisplayed] = useState("");
   const [done, setDone] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const STRIPE_URL = "https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01";
+
+  const handleAiClubClick = () => {
+    if (user) {
+      window.open(STRIPE_URL, "_blank", "noopener");
+    } else {
+      localStorage.setItem("redirect_after_login", STRIPE_URL);
+      navigate("/auth");
+    }
+  };
 
   // Typewriter: starts immediately on mount
   useEffect(() => {
@@ -144,9 +159,12 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 5.5 }}
           className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <a href="#youtube" className="hero-glass-button text-center">
-            Nézd a videókat
-          </a>
+          <button
+            onClick={handleAiClubClick}
+            className="hero-glass-button text-center animate-[pulse_3s_ease-in-out_infinite] hover:animate-none"
+          >
+            Csatlakozz az AI CLUB csoporthoz
+          </button>
           <a href="#termekek" className="hero-glass-button-outline text-center">
             Gyorsítsd fel a munkád!
           </a>
