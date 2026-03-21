@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { optimizeImageForUpload } from "@/lib/imageOptimization";
 
-type Tab = "users" | "products" | "portfolio" | "experiments" | "prompts" | "content" | "waitlist" | "prompt-manager";
+type Tab = "users" | "products" | "portfolio" | "experiments" | "prompts" | "content" | "waitlist" | "prompt-manager" | "ai-club";
 type UploadFolder = "portfolio" | "prompts" | "products";
 
 const uploadCmsImage = async (file: File, folder: UploadFolder) => {
