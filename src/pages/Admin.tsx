@@ -123,16 +123,18 @@ const Admin = () => {
 const UsersPanel = () => {
   const [users, setUsers] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
+  const [discordEmails, setDiscordEmails] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
   const [giftingUserId, setGiftingUserId] = useState<string | null>(null);
   const [selectedProductId, setSelectedProductId] = useState("");
   const [giftLoading, setGiftLoading] = useState(false);
 
   const fetchData = async () => {
-    const [{ data: profiles }, { data: purchases }, { data: prods }] = await Promise.all([
+    const [{ data: profiles }, { data: purchases }, { data: prods }, { data: discordLinks }] = await Promise.all([
       supabase.from("profiles").select("*"),
       supabase.from("purchases").select("*"),
       supabase.from("products").select("*").order("sort_order"),
+      supabase.from("discord_links").select("email"),
     ]);
 
     const enriched = (profiles || []).map((p) => ({
@@ -141,6 +143,7 @@ const UsersPanel = () => {
     }));
     setUsers(enriched);
     setProducts(prods || []);
+    setDiscordEmails(new Set((discordLinks || []).map((d: any) => d.email)));
     setLoading(false);
   };
 
