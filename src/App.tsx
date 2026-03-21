@@ -29,7 +29,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/tartalmaim" element={<Dashboard />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/impresszum" element={<Impresszum />} />
             <Route path="/adatvedelem" element={<Adatvedelem />} />

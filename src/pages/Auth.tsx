@@ -21,8 +21,8 @@ const Auth = () => {
 
   // If already logged in and there's a redirect param, go there
   useEffect(() => {
-    if (!authLoading && user && redirectTo === "dashboard") {
-      navigate("/dashboard", { replace: true });
+    if (!authLoading && user && redirectTo === "tartalmaim") {
+      navigate("/tartalmaim", { replace: true });
     }
   }, [user, authLoading, redirectTo, navigate]);
 
@@ -53,7 +53,7 @@ const Auth = () => {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
         toast({ title: "Sikeres bejelentkezés!" });
-        navigate(redirectTo === "dashboard" ? "/dashboard" : "/");
+        navigate(redirectTo === "tartalmaim" ? "/tartalmaim" : "/");
       } else {
         const { error } = await supabase.auth.signUp({
           email,
