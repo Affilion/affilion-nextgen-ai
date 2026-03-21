@@ -106,6 +106,21 @@ serve(async (req) => {
     await addMemberRes.text();
     console.log(`[DISCORD-AUTH] Add member to guild status: ${addMemberStatus}`);
 
+    // 3b. Assign the AI Club role directly via Discord API
+    const roleId = "1484598151812878516";
+    const addRoleRes = await fetch(
+      `https://discord.com/api/v10/guilds/${guildId}/members/${userData.id}/roles/${roleId}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bot ${botToken}`,
+        },
+      }
+    );
+    const addRoleStatus = addRoleRes.status;
+    await addRoleRes.text();
+    console.log(`[DISCORD-AUTH] Add role ${roleId} to user ${userData.id} status: ${addRoleStatus}`);
+
     // 4. Send to Make.com webhook
     const webhookRes = await fetch(
       "https://hook.eu2.make.com/s31a5qmrwfj3gzxkehm5whfbhararfkc",
