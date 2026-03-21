@@ -19,10 +19,18 @@ const Auth = () => {
   const redirectTo = searchParams.get("redirect");
   const { user, loading: authLoading } = useAuth();
 
-  // If already logged in and there's a redirect param, go there
+  // If already logged in, check for redirect
   useEffect(() => {
-    if (!authLoading && user && redirectTo === "tartalmaim") {
-      navigate("/tartalmaim", { replace: true });
+    if (!authLoading && user) {
+      const externalRedirect = localStorage.getItem("redirect_after_login");
+      if (externalRedirect) {
+        localStorage.removeItem("redirect_after_login");
+        window.location.href = externalRedirect;
+        return;
+      }
+      if (redirectTo === "tartalmaim") {
+        navigate("/tartalmaim", { replace: true });
+      }
     }
   }, [user, authLoading, redirectTo, navigate]);
 
