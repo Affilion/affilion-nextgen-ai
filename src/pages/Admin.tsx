@@ -212,7 +212,15 @@ const UsersPanel = () => {
                   )}
                 </td>
                 <td className="p-4">
-                  {giftingUserId === u.user_id ? (
+                  {u.email && discordEmails.has(u.email) ? (
+                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-primary/20 text-primary">
+                      Aktív tag
+                    </span>
+                  ) : (
+                    <span className="text-muted-foreground">–</span>
+                  )}
+                </td>
+                <td className="p-4">
                     <div className="flex items-center gap-2">
                       <select
                         value={selectedProductId}
