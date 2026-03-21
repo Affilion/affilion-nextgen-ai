@@ -111,6 +111,7 @@ const Admin = () => {
             {activeTab === "prompt-manager" && <PromptManagerPanel />}
             {activeTab === "content" && <ContentPanel />}
             {activeTab === "waitlist" && <WaitlistPanel />}
+            {activeTab === "ai-club" && <AiClubPanel />}
           </motion.div>
         </div>
       </div>
