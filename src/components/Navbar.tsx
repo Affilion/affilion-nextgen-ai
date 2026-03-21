@@ -3,9 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, LogIn, LogOut, User, BookOpen, Shield } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdmin } from "@/hooks/useAdmin";
-import { useAiClubStatus } from "@/hooks/useAiClubStatus";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
 import defaultLogo from "@/assets/logo.jpg";
 
 const links = [
@@ -14,6 +12,7 @@ const links = [
   { label: "Kreatív Stúdió", sectionId: "prompt-labor" },
   { label: "Termékek", sectionId: "termekek" },
   { label: "Kurzus", sectionId: "kurzus" },
+  { label: "AI Csoport", sectionId: "__link__/csatlakozas" },
 ];
 
 const resetBodyLock = () => {
@@ -28,28 +27,12 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user } = useAuth();
   const { isAdmin } = useAdmin();
-  const { isSubscribed } = useAiClubStatus();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const STRIPE_URL = "https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01";
-
   const handleAiClubClick = () => {
-    if (!user) {
-      localStorage.setItem("redirect_after_login", STRIPE_URL);
-      resetBodyLock();
-      navigate("/auth");
-      setOpen(false);
-      return;
-    }
-    if (isSubscribed) {
-      toast.info("Már van aktív AI Club tagságod! A tagságodat a Tartalmaim oldalon tudod kezelni.");
-      resetBodyLock();
-      navigate("/tartalmaim");
-      setOpen(false);
-      return;
-    }
-    window.open(STRIPE_URL, "_blank", "noopener");
+    resetBodyLock();
+    navigate("/csatlakozas");
     setOpen(false);
   };
 
@@ -71,6 +54,14 @@ const Navbar = () => {
 
   const navigateToSection = (sectionId: string) => {
     resetBodyLock();
+
+    // Handle direct link navigation (e.g. __link__/csatlakozas)
+    if (sectionId.startsWith("__link__")) {
+      const path = sectionId.replace("__link__", "");
+      navigate(path);
+      setOpen(false);
+      return;
+    }
 
     if (location.pathname === "/") {
       const target = document.getElementById(sectionId);

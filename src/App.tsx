@@ -14,6 +14,7 @@ import Adatvedelem from "./pages/Adatvedelem";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import AiClubSuccess from "./pages/AiClubSuccess";
 import AiClubDiscordCallback from "./pages/AiClubDiscordCallback";
+import Csatlakozas from "./pages/Csatlakozas";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="/fizetes-sikeres" element={<PaymentSuccess />} />
             <Route path="/ai-club/success" element={<AiClubSuccess />} />
             <Route path="/ai-club/discord-callback" element={<AiClubDiscordCallback />} />
+            <Route path="/csatlakozas" element={<Csatlakozas />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
