@@ -10,7 +10,6 @@ const corsHeaders = {
 
 const toIsoString = (timestamp?: number | null) => {
   if (!timestamp || Number.isNaN(timestamp)) return null;
-
   const date = new Date(timestamp * 1000);
   return Number.isNaN(date.getTime()) ? null : date.toISOString();
 };
@@ -21,7 +20,6 @@ serve(async (req) => {
   }
 
   try {
-    // Verify admin
     const supabaseClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
@@ -44,51 +42,67 @@ serve(async (req) => {
 
     if (!roleData) throw new Error("Not authorized");
 
-    // Fetch Stripe subscriptions
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
       apiVersion: "2025-08-27.basil",
     });
 
     const productId = "prod_UBSvwtqbSH8L6K";
     const subscribers: any[] = [];
-    let hasMore = true;
-    let startingAfter: string | undefined;
 
-    while (hasMore) {
-      const params: any = {
-        status: "active",
-        limit: 100,
-        expand: ["data.customer"],
-      };
-      if (startingAfter) params.starting_after = startingAfter;
+    // Fetch active subscriptions (includes cancel_at_period_end)
+    for (const status of ["active", "canceled"] as const) {
+      let hasMore = true;
+      let startingAfter: string | undefined;
 
-      const subs = await stripe.subscriptions.list(params);
+      while (hasMore) {
+        const params: any = {
+          status,
+          limit: 100,
+          expand: ["data.customer"],
+        };
+        if (startingAfter) params.starting_after = startingAfter;
 
-      for (const sub of subs.data) {
-        const matchingItem = sub.items.data.find(
-          (item: any) => item.price.product === productId
-        );
+        const subs = await stripe.subscriptions.list(params);
 
-        if (matchingItem) {
-          const customer = sub.customer as any;
-          subscribers.push({
-            id: sub.id,
-            name: customer?.name || "-",
-            email: customer?.email || "-",
-            created: toIsoString(sub.created),
-            current_period_end: toIsoString(matchingItem.current_period_end),
-            status: sub.status,
-          });
+        for (const sub of subs.data) {
+          const matchingItem = sub.items.data.find(
+            (item: any) => item.price.product === productId
+          );
+
+          if (matchingItem) {
+            const customer = sub.customer as any;
+
+            // Determine display status
+            let displayStatus: "active" | "canceled_pending" | "inactive";
+            if (sub.status === "active" && !sub.cancel_at_period_end) {
+              displayStatus = "active";
+            } else if (sub.status === "active" && sub.cancel_at_period_end) {
+              displayStatus = "canceled_pending";
+            } else {
+              displayStatus = "inactive";
+            }
+
+            subscribers.push({
+              id: sub.id,
+              name: customer?.name || "-",
+              email: customer?.email || "-",
+              created: toIsoString(sub.created),
+              current_period_end: toIsoString(matchingItem.current_period_end),
+              status: sub.status,
+              cancel_at_period_end: sub.cancel_at_period_end ?? false,
+              display_status: displayStatus,
+            });
+          }
         }
-      }
 
-      hasMore = subs.has_more;
-      if (subs.data.length > 0) {
-        startingAfter = subs.data[subs.data.length - 1].id;
+        hasMore = subs.has_more;
+        if (subs.data.length > 0) {
+          startingAfter = subs.data[subs.data.length - 1].id;
+        }
       }
     }
 
-    console.log(`[LIST-AI-CLUB] Found ${subscribers.length} active subscribers`);
+    console.log(`[LIST-AI-CLUB] Found ${subscribers.length} subscribers (active+canceled)`);
 
     return new Response(JSON.stringify({ subscribers }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
