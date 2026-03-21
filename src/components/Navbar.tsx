@@ -69,12 +69,14 @@ const Navbar = () => {
             <img src={defaultLogo} alt="Affilion AI" className="h-8 w-8 object-cover" style={{ clipPath: "circle(50%)" }} />
             <span className="text-xl font-bold glow-text">Affilion AI</span>
           </button>
-          <button
-            onClick={() => {/* TODO: funkció később */}}
-            className="hidden md:inline-flex relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg border border-transparent bg-transparent overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 neon-club-btn"
+          <a
+            href="https://buy.stripe.com/5kQ28rfM17si7b44ro7bW00"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden md:inline-flex relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg border border-transparent bg-transparent overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 neon-club-btn no-underline"
           >
             AI CLUB
-          </button>
+          </a>
         </div>
 
         {/* Desktop */}
@@ -147,12 +149,14 @@ const Navbar = () => {
       {/* Mobile menu */}
       {open && (
         <div className="md:hidden glass-card border-0 border-t border-glass-border/20 px-4 py-4 flex flex-col gap-4">
-          <button
-            onClick={() => {/* TODO */}}
-            className="relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg overflow-hidden neon-club-btn text-left w-fit"
+          <a
+            href="https://buy.stripe.com/5kQ28rfM17si7b44ro7bW00"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg overflow-hidden neon-club-btn text-left w-fit no-underline"
           >
             AI CLUB
-          </button>
+          </a>
           {links.map((l) => (
             <button
               key={l.sectionId}
