@@ -188,6 +188,7 @@ const UsersPanel = () => {
               <th className="p-4">Email</th>
               <th className="p-4">Regisztráció</th>
               <th className="p-4">Vásárlások</th>
+              <th className="p-4">AI Club</th>
               <th className="p-4">Művelet</th>
             </tr>
           </thead>
