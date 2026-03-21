@@ -70,6 +70,7 @@ const Admin = () => {
     { id: "prompt-manager", label: "Prompt Player", icon: <Music size={16} /> },
     { id: "content", label: "Tartalom URL-ek", icon: <Link size={16} /> },
     { id: "waitlist", label: "Várólista", icon: <Mail size={16} /> },
+    { id: "ai-club", label: "AI Club Előfizetők", icon: <Users size={16} /> },
   ];
 
   return (
