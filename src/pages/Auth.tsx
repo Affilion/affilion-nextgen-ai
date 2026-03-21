@@ -21,8 +21,8 @@ const Auth = () => {
 
   // If already logged in and there's a redirect param, go there
   useEffect(() => {
-    if (!authLoading && user && redirectTo === "dashboard") {
-      navigate("/dashboard", { replace: true });
+    if (!authLoading && user && redirectTo === "tartalmaim") {
+      navigate("/tartalmaim", { replace: true });
     }
   }, [user, authLoading, redirectTo, navigate]);
 
