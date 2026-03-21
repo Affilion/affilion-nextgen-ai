@@ -4,6 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Lock, Unlock, ShoppingCart, X, BookOpen, Sparkles, Music } from "lucide-react";
+import { CreditCard, ExternalLink, Crown } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import PromptPlayer from "@/components/PromptPlayer";
 import Footer from "@/components/Footer";
@@ -27,6 +28,10 @@ const Dashboard = () => {
 
   // Prompt Player state
   const [activePlayer, setActivePlayer] = useState<{ productId: string; productName: string } | null>(null);
+
+  // AI Club subscription state
+  const [hasAiClub, setHasAiClub] = useState(false);
+  const [aiClubLoading, setAiClubLoading] = useState(false);
 
   // Track which products have prompts
   const [promptCounts, setPromptCounts] = useState<Record<string, number>>({});
@@ -62,6 +67,14 @@ const Dashboard = () => {
         setPromptCounts(counts);
       }
 
+      // Check AI Club subscription
+      try {
+        const { data: subData, error: subError } = await supabase.functions.invoke("check-ai-club-subscription");
+        if (!subError && subData?.subscribed) {
+          setHasAiClub(true);
+        }
+      } catch {}
+
       setLoading(false);
     };
 
@@ -84,6 +97,24 @@ const Dashboard = () => {
       });
     } finally {
       setLoadingBuyId(null);
+    }
+  };
+
+  const handleManageSubscription = async () => {
+    setAiClubLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("create-billing-portal");
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      if (data?.url) window.open(data.url, "_blank");
+    } catch (err: any) {
+      toast({
+        title: "Hiba",
+        description: err.message || "Nem sikerült megnyitni az előfizetés kezelőt.",
+        variant: "destructive",
+      });
+    } finally {
+      setAiClubLoading(false);
     }
   };
 
@@ -125,6 +156,34 @@ const Dashboard = () => {
                 : "Még nincs megvásárolt tartalmad — nézd meg, mit kínálunk!"}
             </p>
           </motion.div>
+
+          {/* AI Club Membership */}
+          {hasAiClub && (
+            <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="mb-14">
+              <div className="hyper-glass rounded-xl p-6">
+                <div className="flex items-center justify-between flex-wrap gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
+                      <Crown size={20} className="text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-foreground">AI Club tagságom</h3>
+                      <p className="text-xs text-muted-foreground">Aktív Affilion AI Club előfizetés</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={handleManageSubscription}
+                    disabled={aiClubLoading}
+                    className="neon-button-outline text-xs py-2 px-5 flex items-center gap-2 disabled:opacity-50"
+                  >
+                    <CreditCard size={14} />
+                    {aiClubLoading ? "Betöltés..." : "Előfizetés kezelése"}
+                    <ExternalLink size={12} />
+                  </button>
+                </div>
+              </div>
+            </motion.section>
+          )}
 
           {/* UNLOCKED */}
           {purchasedProducts.length > 0 && (
