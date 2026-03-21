@@ -76,7 +76,8 @@ const Csatlakozas = () => {
 
           <div className="border-t border-glass-border/30 pt-4 space-y-2">
             <p className="text-xs text-muted-foreground leading-relaxed">
-              ⚠️ <strong>Fontos:</strong> Szükséges egy ingyenes Discord fiók regisztrálása és a fizetés után azzal tudsz csatlakozni a csoporthoz. Várunk szeretettel!
+              ⚠️ <strong>Fontos:</strong> Szükséges egy ingyenes Discord fiók regisztrálása és a fizetés után azzal tudsz csatlakozni a csoporthoz. Várunk szeretettel!{" "}
+              <a href="https://discord.com/download" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Discord letöltése →</a>
             </p>
             <p className="text-xs text-muted-foreground">Havonta számlázva.</p>
           </div>
