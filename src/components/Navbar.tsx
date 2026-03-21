@@ -60,6 +60,14 @@ const Navbar = () => {
   const navigateToSection = (sectionId: string) => {
     resetBodyLock();
 
+    // Handle direct link navigation (e.g. __link__/csatlakozas)
+    if (sectionId.startsWith("__link__")) {
+      const path = sectionId.replace("__link__", "");
+      navigate(path);
+      setOpen(false);
+      return;
+    }
+
     if (location.pathname === "/") {
       const target = document.getElementById(sectionId);
       if (target) {

@@ -22,20 +22,8 @@ const HeroSection = () => {
   const { isSubscribed } = useAiClubStatus();
   const navigate = useNavigate();
 
-  const STRIPE_URL = "https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01";
-
   const handleAiClubClick = () => {
-    if (!user) {
-      localStorage.setItem("redirect_after_login", STRIPE_URL);
-      navigate("/auth");
-      return;
-    }
-    if (isSubscribed) {
-      toast.info("Már van aktív AI Club tagságod! A tagságodat a Tartalmaim oldalon tudod kezelni.");
-      navigate("/tartalmaim");
-      return;
-    }
-    window.open(STRIPE_URL, "_blank", "noopener");
+    navigate("/csatlakozas");
   };
 
   // Typewriter: starts immediately on mount
