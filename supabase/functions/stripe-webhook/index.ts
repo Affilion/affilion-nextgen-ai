@@ -28,15 +28,31 @@ function escapeXml(str: string): string {
     .replace(/'/g, "&apos;");
 }
 
+interface BillingAddress {
+  city?: string;
+  country?: string;
+  line1?: string;
+  line2?: string;
+  postal_code?: string;
+  state?: string;
+}
+
 async function createSzamlazzInvoice(
   agentKey: string,
   customerEmail: string,
   customerName: string,
   productId: string,
-  _amountFromStripe: number
+  _amountFromStripe: number,
+  billingAddress?: BillingAddress
 ): Promise<string | null> {
   const productName = PRODUCT_NAMES[productId] || productId;
   const price = PRODUCT_PRICES[productId] || _amountFromStripe;
+
+  const city = billingAddress?.city || "N/A";
+  const postalCode = billingAddress?.postal_code || "";
+  const addressLine = billingAddress?.line1 || "Online vásárlás";
+  const addressLine2 = billingAddress?.line2 ? ` ${billingAddress.line2}` : "";
+  const fullAddress = `${addressLine}${addressLine2}`;
 
   const today = new Date().toISOString().split("T")[0];
   // AAM = Alanyi adómentes (KATA egyéni vállalkozó, ÁFA-mentes)
@@ -66,9 +82,9 @@ async function createSzamlazzInvoice(
   <elado/>
   <vevo>
     <nev>${escapeXml(customerName || customerEmail)}</nev>
-    <irsz></irsz>
-    <telepules>N/A</telepules>
-    <cim>Online vásárlás</cim>
+    <irsz>${escapeXml(postalCode)}</irsz>
+    <telepules>${escapeXml(city)}</telepules>
+    <cim>${escapeXml(fullAddress)}</cim>
     <email>${escapeXml(customerEmail)}</email>
     <sendEmail>true</sendEmail>
     <adoszam></adoszam>
@@ -197,8 +213,10 @@ serve(async (req) => {
       const productId = session.metadata?.product_id;
       const customerEmail = session.customer_details?.email || session.customer_email || "";
       const customerName = session.customer_details?.name || "";
+      const billingAddress = session.customer_details?.address as BillingAddress | undefined;
 
       console.log(`[WEBHOOK] Payment completed for user ${userId}, product ${productId}`);
+      console.log(`[WEBHOOK] Billing address:`, JSON.stringify(billingAddress));
 
       if (userId && productId) {
         // 1. Save purchase to database
@@ -228,7 +246,8 @@ serve(async (req) => {
             customerEmail,
             customerName,
             productId,
-            (session.amount_total || 0) / 100
+            (session.amount_total || 0) / 100,
+            billingAddress
           );
 
           if (invoiceId) {
