@@ -221,6 +221,7 @@ const UsersPanel = () => {
                   )}
                 </td>
                 <td className="p-4">
+                  {giftingUserId === u.user_id ? (
                     <div className="flex items-center gap-2">
                       <select
                         value={selectedProductId}
