@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useAuth } from "@/hooks/useAuth";
-import { useAiClubStatus } from "@/hooks/useAiClubStatus";
-import { toast } from "sonner";
 
 const sequence = [
   { action: "type" as const, text: "Szórakozz az AI-val... nem," },
