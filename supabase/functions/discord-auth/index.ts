@@ -12,7 +12,37 @@ serve(async (req) => {
   }
 
   try {
-    const { code, session_id } = await req.json();
+    const body = await req.json();
+    const { action } = body;
+
+    // Handle role removal
+    if (action === "remove_role") {
+      const { discord_user_id } = body;
+      if (!discord_user_id) {
+        return new Response(JSON.stringify({ error: "Missing discord_user_id" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      const removeRes = await fetch(
+        "https://hook.eu2.make.com/a23r47wbiz23jj2k8u6eej3levlzwxae",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ discord_user_id }),
+        }
+      );
+      await removeRes.text();
+
+      console.log(`[DISCORD-AUTH] Role removal webhook sent for user: ${discord_user_id}`);
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Default: handle Discord OAuth code exchange
+    const { code, session_id } = body;
     if (!code) {
       return new Response(JSON.stringify({ error: "Missing code" }), {
         status: 400,
