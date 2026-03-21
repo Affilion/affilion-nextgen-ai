@@ -74,10 +74,11 @@ const Csatlakozas = () => {
             Csatlakozás az AI CLUB-hoz
           </button>
 
-          <div className="border-t border-glass-border/30 pt-4">
+          <div className="border-t border-glass-border/30 pt-4 space-y-2">
             <p className="text-xs text-muted-foreground leading-relaxed">
-              ⚠️ <strong>Fontos:</strong> A zárt csoport Discord-alapú, ezért a csatlakozáshoz szükséges egy ingyenes Discord fiók. A fizetés után e-mailben küldjük a meghívót.
+              ⚠️ <strong>Fontos:</strong> Szükséges egy ingyenes Discord fiók regisztrálása és a fizetés után azzal tudsz csatlakozni a csoporthoz. Várunk szeretettel!
             </p>
+            <p className="text-xs text-muted-foreground">Havonta számlázva.</p>
           </div>
         </motion.div>
       </main>
