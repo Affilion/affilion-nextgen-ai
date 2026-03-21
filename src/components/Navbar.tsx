@@ -3,7 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, LogIn, LogOut, User, BookOpen, Shield } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdmin } from "@/hooks/useAdmin";
+import { useAiClubStatus } from "@/hooks/useAiClubStatus";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import defaultLogo from "@/assets/logo.jpg";
 
 const links = [
@@ -26,8 +28,30 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user } = useAuth();
   const { isAdmin } = useAdmin();
+  const { isSubscribed } = useAiClubStatus();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const STRIPE_URL = "https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01";
+
+  const handleAiClubClick = () => {
+    if (!user) {
+      localStorage.setItem("redirect_after_login", STRIPE_URL);
+      resetBodyLock();
+      navigate("/auth");
+      setOpen(false);
+      return;
+    }
+    if (isSubscribed) {
+      toast.info("Már van aktív AI Club tagságod! A tagságodat a Tartalmaim oldalon tudod kezelni.");
+      resetBodyLock();
+      navigate("/tartalmaim");
+      setOpen(false);
+      return;
+    }
+    window.open(STRIPE_URL, "_blank", "noopener");
+    setOpen(false);
+  };
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -69,26 +93,12 @@ const Navbar = () => {
             <img src={defaultLogo} alt="Affilion AI" className="h-8 w-8 object-cover" style={{ clipPath: "circle(50%)" }} />
             <span className="text-xl font-bold glow-text">Affilion AI</span>
           </button>
-          {user ? (
-            <a
-              href="https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden md:inline-flex relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg border border-transparent bg-transparent overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 neon-club-btn no-underline"
-            >
-              AI CLUB
-            </a>
-          ) : (
-            <button
-              onClick={() => {
-                localStorage.setItem("redirect_after_login", "https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01");
-                navigate("/auth");
-              }}
-              className="hidden md:inline-flex relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg border border-transparent bg-transparent overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 neon-club-btn no-underline"
-            >
-              AI CLUB
-            </button>
-          )}
+          <button
+            onClick={handleAiClubClick}
+            className="hidden md:inline-flex relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg border border-transparent bg-transparent overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 neon-club-btn no-underline"
+          >
+            AI CLUB
+          </button>
         </div>
 
         {/* Desktop */}
@@ -161,28 +171,12 @@ const Navbar = () => {
       {/* Mobile menu */}
       {open && (
         <div className="md:hidden glass-card border-0 border-t border-glass-border/20 px-4 py-4 flex flex-col gap-4">
-          {user ? (
-            <a
-              href="https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg overflow-hidden neon-club-btn text-left w-fit no-underline"
-            >
-              AI CLUB
-            </a>
-          ) : (
-            <button
-              onClick={() => {
-                localStorage.setItem("redirect_after_login", "https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01");
-                resetBodyLock();
-                navigate("/auth");
-                setOpen(false);
-              }}
-              className="relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg overflow-hidden neon-club-btn text-left w-fit no-underline"
-            >
-              AI CLUB
-            </button>
-          )}
+          <button
+            onClick={handleAiClubClick}
+            className="relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg overflow-hidden neon-club-btn text-left w-fit no-underline"
+          >
+            AI CLUB
+          </button>
           {links.map((l) => (
             <button
               key={l.sectionId}
