@@ -69,14 +69,26 @@ const Navbar = () => {
             <img src={defaultLogo} alt="Affilion AI" className="h-8 w-8 object-cover" style={{ clipPath: "circle(50%)" }} />
             <span className="text-xl font-bold glow-text">Affilion AI</span>
           </button>
-          <a
-            href="https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden md:inline-flex relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg border border-transparent bg-transparent overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 neon-club-btn no-underline"
-          >
-            AI CLUB
-          </a>
+          {user ? (
+            <a
+              href="https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:inline-flex relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg border border-transparent bg-transparent overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 neon-club-btn no-underline"
+            >
+              AI CLUB
+            </a>
+          ) : (
+            <button
+              onClick={() => {
+                localStorage.setItem("redirect_after_login", "https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01");
+                navigate("/auth");
+              }}
+              className="hidden md:inline-flex relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg border border-transparent bg-transparent overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 neon-club-btn no-underline"
+            >
+              AI CLUB
+            </button>
+          )}
         </div>
 
         {/* Desktop */}
@@ -149,14 +161,28 @@ const Navbar = () => {
       {/* Mobile menu */}
       {open && (
         <div className="md:hidden glass-card border-0 border-t border-glass-border/20 px-4 py-4 flex flex-col gap-4">
-          <a
-            href="https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg overflow-hidden neon-club-btn text-left w-fit no-underline"
-          >
-            AI CLUB
-          </a>
+          {user ? (
+            <a
+              href="https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg overflow-hidden neon-club-btn text-left w-fit no-underline"
+            >
+              AI CLUB
+            </a>
+          ) : (
+            <button
+              onClick={() => {
+                localStorage.setItem("redirect_after_login", "https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01");
+                resetBodyLock();
+                navigate("/auth");
+                setOpen(false);
+              }}
+              className="relative text-base font-bold tracking-wide text-foreground px-4 py-1.5 rounded-lg overflow-hidden neon-club-btn text-left w-fit no-underline"
+            >
+              AI CLUB
+            </button>
+          )}
           {links.map((l) => (
             <button
               key={l.sectionId}
