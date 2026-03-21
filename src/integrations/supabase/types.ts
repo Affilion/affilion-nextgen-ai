@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      discord_links: {
+        Row: {
+          created_at: string
+          discord_user_id: string
+          discord_username: string | null
+          email: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          discord_user_id: string
+          discord_username?: string | null
+          email: string
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          discord_user_id?: string
+          discord_username?: string | null
+          email?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       experiments: {
         Row: {
           badge: string | null
