@@ -88,7 +88,25 @@ serve(async (req) => {
 
     console.log(`[DISCORD-AUTH] User: ${userData.id} (${userData.username})`);
 
-    // 3. Send to Make.com webhook
+    // 3. Add user to the Affilion AI Club Discord server
+    const botToken = Deno.env.get("DISCORD_BOT_TOKEN") || "";
+    const guildId = "1484597652749553734";
+    const addMemberRes = await fetch(
+      `https://discord.com/api/v10/guilds/${guildId}/members/${userData.id}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bot ${botToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ access_token: tokenData.access_token }),
+      }
+    );
+    const addMemberStatus = addMemberRes.status;
+    await addMemberRes.text();
+    console.log(`[DISCORD-AUTH] Add member to guild status: ${addMemberStatus}`);
+
+    // 4. Send to Make.com webhook
     const webhookRes = await fetch(
       "https://hook.eu2.make.com/s31a5qmrwfj3gzxkehm5whfbhararfkc",
       {
