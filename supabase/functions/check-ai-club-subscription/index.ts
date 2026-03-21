@@ -27,37 +27,60 @@ serve(async (req) => {
     const { data: userData, error: userError } = await supabaseClient.auth.getUser(token);
     if (userError || !userData.user) throw new Error("Not authenticated");
 
-    const email = userData.user.email;
-    if (!email) return new Response(JSON.stringify({ subscribed: false }), {
+    const primaryEmail = userData.user.email;
+    if (!primaryEmail) return new Response(JSON.stringify({ subscribed: false }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
+
+    // Collect all emails: primary + linked
+    const emails = [primaryEmail];
+    const { data: linkedEmails } = await supabaseClient
+      .from("linked_emails")
+      .select("email")
+      .eq("user_id", userData.user.id);
+    
+    if (linkedEmails) {
+      for (const le of linkedEmails) {
+        if (!emails.includes(le.email)) {
+          emails.push(le.email);
+        }
+      }
+    }
+
+    console.log(`[CHECK-AI-CLUB] Checking emails: ${emails.join(", ")}`);
 
     const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
     if (!stripeKey) throw new Error("STRIPE_SECRET_KEY is not set");
 
     const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
-
-    const customers = await stripe.customers.list({ email, limit: 1 });
-    if (customers.data.length === 0) {
-      return new Response(JSON.stringify({ subscribed: false }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
-    const customerId = customers.data[0].id;
     const productId = "prod_UBSvwtqbSH8L6K";
 
-    const subscriptions = await stripe.subscriptions.list({
-      customer: customerId,
-      status: "active",
-      limit: 10,
-    });
+    // Check each email for active AI Club subscription
+    for (const email of emails) {
+      const customers = await stripe.customers.list({ email, limit: 1 });
+      if (customers.data.length === 0) continue;
 
-    const hasAiClub = subscriptions.data.some((sub) =>
-      sub.items.data.some((item: any) => item.price.product === productId)
-    );
+      const customerId = customers.data[0].id;
+      const subscriptions = await stripe.subscriptions.list({
+        customer: customerId,
+        status: "active",
+        limit: 10,
+      });
 
-    return new Response(JSON.stringify({ subscribed: hasAiClub }), {
+      const hasAiClub = subscriptions.data.some((sub) =>
+        sub.items.data.some((item: any) => item.price.product === productId)
+      );
+
+      if (hasAiClub) {
+        console.log(`[CHECK-AI-CLUB] Found active subscription via email: ${email}`);
+        return new Response(JSON.stringify({ subscribed: true }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+    }
+
+    console.log(`[CHECK-AI-CLUB] No active subscription found for any email`);
+    return new Response(JSON.stringify({ subscribed: false }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {
