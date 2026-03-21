@@ -39,7 +39,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (authLoading) return;
     if (!user) {
-      navigate("/auth?redirect=dashboard");
+      navigate("/auth?redirect=tartalmaim");
       return;
     }
 

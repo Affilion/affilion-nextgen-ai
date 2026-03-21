@@ -11,9 +11,9 @@ const PaymentSuccess = () => {
 
     // If not logged in, redirect to auth with a return-to-dashboard param
     if (!user) {
-      navigate("/auth?redirect=dashboard", { replace: true });
+      navigate("/auth?redirect=tartalmaim", { replace: true });
     } else {
-      navigate("/dashboard", { replace: true });
+      navigate("/tartalmaim", { replace: true });
     }
   }, [user, loading, navigate]);
 
