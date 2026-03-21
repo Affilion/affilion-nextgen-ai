@@ -14,6 +14,7 @@ import Adatvedelem from "./pages/Adatvedelem";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import AiClubSuccess from "./pages/AiClubSuccess";
 import AiClubDiscordCallback from "./pages/AiClubDiscordCallback";
+import Csatlakozas from "./pages/Csatlakozas";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
