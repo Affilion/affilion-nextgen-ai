@@ -16,6 +16,19 @@ const HeroSection = () => {
   const [displayed, setDisplayed] = useState("");
   const [done, setDone] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const STRIPE_URL = "https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01";
+
+  const handleAiClubClick = () => {
+    if (user) {
+      window.open(STRIPE_URL, "_blank", "noopener");
+    } else {
+      localStorage.setItem("redirect_after_login", STRIPE_URL);
+      navigate("/auth");
+    }
+  };
 
   // Typewriter: starts immediately on mount
   useEffect(() => {
