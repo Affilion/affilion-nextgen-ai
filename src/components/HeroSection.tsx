@@ -159,9 +159,12 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 5.5 }}
           className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <a href="#youtube" className="hero-glass-button text-center">
-            Nézd a videókat
-          </a>
+          <button
+            onClick={handleAiClubClick}
+            className="hero-glass-button text-center animate-[pulse_3s_ease-in-out_infinite] hover:animate-none"
+          >
+            Csatlakozz az AI CLUB csoporthoz
+          </button>
           <a href="#termekek" className="hero-glass-button-outline text-center">
             Gyorsítsd fel a munkád!
           </a>
