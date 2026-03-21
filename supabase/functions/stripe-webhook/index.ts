@@ -213,8 +213,10 @@ serve(async (req) => {
       const productId = session.metadata?.product_id;
       const customerEmail = session.customer_details?.email || session.customer_email || "";
       const customerName = session.customer_details?.name || "";
+      const billingAddress = session.customer_details?.address as BillingAddress | undefined;
 
       console.log(`[WEBHOOK] Payment completed for user ${userId}, product ${productId}`);
+      console.log(`[WEBHOOK] Billing address:`, JSON.stringify(billingAddress));
 
       if (userId && productId) {
         // 1. Save purchase to database
@@ -244,7 +246,8 @@ serve(async (req) => {
             customerEmail,
             customerName,
             productId,
-            (session.amount_total || 0) / 100
+            (session.amount_total || 0) / 100,
+            billingAddress
           );
 
           if (invoiceId) {
