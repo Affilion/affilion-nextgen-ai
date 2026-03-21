@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
+import { useAiClubStatus } from "@/hooks/useAiClubStatus";
+import { toast } from "sonner";
 
 const sequence = [
   { action: "type" as const, text: "Szórakozz az AI-val... nem," },
@@ -17,17 +19,23 @@ const HeroSection = () => {
   const [done, setDone] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const { user } = useAuth();
+  const { isSubscribed } = useAiClubStatus();
   const navigate = useNavigate();
 
   const STRIPE_URL = "https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01";
 
   const handleAiClubClick = () => {
-    if (user) {
-      window.open(STRIPE_URL, "_blank", "noopener");
-    } else {
+    if (!user) {
       localStorage.setItem("redirect_after_login", STRIPE_URL);
       navigate("/auth");
+      return;
     }
+    if (isSubscribed) {
+      toast.info("Már van aktív AI Club tagságod! A tagságodat a Tartalmaim oldalon tudod kezelni.");
+      navigate("/tartalmaim");
+      return;
+    }
+    window.open(STRIPE_URL, "_blank", "noopener");
   };
 
   // Typewriter: starts immediately on mount
