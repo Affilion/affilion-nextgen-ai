@@ -28,8 +28,30 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user } = useAuth();
   const { isAdmin } = useAdmin();
+  const { isSubscribed } = useAiClubStatus();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const STRIPE_URL = "https://buy.stripe.com/dRm4gz8jz3c23YS7DA7bW01";
+
+  const handleAiClubClick = () => {
+    if (!user) {
+      localStorage.setItem("redirect_after_login", STRIPE_URL);
+      resetBodyLock();
+      navigate("/auth");
+      setOpen(false);
+      return;
+    }
+    if (isSubscribed) {
+      toast.info("Már van aktív AI Club tagságod! A tagságodat a Tartalmaim oldalon tudod kezelni.");
+      resetBodyLock();
+      navigate("/tartalmaim");
+      setOpen(false);
+      return;
+    }
+    window.open(STRIPE_URL, "_blank", "noopener");
+    setOpen(false);
+  };
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
