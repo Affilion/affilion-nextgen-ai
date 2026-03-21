@@ -82,9 +82,9 @@ async function createSzamlazzInvoice(
   <elado/>
   <vevo>
     <nev>${escapeXml(customerName || customerEmail)}</nev>
-    <irsz></irsz>
-    <telepules>N/A</telepules>
-    <cim>Online vásárlás</cim>
+    <irsz>${escapeXml(postalCode)}</irsz>
+    <telepules>${escapeXml(city)}</telepules>
+    <cim>${escapeXml(fullAddress)}</cim>
     <email>${escapeXml(customerEmail)}</email>
     <sendEmail>true</sendEmail>
     <adoszam></adoszam>
