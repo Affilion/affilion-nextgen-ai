@@ -72,6 +72,8 @@ serve(async (req) => {
           if (matchingItem) {
             const customer = sub.customer as any;
 
+            console.log(`[LIST-AI-CLUB] Sub ${sub.id}: status=${sub.status}, cancel_at_period_end=${sub.cancel_at_period_end}`);
+
             // Determine display status
             let displayStatus: "active" | "canceled_pending" | "inactive";
             if (sub.status === "active" && !sub.cancel_at_period_end) {
