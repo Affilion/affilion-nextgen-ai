@@ -27,20 +27,37 @@ serve(async (req) => {
     const { data: userData, error: userError } = await supabaseClient.auth.getUser(token);
     if (userError || !userData.user) throw new Error("Not authenticated");
 
-    const email = userData.user.email;
-    if (!email) throw new Error("User email not available");
+    const primaryEmail = userData.user.email;
+    if (!primaryEmail) throw new Error("User email not available");
+
+    const { data: linkedEmails } = await supabaseClient
+      .from("linked_emails")
+      .select("email")
+      .eq("user_id", userData.user.id);
+
+    const emails = [primaryEmail, ...(linkedEmails?.map((item) => item.email) ?? [])].filter(
+      (email, index, array) => email && array.indexOf(email) === index
+    );
 
     const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
     if (!stripeKey) throw new Error("STRIPE_SECRET_KEY is not set");
 
     const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
 
-    const customers = await stripe.customers.list({ email, limit: 1 });
-    if (customers.data.length === 0) {
-      throw new Error("No Stripe customer found for this email");
+    let customerId: string | null = null;
+
+    for (const email of emails) {
+      const customers = await stripe.customers.list({ email, limit: 1 });
+      if (customers.data.length > 0) {
+        customerId = customers.data[0].id;
+        console.log(`[BILLING-PORTAL] Found Stripe customer via email: ${email}`);
+        break;
+      }
     }
 
-    const customerId = customers.data[0].id;
+    if (!customerId) {
+      throw new Error("No Stripe customer found for this user or linked emails");
+    }
 
     const portalSession = await stripe.billingPortal.sessions.create({
       customer: customerId,
