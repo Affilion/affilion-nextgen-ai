@@ -251,6 +251,69 @@ serve(async (req) => {
       }
     }
 
+    // Handle subscription cancellation — remove Discord role
+    if (event.type === "customer.subscription.deleted") {
+      const subscription = event.data.object as Stripe.Subscription;
+      const customerId = typeof subscription.customer === "string" ? subscription.customer : subscription.customer?.id;
+      
+      // Check if this is an AI Club subscription
+      const aiClubProductId = "prod_UBSvwtqbSH8L6K";
+      const isAiClub = subscription.items.data.some(
+        (item: any) => item.price.product === aiClubProductId
+      );
+
+      if (isAiClub && customerId) {
+        console.log(`[WEBHOOK] AI Club subscription canceled for customer: ${customerId}`);
+
+        // Get customer email from Stripe
+        const customer = await stripe.customers.retrieve(customerId);
+        const customerEmail = (customer as any).email;
+
+        if (customerEmail) {
+          console.log(`[WEBHOOK] Looking up Discord user for email: ${customerEmail}`);
+
+          // Look up discord_user_id from discord_links table
+          const { data: link } = await supabase
+            .from("discord_links")
+            .select("discord_user_id")
+            .eq("email", customerEmail)
+            .maybeSingle();
+
+          if (link?.discord_user_id) {
+            console.log(`[WEBHOOK] Removing Discord role for user: ${link.discord_user_id}`);
+
+            // Remove role directly via Discord API
+            const botToken = Deno.env.get("DISCORD_BOT_TOKEN") || "";
+            const guildId = "1484597652749553734";
+            const roleId = "1484598151812878516";
+            const removeRoleRes = await fetch(
+              `https://discord.com/api/v10/guilds/${guildId}/members/${link.discord_user_id}/roles/${roleId}`,
+              {
+                method: "DELETE",
+                headers: { Authorization: `Bot ${botToken}` },
+              }
+            );
+            console.log(`[WEBHOOK] Discord role removal status: ${removeRoleRes.status}`);
+            await removeRoleRes.text();
+
+            // Also notify Make.com webhook
+            const makeRes = await fetch(
+              "https://hook.eu2.make.com/a23r47wbiz23jj2k8u6eej3levlzwxae",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ discord_user_id: link.discord_user_id }),
+              }
+            );
+            await makeRes.text();
+            console.log(`[WEBHOOK] Make.com role removal webhook sent`);
+          } else {
+            console.warn(`[WEBHOOK] No Discord link found for email: ${customerEmail}`);
+          }
+        }
+      }
+    }
+
     return new Response(JSON.stringify({ received: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
