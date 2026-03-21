@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { optimizeImageForUpload } from "@/lib/imageOptimization";
 
-type Tab = "users" | "products" | "portfolio" | "experiments" | "prompts" | "content" | "waitlist" | "prompt-manager";
+type Tab = "users" | "products" | "portfolio" | "experiments" | "prompts" | "content" | "waitlist" | "prompt-manager" | "ai-club";
 type UploadFolder = "portfolio" | "prompts" | "products";
 
 const uploadCmsImage = async (file: File, folder: UploadFolder) => {
@@ -70,6 +70,7 @@ const Admin = () => {
     { id: "prompt-manager", label: "Prompt Player", icon: <Music size={16} /> },
     { id: "content", label: "Tartalom URL-ek", icon: <Link size={16} /> },
     { id: "waitlist", label: "Várólista", icon: <Mail size={16} /> },
+    { id: "ai-club", label: "AI Club Előfizetők", icon: <Users size={16} /> },
   ];
 
   return (
@@ -110,6 +111,7 @@ const Admin = () => {
             {activeTab === "prompt-manager" && <PromptManagerPanel />}
             {activeTab === "content" && <ContentPanel />}
             {activeTab === "waitlist" && <WaitlistPanel />}
+            {activeTab === "ai-club" && <AiClubPanel />}
           </motion.div>
         </div>
       </div>
@@ -1395,6 +1397,98 @@ const WaitlistPanel = () => {
           </table>
         </div>
       </div>
+    </div>
+  );
+};
+
+/* ── AI Club Panel ── */
+const AiClubPanel = () => {
+  const [subscribers, setSubscribers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const fetchSubscribers = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error("Nincs bejelentkezve");
+
+      const { data, error: fnError } = await supabase.functions.invoke("list-ai-club-subscribers", {
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
+
+      if (fnError) throw fnError;
+      if (data?.error) throw new Error(data.error);
+
+      setSubscribers(data.subscribers || []);
+    } catch (err: any) {
+      setError(err.message || "Hiba történt");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSubscribers();
+  }, []);
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold text-foreground">AI Club Előfizetők</h2>
+        <Button onClick={fetchSubscribers} disabled={loading} variant="outline" className="gap-2">
+          <Download size={14} /> Frissítés
+        </Button>
+      </div>
+
+      {loading ? (
+        <div className="flex justify-center py-12">
+          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : error ? (
+        <div className="hyper-glass rounded-xl p-8 text-center text-destructive">{error}</div>
+      ) : (
+        <div className="hyper-glass rounded-xl overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border text-left text-muted-foreground">
+                  <th className="p-4">Név</th>
+                  <th className="p-4">Email</th>
+                  <th className="p-4">Előfizetés kezdete</th>
+                  <th className="p-4">Következő fizetés</th>
+                  <th className="p-4">Státusz</th>
+                </tr>
+              </thead>
+              <tbody>
+                {subscribers.length === 0 ? (
+                  <tr><td colSpan={5} className="p-8 text-center text-muted-foreground">Nincs aktív AI Club előfizető.</td></tr>
+                ) : (
+                  subscribers.map((s) => (
+                    <tr key={s.id} className="border-b border-border/50 hover:bg-muted/20">
+                      <td className="p-4 text-foreground">{s.name}</td>
+                      <td className="p-4 text-foreground">{s.email}</td>
+                      <td className="p-4 text-muted-foreground">{new Date(s.created).toLocaleDateString("hu")}</td>
+                      <td className="p-4 text-muted-foreground">{new Date(s.current_period_end).toLocaleDateString("hu")}</td>
+                      <td className="p-4">
+                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400">
+                          Aktív
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+          {subscribers.length > 0 && (
+            <div className="p-4 border-t border-border text-sm text-muted-foreground">
+              Összesen: {subscribers.length} aktív előfizető
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
