@@ -95,7 +95,7 @@ const Navbar = () => {
               <button
                 onClick={() => {
                   resetBodyLock();
-                  navigate("/dashboard");
+                  navigate("/tartalmaim");
                 }}
                 className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"
               >
