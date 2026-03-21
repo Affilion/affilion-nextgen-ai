@@ -14,7 +14,7 @@ const AiClubSuccess = () => {
   }, [sessionId]);
 
   const discordOAuthUrl =
-    "https://discord.com/oauth2/authorize?client_id=1484599498113290240&response_type=code&redirect_uri=https%3A%2F%2Faffilionai.hu%2Fai-club%2Fdiscord-callback&scope=identify+guilds.join";
+    "https://discord.com/oauth2/authorize?client_id=1484599498113290240&response_type=code&redirect_uri=https%3A%2F%2Faffilionai.hu%2Fai-club%2Fdiscord-callback&scope=identify+guilds.join+email";
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
