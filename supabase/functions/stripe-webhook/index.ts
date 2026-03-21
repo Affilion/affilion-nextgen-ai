@@ -28,15 +28,31 @@ function escapeXml(str: string): string {
     .replace(/'/g, "&apos;");
 }
 
+interface BillingAddress {
+  city?: string;
+  country?: string;
+  line1?: string;
+  line2?: string;
+  postal_code?: string;
+  state?: string;
+}
+
 async function createSzamlazzInvoice(
   agentKey: string,
   customerEmail: string,
   customerName: string,
   productId: string,
-  _amountFromStripe: number
+  _amountFromStripe: number,
+  billingAddress?: BillingAddress
 ): Promise<string | null> {
   const productName = PRODUCT_NAMES[productId] || productId;
   const price = PRODUCT_PRICES[productId] || _amountFromStripe;
+
+  const city = billingAddress?.city || "N/A";
+  const postalCode = billingAddress?.postal_code || "";
+  const addressLine = billingAddress?.line1 || "Online vásárlás";
+  const addressLine2 = billingAddress?.line2 ? ` ${billingAddress.line2}` : "";
+  const fullAddress = `${addressLine}${addressLine2}`;
 
   const today = new Date().toISOString().split("T")[0];
   // AAM = Alanyi adómentes (KATA egyéni vállalkozó, ÁFA-mentes)
