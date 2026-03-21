@@ -123,16 +123,18 @@ const Admin = () => {
 const UsersPanel = () => {
   const [users, setUsers] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
+  const [discordEmails, setDiscordEmails] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
   const [giftingUserId, setGiftingUserId] = useState<string | null>(null);
   const [selectedProductId, setSelectedProductId] = useState("");
   const [giftLoading, setGiftLoading] = useState(false);
 
   const fetchData = async () => {
-    const [{ data: profiles }, { data: purchases }, { data: prods }] = await Promise.all([
+    const [{ data: profiles }, { data: purchases }, { data: prods }, { data: discordLinks }] = await Promise.all([
       supabase.from("profiles").select("*"),
       supabase.from("purchases").select("*"),
       supabase.from("products").select("*").order("sort_order"),
+      supabase.from("discord_links").select("email"),
     ]);
 
     const enriched = (profiles || []).map((p) => ({
@@ -141,6 +143,7 @@ const UsersPanel = () => {
     }));
     setUsers(enriched);
     setProducts(prods || []);
+    setDiscordEmails(new Set((discordLinks || []).map((d: any) => d.email)));
     setLoading(false);
   };
 
@@ -185,6 +188,7 @@ const UsersPanel = () => {
               <th className="p-4">Email</th>
               <th className="p-4">Regisztráció</th>
               <th className="p-4">Vásárlások</th>
+              <th className="p-4">AI Club</th>
               <th className="p-4">Művelet</th>
             </tr>
           </thead>
@@ -205,6 +209,15 @@ const UsersPanel = () => {
                         </span>
                       ))}
                     </div>
+                  )}
+                </td>
+                <td className="p-4">
+                  {u.email && discordEmails.has(u.email) ? (
+                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-primary/20 text-primary">
+                      Aktív tag
+                    </span>
+                  ) : (
+                    <span className="text-muted-foreground">–</span>
                   )}
                 </td>
                 <td className="p-4">
