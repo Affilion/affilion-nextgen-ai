@@ -60,7 +60,7 @@ serve(async (req) => {
 
     // 3. Send to Make.com webhook
     const webhookRes = await fetch(
-      "https://hook.eu2.make.com/i767jjvfil1vopmym88riio7g76kz5w8",
+      "https://hook.eu2.make.com/s31a5qmrwfj3gzxkehm5whfbhararfkc",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
