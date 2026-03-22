@@ -71,10 +71,10 @@ serve(async (req) => {
 
           if (matchingItem) {
             const customer = sub.customer as any;
+            const price = matchingItem.price;
 
             console.log(`[LIST-AI-CLUB] Sub ${sub.id}: status=${sub.status}, cancel_at_period_end=${sub.cancel_at_period_end}`);
 
-            // Determine display status
             let displayStatus: "active" | "canceled_pending" | "inactive";
             if (sub.status === "active" && !sub.cancel_at_period_end) {
               displayStatus = "active";
@@ -83,6 +83,20 @@ serve(async (req) => {
             } else {
               displayStatus = "inactive";
             }
+
+            // Extract coupon/discount info
+            const discount = sub.discount;
+            let couponName: string | null = null;
+            let couponPercent: number | null = null;
+            let couponAmountOff: number | null = null;
+            if (discount?.coupon) {
+              couponName = discount.coupon.name || discount.coupon.id;
+              couponPercent = discount.coupon.percent_off ?? null;
+              couponAmountOff = discount.coupon.amount_off ? discount.coupon.amount_off / 100 : null;
+            }
+
+            const monthlyAmount = price.unit_amount ? price.unit_amount / 100 : null;
+            const currency = price.currency || "huf";
 
             subscribers.push({
               id: sub.id,
@@ -93,6 +107,11 @@ serve(async (req) => {
               status: sub.status,
               cancel_at_period_end: sub.cancel_at_period_end ?? false,
               display_status: displayStatus,
+              monthly_amount: monthlyAmount,
+              currency,
+              coupon_name: couponName,
+              coupon_percent: couponPercent,
+              coupon_amount_off: couponAmountOff,
             });
           }
         }
