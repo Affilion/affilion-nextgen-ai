@@ -1507,6 +1507,7 @@ const AiClubPanel = () => {
                   <th className="p-4">Név</th>
                   <th className="p-4">Email</th>
                   <th className="p-4">Havi díj</th>
+                  <th className="p-4">Fizetett</th>
                   <th className="p-4">Kupon</th>
                   <th className="p-4">Előfizetés kezdete</th>
                   <th className="p-4">{subTab === "active" ? "Következő fizetés / Lejárat" : "Lejárt"}</th>
@@ -1515,7 +1516,7 @@ const AiClubPanel = () => {
               </thead>
               <tbody>
                 {displayed.length === 0 ? (
-                  <tr><td colSpan={7} className="p-8 text-center text-muted-foreground">
+                  <tr><td colSpan={8} className="p-8 text-center text-muted-foreground">
                     {subTab === "active" ? "Nincs aktív AI Club előfizető." : "Nincs inaktív AI Club előfizető."}
                   </td></tr>
                 ) : (
@@ -1531,14 +1532,24 @@ const AiClubPanel = () => {
                           ? `${s.coupon_name} (-${fmtAmt(s.coupon_amount_off, s.currency)})`
                           : s.coupon_name
                       : null;
+                    const hasDifference = s.paid_amount !== null && s.monthly_amount !== null && s.paid_amount < s.monthly_amount;
                     return (
                       <tr key={s.id} className="border-b border-border/50 hover:bg-muted/20">
                         <td className="p-4 text-foreground">{s.name}</td>
                         <td className="p-4 text-foreground">{s.email}</td>
                         <td className="p-4 text-foreground font-medium">{fmtAmt(s.monthly_amount, s.currency)}</td>
                         <td className="p-4">
+                          {s.paid_amount !== null ? (
+                            <span className={hasDifference ? "text-green-400 font-medium" : "text-foreground"}>
+                              {fmtAmt(s.paid_amount, s.currency)}
+                            </span>
+                          ) : "-"}
+                        </td>
+                        <td className="p-4">
                           {couponLabel ? (
                             <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-400">{couponLabel}</span>
+                          ) : hasDifference ? (
+                            <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-400">Kedvezmény</span>
                           ) : (
                             <span className="text-muted-foreground">-</span>
                           )}

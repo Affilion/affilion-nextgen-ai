@@ -58,7 +58,7 @@ serve(async (req) => {
         const params: any = {
           status,
           limit: 100,
-          expand: ["data.customer"],
+          expand: ["data.customer", "data.latest_invoice"],
         };
         if (startingAfter) params.starting_after = startingAfter;
 
@@ -84,19 +84,46 @@ serve(async (req) => {
               displayStatus = "inactive";
             }
 
-            // Extract coupon/discount info
+            // Extract coupon/discount info from subscription level
             const discount = sub.discount;
             let couponName: string | null = null;
             let couponPercent: number | null = null;
             let couponAmountOff: number | null = null;
+
             if (discount?.coupon) {
               couponName = discount.coupon.name || discount.coupon.id;
               couponPercent = discount.coupon.percent_off ?? null;
               couponAmountOff = discount.coupon.amount_off ? discount.coupon.amount_off / 100 : null;
             }
 
+            // If no subscription-level discount, check latest invoice for applied discounts
+            const latestInvoice = sub.latest_invoice as any;
+            if (!couponName && latestInvoice && typeof latestInvoice === "object") {
+              // Check invoice-level discount
+              if (latestInvoice.discount?.coupon) {
+                const ic = latestInvoice.discount.coupon;
+                couponName = ic.name || ic.id;
+                couponPercent = ic.percent_off ?? null;
+                couponAmountOff = ic.amount_off ? ic.amount_off / 100 : null;
+              }
+              // Check total_discount_amounts on the invoice
+              if (!couponName && latestInvoice.total_discount_amounts?.length > 0) {
+                const totalDiscount = latestInvoice.total_discount_amounts[0];
+                if (totalDiscount.amount > 0) {
+                  couponName = "Kedvezmény";
+                  couponAmountOff = totalDiscount.amount / 100;
+                }
+              }
+            }
+
             const monthlyAmount = price.unit_amount ? price.unit_amount / 100 : null;
             const currency = price.currency || "huf";
+
+            // Calculate actual paid amount from latest invoice if available
+            let paidAmount: number | null = null;
+            if (latestInvoice && typeof latestInvoice === "object" && latestInvoice.amount_paid != null) {
+              paidAmount = latestInvoice.amount_paid / 100;
+            }
 
             subscribers.push({
               id: sub.id,
@@ -108,6 +135,7 @@ serve(async (req) => {
               cancel_at_period_end: sub.cancel_at_period_end ?? false,
               display_status: displayStatus,
               monthly_amount: monthlyAmount,
+              paid_amount: paidAmount,
               currency,
               coupon_name: couponName,
               coupon_percent: couponPercent,
