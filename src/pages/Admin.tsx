@@ -1506,6 +1506,8 @@ const AiClubPanel = () => {
                 <tr className="border-b border-border text-left text-muted-foreground">
                   <th className="p-4">Név</th>
                   <th className="p-4">Email</th>
+                  <th className="p-4">Havi díj</th>
+                  <th className="p-4">Kupon</th>
                   <th className="p-4">Előfizetés kezdete</th>
                   <th className="p-4">{subTab === "active" ? "Következő fizetés / Lejárat" : "Lejárt"}</th>
                   <th className="p-4">Státusz</th>
@@ -1513,19 +1515,40 @@ const AiClubPanel = () => {
               </thead>
               <tbody>
                 {displayed.length === 0 ? (
-                  <tr><td colSpan={5} className="p-8 text-center text-muted-foreground">
+                  <tr><td colSpan={7} className="p-8 text-center text-muted-foreground">
                     {subTab === "active" ? "Nincs aktív AI Club előfizető." : "Nincs inaktív AI Club előfizető."}
                   </td></tr>
                 ) : (
-                  displayed.map((s) => (
-                    <tr key={s.id} className="border-b border-border/50 hover:bg-muted/20">
-                      <td className="p-4 text-foreground">{s.name}</td>
-                      <td className="p-4 text-foreground">{s.email}</td>
-                      <td className="p-4 text-muted-foreground">{s.created ? new Date(s.created).toLocaleDateString("hu") : "-"}</td>
-                      <td className="p-4 text-muted-foreground">{s.current_period_end ? new Date(s.current_period_end).toLocaleDateString("hu") : "-"}</td>
-                      <td className="p-4"><StatusBadge status={s.display_status} /></td>
-                    </tr>
-                  ))
+                  displayed.map((s) => {
+                    const fmtAmt = (amt: number | null, cur: string) => {
+                      if (amt === null) return "-";
+                      return cur === "huf" ? `${amt.toLocaleString("hu")} Ft` : `${amt} ${cur.toUpperCase()}`;
+                    };
+                    const couponLabel = s.coupon_name
+                      ? s.coupon_percent
+                        ? `${s.coupon_name} (${s.coupon_percent}%)`
+                        : s.coupon_amount_off
+                          ? `${s.coupon_name} (-${fmtAmt(s.coupon_amount_off, s.currency)})`
+                          : s.coupon_name
+                      : null;
+                    return (
+                      <tr key={s.id} className="border-b border-border/50 hover:bg-muted/20">
+                        <td className="p-4 text-foreground">{s.name}</td>
+                        <td className="p-4 text-foreground">{s.email}</td>
+                        <td className="p-4 text-foreground font-medium">{fmtAmt(s.monthly_amount, s.currency)}</td>
+                        <td className="p-4">
+                          {couponLabel ? (
+                            <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-400">{couponLabel}</span>
+                          ) : (
+                            <span className="text-muted-foreground">-</span>
+                          )}
+                        </td>
+                        <td className="p-4 text-muted-foreground">{s.created ? new Date(s.created).toLocaleDateString("hu") : "-"}</td>
+                        <td className="p-4 text-muted-foreground">{s.current_period_end ? new Date(s.current_period_end).toLocaleDateString("hu") : "-"}</td>
+                        <td className="p-4"><StatusBadge status={s.display_status} /></td>
+                      </tr>
+                    );
+                  })
                 )}
               </tbody>
             </table>
