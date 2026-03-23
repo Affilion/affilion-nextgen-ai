@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import Stripe from "https://esm.sh/stripe@18.5.0";
+import Stripe from "https://esm.sh/stripe@14.21.0";
 import { createClient } from "npm:@supabase/supabase-js@2.57.2";
 
 const corsHeaders = {
@@ -43,7 +43,7 @@ serve(async (req) => {
     if (!roleData) throw new Error("Not authorized");
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
-      apiVersion: "2025-08-27.basil",
+      apiVersion: "2023-10-16",
     });
 
     const productId = "prod_UBSvwtqbSH8L6K";
@@ -58,7 +58,7 @@ serve(async (req) => {
         const params: any = {
           status,
           limit: 100,
-          expand: ["data.customer", "data.latest_invoice"],
+          expand: ["data.customer"],
         };
         if (startingAfter) params.starting_after = startingAfter;
 
@@ -96,33 +96,40 @@ serve(async (req) => {
               couponAmountOff = discount.coupon.amount_off ? discount.coupon.amount_off / 100 : null;
             }
 
-            // If no subscription-level discount, check latest invoice for applied discounts
-            const latestInvoice = sub.latest_invoice as any;
-            if (!couponName && latestInvoice && typeof latestInvoice === "object") {
-              // Check invoice-level discount
-              if (latestInvoice.discount?.coupon) {
-                const ic = latestInvoice.discount.coupon;
-                couponName = ic.name || ic.id;
-                couponPercent = ic.percent_off ?? null;
-                couponAmountOff = ic.amount_off ? ic.amount_off / 100 : null;
-              }
-              // Check total_discount_amounts on the invoice
-              if (!couponName && latestInvoice.total_discount_amounts?.length > 0) {
-                const totalDiscount = latestInvoice.total_discount_amounts[0];
-                if (totalDiscount.amount > 0) {
-                  couponName = "Kedvezmény";
-                  couponAmountOff = totalDiscount.amount / 100;
-                }
-              }
-            }
-
             const monthlyAmount = price.unit_amount ? price.unit_amount / 100 : null;
             const currency = price.currency || "huf";
 
-            // Calculate actual paid amount from latest invoice if available
+            // Fetch latest invoice separately to avoid permission issues with expand
             let paidAmount: number | null = null;
-            if (latestInvoice && typeof latestInvoice === "object" && latestInvoice.amount_paid != null) {
-              paidAmount = latestInvoice.amount_paid / 100;
+            try {
+              const invoices = await stripe.invoices.list({
+                subscription: sub.id,
+                limit: 1,
+                status: "paid",
+              });
+              if (invoices.data.length > 0) {
+                const latestInvoice = invoices.data[0];
+                paidAmount = latestInvoice.amount_paid != null ? latestInvoice.amount_paid / 100 : null;
+
+                // Check invoice-level discount if no subscription-level discount
+                if (!couponName && latestInvoice.discount?.coupon) {
+                  const ic = latestInvoice.discount.coupon;
+                  couponName = ic.name || ic.id;
+                  couponPercent = ic.percent_off ?? null;
+                  couponAmountOff = ic.amount_off ? ic.amount_off / 100 : null;
+                }
+
+                // Check total_discount_amounts on the invoice
+                if (!couponName && (latestInvoice as any).total_discount_amounts?.length > 0) {
+                  const totalDiscount = (latestInvoice as any).total_discount_amounts[0];
+                  if (totalDiscount.amount > 0) {
+                    couponName = "Kedvezmény";
+                    couponAmountOff = totalDiscount.amount / 100;
+                  }
+                }
+              }
+            } catch (invoiceErr) {
+              console.warn(`[LIST-AI-CLUB] Could not fetch invoice for ${sub.id}:`, invoiceErr);
             }
 
             subscribers.push({
@@ -130,7 +137,7 @@ serve(async (req) => {
               name: customer?.name || "-",
               email: customer?.email || "-",
               created: toIsoString(sub.created),
-              current_period_end: toIsoString(matchingItem.current_period_end),
+              current_period_end: toIsoString((matchingItem as any).current_period_end),
               status: sub.status,
               cancel_at_period_end: sub.cancel_at_period_end ?? false,
               display_status: displayStatus,
