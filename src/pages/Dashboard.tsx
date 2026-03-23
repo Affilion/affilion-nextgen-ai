@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Lock, Unlock, ShoppingCart, X, BookOpen, Sparkles, Music } from "lucide-react";
+import { ArrowLeft, Lock, Unlock, ShoppingCart, X, BookOpen, Sparkles, Music, MessageCircle } from "lucide-react";
 import { CreditCard, ExternalLink, Crown } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import PromptPlayer from "@/components/PromptPlayer";
@@ -171,15 +171,24 @@ const Dashboard = () => {
                       <p className="text-xs text-muted-foreground">Aktív Affilion AI Club előfizetés</p>
                     </div>
                   </div>
-                  <button
-                    onClick={handleManageSubscription}
-                    disabled={aiClubLoading}
-                    className="neon-button-outline text-xs py-2 px-5 flex items-center gap-2 disabled:opacity-50"
-                  >
-                    <CreditCard size={14} />
-                    {aiClubLoading ? "Betöltés..." : "Előfizetés kezelése"}
-                    <ExternalLink size={12} />
-                  </button>
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <a
+                      href="https://discord.com/oauth2/authorize?client_id=1484599498113290240&response_type=code&redirect_uri=https%3A%2F%2Faffilionai.hu%2Fai-club%2Fdiscord-callback&scope=identify+guilds.join+email"
+                      className="neon-button text-xs py-2 px-5 flex items-center gap-2"
+                    >
+                      <MessageCircle size={14} />
+                      Discord csoport
+                    </a>
+                    <button
+                      onClick={handleManageSubscription}
+                      disabled={aiClubLoading}
+                      className="neon-button-outline text-xs py-2 px-5 flex items-center gap-2 disabled:opacity-50"
+                    >
+                      <CreditCard size={14} />
+                      {aiClubLoading ? "Betöltés..." : "Előfizetés kezelése"}
+                      <ExternalLink size={12} />
+                    </button>
+                  </div>
                 </div>
               </div>
             </motion.section>
