@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Lock, Unlock, ShoppingCart, X, BookOpen, Sparkles, Music } from "lucide-react";
+import { ArrowLeft, Lock, Unlock, ShoppingCart, X, BookOpen, Sparkles, Music, MessageCircle } from "lucide-react";
 import { CreditCard, ExternalLink, Crown } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import PromptPlayer from "@/components/PromptPlayer";
