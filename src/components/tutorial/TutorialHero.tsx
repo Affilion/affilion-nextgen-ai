@@ -37,7 +37,7 @@ const HeroVideo = () => {
     </div>
   );
 };
-
+const LOVABLE_URL = "https://lovable.dev/invite/PBZ4OPL";
 
 const TutorialHero = () => {
   return (
