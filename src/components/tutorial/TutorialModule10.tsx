@@ -1,41 +1,55 @@
 import { useState, useMemo } from "react";
-import { Search, ChevronDown, BookOpen } from "lucide-react";
+import { Search, BookOpen } from "lucide-react";
 
 const glossaryItems = [
   { term: "A rekord", badge: "DNS", def: "DNS bejegyzés, ami egy domain nevét egy konkrét IP-címhez (szerver címéhez) rendel. Ezzel mondod meg, melyik szerveren van a weboldalad." },
+  { term: "AI", badge: "AI", def: "Artificial Intelligence — mesterséges intelligencia. Számítógép által végzett 'okos' műveletek, pl. szöveggenerálás, képfelismerés. A Lovable AI-t használ a kód generálásához." },
   { term: "API", badge: "Fejlesztés", def: "Application Programming Interface — két szoftver közötti kommunikációs 'nyelv'. Például így küld adatot a Lovable a Supabase-nek." },
   { term: "Backend", badge: "Webfejlesztés", def: "A weboldal háttérben futó része — adatbázis, szerverlogika, felhasználó-kezelés. Nem látható a felhasználó számára." },
   { term: "Böngésző", badge: "Alap", def: "A program, amivel weboldalakat nézel (Chrome, Firefox, Safari, Edge). A böngésző jeleníti meg a weboldalak tartalmát." },
+  { term: "Cache", badge: "Teljesítmény", def: "A böngésző által ideiglenesen tárolt adatok (képek, fájlok), hogy a weboldal gyorsabban töltődjön be legközelebb. Néha törölni kell, ha a változtatások nem jelennek meg." },
   { term: "CMS", badge: "Platform", def: "Content Management System — tartalomkezelő rendszer, pl. WordPress. Lehetővé teszi weboldalak kezelését programozás nélkül." },
+  { term: "Cookie", badge: "Biztonság", def: "Kis szöveges fájl, amit a weboldal a látogató böngészőjében tárol. Használják bejelentkezési adatok megjegyzésére, statisztikákra és hirdetéskövetésre." },
   { term: "CTA", badge: "Marketing", def: "Call to Action — cselekvésre ösztönző elem, pl. 'Vedd meg most!', 'Regisztrálj' gomb. A weboldal legfontosabb interakciós eleme." },
   { term: "CSS", badge: "Kód", def: "Cascading Style Sheets — a weboldal 'öltözéke'. Ez határozza meg a színeket, betűtípusokat, elrendezést és megjelenést." },
+  { term: "Deploy", badge: "Fejlesztés", def: "A weboldal 'élesítése' — amikor a kész kódot feltöltöd a szerverre és bárki számára elérhetővé teszed az interneten. A Lovable-ben egy gombnyomással megteheted." },
   { term: "DNS", badge: "Hálózat", def: "Domain Name System — az internet 'telefonkönyve'. A domain neveket (pelda.hu) lefordítja IP-címekre (számsorokra), amit a számítógépek megértenek." },
   { term: "Domain", badge: "Alap", def: "A weboldalad egyedi neve/címe az interneten (pl. pelda.hu). Ezt gépeli be a látogató a böngészőjébe." },
   { term: "Edge Function", badge: "Supabase", def: "Szerver nélküli háttér-kód, ami a felhőben fut. Ideális e-mail küldésre, fizetés-feldolgozásra, vagy API hívásokra." },
+  { term: "Favicon", badge: "Design", def: "A kis ikon, ami a böngésző fülecskéjében jelenik meg a weboldal neve mellett. Általában 32x32 pixeles kép, ami segít felismerni az oldalad." },
   { term: "Frontend", badge: "Webfejlesztés", def: "A weboldal 'vitrine' — minden, amit a látogató lát és használ: design, gombok, szövegek, képek, animációk." },
   { term: "GA4", badge: "Analytics", def: "Google Analytics 4 — a Google ingyenes statisztikai eszköze, amellyel a weboldalad látogatóit követheted nyomon (hányan jönnek, honnan, mit csinálnak)." },
+  { term: "Git/GitHub", badge: "Fejlesztés", def: "Verziókezelő rendszer (Git) és annak webes platformja (GitHub). Tárolja a kódod történetét és lehetővé teszi a csapatmunkát. A Lovable automatikusan GitHub-ot használ." },
   { term: "GSC", badge: "SEO", def: "Google Search Console — ingyenes eszköz, amivel megnézheted, hogyan teljesít a weboldalad a Google keresőben." },
   { term: "Hosting", badge: "Infrastruktúra", def: "Tárhelyszolgáltatás — a szerver, ahol a weboldalad fájljai 'laknak' és az interneten elérhetők. A Lovable Cloud ezt automatikusan biztosítja." },
   { term: "HTML", badge: "Kód", def: "HyperText Markup Language — a weboldal 'csontváza'. Ez határozza meg a weboldal szerkezetét (címsorok, bekezdések, képek, linkek)." },
   { term: "HTTPS/SSL", badge: "Biztonság", def: "Titkosított kapcsolat a böngésző és a szerver között. A böngészőben lakat ikonnal jelölik. A Lovable automatikusan biztosítja minden weboldalhoz." },
+  { term: "IP-cím", badge: "Hálózat", def: "Egyedi számsor (pl. 192.168.1.1), ami azonosítja a számítógépeket az interneten. Minden szerver, ami weboldalakat szolgál ki, rendelkezik IP-címmel." },
   { term: "JavaScript", badge: "Kód", def: "Programozási nyelv, ami a weboldalakat interaktívvá teszi (gombok, animációk, űrlapok). A Lovable React-et használ, ami JavaScript-re épül." },
   { term: "JSON-LD", badge: "SEO", def: "Strukturált adat formátum, amivel a Google-nek extra információkat adsz a weboldaladról (pl. cég neve, címe, nyitvatartás)." },
   { term: "Kulcsszó", badge: "SEO", def: "Az a szó vagy kifejezés, amire a célközönséged keres a Google-ben. A jó SEO alapja: a megfelelő kulcsszavak használata a weboldalad szövegeiben." },
+  { term: "Landing Page", badge: "Marketing", def: "Céloldal — egyetlen oldalból álló weboldal, ami egy konkrét célra készül (pl. termék bemutatása, feliratkozás gyűjtése). A legfontosabb eleme a CTA gomb." },
   { term: "Meta tag", badge: "SEO", def: "A weboldal fejlécében elhelyezett rejtett információ, ami a keresőmotoroknak és a közösségi médiának szól (cím, leírás, kép)." },
+  { term: "Navigáció", badge: "Design", def: "A weboldal menürendszere — az a rész, ahol a látogató az oldalak között tud mozogni. Általában az oldal tetején, néha oldalt (hamburger menü mobilon)." },
   { term: "Open Graph", badge: "Közösségi", def: "Meta tag szabvány, ami meghatározza, hogyan jelenik meg a weboldalad, ha megosztják Facebookon, LinkedInen vagy más közösségi platformon." },
   { term: "PostgreSQL", badge: "Adatbázis", def: "Nyílt forráskódú adatbázis-kezelő rendszer. A Supabase (és így a Lovable) ezt használja az adatok tárolására." },
   { term: "Prompt", badge: "AI", def: "Az AI-nak adott szöveges utasítás. Minél részletesebb és pontosabb, annál jobb eredményt kapsz a Lovable-től." },
   { term: "React", badge: "Kód", def: "Népszerű JavaScript könyvtár weboldalak építéséhez. A Lovable ezt használja a weboldalad kódjának generálásához." },
+  { term: "Redirect", badge: "Hálózat", def: "Átirányítás — amikor egy URL automatikusan egy másik oldalra visz. Hasznos, ha megváltoztatod egy oldal címét, de a régi linknek is működnie kell." },
   { term: "Reszponzív", badge: "Design", def: "Alkalmazkodó megjelenés — a weboldal automatikusan igazodik a képernyő méretéhez (telefon, tablet, monitor)." },
   { term: "Robots.txt", badge: "SEO", def: "Szöveges fájl, ami megmondja a keresőrobotoknak, melyik oldalakat indexelhetik és melyeket ne." },
   { term: "SEO", badge: "Marketing", def: "Search Engine Optimization — keresőoptimalizálás. Az a folyamat, amivel eléred, hogy a Google-ben magasabban jelenjen meg a weboldalad." },
   { term: "Sitemap", badge: "SEO", def: "XML fájl, ami a weboldalad összes oldalát felsorolja. Segíti a Google-t, hogy megtalálja és indexelje az oldalaidat." },
   { term: "SPA", badge: "Fejlesztés", def: "Single Page Application — egyoldalas alkalmazás. A weboldal egyetlen HTML oldalból áll, és JavaScript-tel tölti be a különböző nézeteket. A Lovable ilyen oldalakat készít." },
   { term: "Supabase", badge: "Backend", def: "Nyílt forráskódú backend-szolgáltatás (adatbázis, hitelesítés, fájltárolás). A Lovable ezt használja backend-ként, ha szükséged van rá." },
+  { term: "Tailwind CSS", badge: "Kód", def: "Modern CSS keretrendszer, ami előre elkészített stílusosztályokat kínál (pl. 'bg-blue-500', 'text-center'). A Lovable ezt használja a weboldalad kinézetének kialakításához." },
   { term: "TXT rekord", badge: "DNS", def: "DNS bejegyzés szöveges adatokkal. Leggyakrabban domain-verifikációra használják (pl. Google Search Console, Lovable domain megerősítés)." },
+  { term: "TypeScript", badge: "Kód", def: "A JavaScript bővített változata, ami típusbiztonságot ad a kódhoz. A Lovable TypeScript-et használ, ami kevesebb hibát és jobb fejlesztői élményt eredményez." },
   { term: "URL", badge: "Alap", def: "Uniform Resource Locator — a weboldal pontos 'postacíme' (pl. https://pelda.hu/kapcsolat). Minden weboldalnak és aloldalnak saját URL-je van." },
   { term: "UX/UI", badge: "Design", def: "UX = felhasználói élmény (mennyire intuitív, könnyű használni). UI = felhasználói felület (hogy néz ki, gombok, színek, elrendezés)." },
+  { term: "Viewport", badge: "Design", def: "A böngészőablak látható területe, ahol a weboldal megjelenik. A reszponzív design a viewport méret alapján változtatja az elrendezést." },
   { term: "Webshop", badge: "E-kereskedelem", def: "Online áruház/bolt, ahol termékeket vagy szolgáltatásokat árulhatsz. Kosár, fizetés és rendeléskezelés funkciókkal." },
+  { term: "Wireframe", badge: "Design", def: "A weboldal egyszerű vázlatos terve — fekete-fehér 'drótváz' rajz, ami megmutatja, hova kerülnek a szövegek, képek és gombok. Az építkezési tervrajzhoz hasonló." },
 ];
 
 const categoryColors: Record<string, { bg: string; text: string; border: string; glow: string }> = {
@@ -58,6 +72,7 @@ const categoryColors: Record<string, { bg: string; text: string; border: string;
   "Design": { bg: "rgba(251,146,60,0.10)", text: "#fb923c", border: "rgba(251,146,60,0.25)", glow: "rgba(251,146,60,0.06)" },
   "Backend": { bg: "rgba(52,211,153,0.10)", text: "#34d399", border: "rgba(52,211,153,0.25)", glow: "rgba(52,211,153,0.06)" },
   "E-kereskedelem": { bg: "rgba(251,191,36,0.10)", text: "#fbbf24", border: "rgba(251,191,36,0.25)", glow: "rgba(251,191,36,0.06)" },
+  "Teljesítmény": { bg: "rgba(251,191,36,0.10)", text: "#fbbf24", border: "rgba(251,191,36,0.25)", glow: "rgba(251,191,36,0.06)" },
 };
 
 const defaultColor = { bg: "rgba(148,163,184,0.10)", text: "#94a3b8", border: "rgba(148,163,184,0.25)", glow: "rgba(148,163,184,0.06)" };
@@ -65,7 +80,6 @@ const defaultColor = { bg: "rgba(148,163,184,0.10)", text: "#94a3b8", border: "r
 const TutorialModule10 = () => {
   const [search, setSearch] = useState("");
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
-  const [expandedCard, setExpandedCard] = useState<string | null>(null);
 
   const categories = useMemo(() => {
     const cats = [...new Set(glossaryItems.map((i) => i.badge))];
@@ -157,7 +171,7 @@ const TutorialModule10 = () => {
           </div>
         </div>
 
-        {/* Glossary Cards */}
+        {/* Glossary Grid - tile/card layout */}
         <div className="tutorial-fade-up">
           {filtered.length === 0 ? (
             <div className="text-center py-12 text-muted-foreground">
@@ -174,38 +188,25 @@ const TutorialModule10 = () => {
               </button>
             </div>
           ) : (
-            <div className="tutorial-glossary-list">
+            <div className="tutorial-glossary-grid">
               {filtered.map((item) => {
                 const color = getColor(item.badge);
-                const isExpanded = expandedCard === item.term;
                 return (
                   <div
                     key={item.term}
-                    className={`tutorial-glossary-item ${isExpanded ? "expanded" : ""}`}
-                    style={{
-                      borderLeftColor: color.border,
-                      ...(isExpanded ? { background: color.glow } : {}),
-                    }}
-                    onClick={() => setExpandedCard(isExpanded ? null : item.term)}
+                    className="tutorial-glossary-card"
+                    style={{ borderTopColor: color.border }}
                   >
-                    <div className="tutorial-glossary-item-header">
-                      <div className="flex items-center gap-3 flex-1 min-w-0">
-                        <span className="tutorial-glossary-item-term">{item.term}</span>
-                        <span
-                          className="tutorial-glossary-item-badge"
-                          style={{ background: color.bg, color: color.text, borderColor: color.border }}
-                        >
-                          {item.badge}
-                        </span>
-                      </div>
-                      <ChevronDown
-                        size={16}
-                        className={`tutorial-glossary-chevron ${isExpanded ? "rotated" : ""}`}
-                      />
+                    <div className="tutorial-glossary-term">
+                      {item.term}
+                      <span
+                        className="tutorial-glossary-badge"
+                        style={{ background: color.bg, color: color.text, borderColor: color.border }}
+                      >
+                        {item.badge}
+                      </span>
                     </div>
-                    <div className={`tutorial-glossary-item-def ${isExpanded ? "visible" : ""}`}>
-                      {item.def}
-                    </div>
+                    <div className="tutorial-glossary-def">{item.def}</div>
                   </div>
                 );
               })}
