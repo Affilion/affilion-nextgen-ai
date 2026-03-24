@@ -11,7 +11,7 @@ const TutorialModule7 = () => {
             <span className="tutorial-label-line" /> Modul 7
           </div>
           <h2 className="text-3xl md:text-4xl font-bold font-heading mb-3">SEO, Analytics és Indexelés</h2>
-          <p className="text-muted-foreground">Gondoskodj róla, hogy megtaláljanak a Google-ben, es kövesd nyomon a látogatóidat.</p>
+          <p className="text-muted-foreground">Gondoskodj róla, hogy megtaláljanak a Google-ben, és kövesd nyomon a látogatóidat.</p>
         </div>
 
         <div className="mb-8 tutorial-fade-up">
@@ -64,7 +64,7 @@ const TutorialModule7 = () => {
           </div>
 
           <TutorialTipBox variant="info" icon="💡" title="Kezdőknek">
-            <p>Ne aggódj, ha ez sok! A Lovable a technikai SEO nagy részét automatikusan kezeli. A te dolgod főleg az on-page SEO: jó szövegek, kulcsszavak, es a meta tagek beállítása. Az off-page SEO idővel, a tartalom minőségével építhető.</p>
+            <p>Ne aggódj, ha ez sok! A Lovable a technikai SEO nagy részét automatikusan kezeli. A te dolgod főleg az on-page SEO: jó szövegek, kulcsszavak, és a meta tagek beállítása. Az off-page SEO idővel, a tartalom minőségével építhető.</p>
           </TutorialTipBox>
         </div>
 

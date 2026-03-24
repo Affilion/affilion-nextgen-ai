@@ -11,7 +11,7 @@ const faqItems = [
   {
     q: "Kell-e programozói tudás a Lovable hasznalataahoz?",
     a: <>
-      <p className="text-muted-foreground mb-2"><strong className="text-foreground">Egyáltalán nem!</strong> A Lovable lényege éppen az, hogy természetes nyelven (magyarul vagy angolul) írod le, mit szeretnél, es az AI megcsinálja. Nem kell tudnod HTML-t, CSS-t, JavaScript-et, vagy bármi mást. Elég, ha el tudod mondani, milyen weboldalt képzelsz el.</p>
+      <p className="text-muted-foreground mb-2"><strong className="text-foreground">Egyáltalán nem!</strong> A Lovable lényege éppen az, hogy természetes nyelven (magyarul vagy angolul) írod le, mit szeretnél, és az AI megcsinálja. Nem kell tudnod HTML-t, CSS-t, JavaScript-et, vagy bármi mást. Elég, ha el tudod mondani, milyen weboldalt képzelsz el.</p>
       <p className="text-muted-foreground">Persze, ha van némi technikai háttérismereted, az segíthet pontosabb promptokat írni &mdash; de nem feltétel!</p>
     </>,
   },
@@ -30,7 +30,7 @@ const faqItems = [
   },
   {
     q: "Tudom-e később módosítani a weboldalamat?",
-    a: <p className="text-muted-foreground"><strong className="text-foreground">Igen, bármikor!</strong> Ez a Lovable egyik legnagyobb előnye. Egyszerűen írd be, mit szeretnél változtatni: &bdquo;Cseréld ki a hero szekció háttérszínét kékre&rdquo; vagy &bdquo;Add hozzá egy új Szolgáltatások oldalt&rdquo;. Az AI vegrehajta a módosítást, es ha nem tetszik, egy kattintással visszaléphetsz az előző verzióra.</p>,
+    a: <p className="text-muted-foreground"><strong className="text-foreground">Igen, bármikor!</strong> Ez a Lovable egyik legnagyobb előnye. Egyszerűen írd be, mit szeretnél változtatni: &bdquo;Cseréld ki a hero szekció háttérszínét kékre&rdquo; vagy &bdquo;Add hozzá egy új Szolgáltatások oldalt&rdquo;. Az AI végrehajtja a módosítást, és ha nem tetszik, egy kattintással visszaléphetsz az előző verzióra.</p>,
   },
   {
     q: "Biztonságos a Lovable? Mi van az adataimmal?",
@@ -42,7 +42,7 @@ const faqItems = [
         <li>Automatikus <strong className="text-foreground">SSL/HTTPS</strong> minden weboldalon</li>
         <li>A Supabase adatbázis szintén titkosított és biztonsági auditált</li>
       </ul>
-      <p className="text-muted-foreground mt-2">Az adataidat nem használják a modell tanítására, es bármikor törölheted a fiókodat és a projektjeidet.</p>
+      <p className="text-muted-foreground mt-2">Az adataidat nem használják a modell tanítására, és bármikor törölheted a fiókodat és a projektjeidet.</p>
     </>,
   },
   {
@@ -90,7 +90,7 @@ const faqItems = [
     q: "Működik-e a weboldalam telefonon is?",
     a: <>
       <p className="text-muted-foreground mb-2"><strong className="text-foreground">Igen, automatikusan!</strong> A Lovable reszponzív (alkalmazkodó) kódot generál, ami telefonon, tableten és számítógépen is jól néz ki. A React és a modern CSS technológiák biztosítják, hogy az oldal minden eszkozooen megfelelően jelenjen még.</p>
-      <p className="text-muted-foreground"><strong className="text-foreground">Tipp:</strong> Mindig ellenőrizd az elonozetben a mobil nézetet is! Ha valami nem stimmel, írd be: &bdquo;Fix the mobile layout&rdquo; es az AI javítja.</p>
+      <p className="text-muted-foreground"><strong className="text-foreground">Tipp:</strong> Mindig ellenőrizd az előnézetben a mobil nézetet is! Ha valami nem stimmel, írd be: &bdquo;Fix the mobile layout&rdquo; és az AI javítja.</p>
     </>,
   },
 ];

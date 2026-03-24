@@ -112,7 +112,7 @@ const TutorialModule1 = () => {
             <ul className="text-sm text-muted-foreground pl-5 space-y-1 list-disc">
               <li><strong className="text-foreground">CMS (pl. WordPress):</strong> Kész sablonokból építkezel, de korlátozott és gyakran lassú</li>
               <li><strong className="text-foreground">Kóddal:</strong> Maximális szabadság, de programozói tudás kell</li>
-              <li><strong className="text-foreground">AI-alapú (Lovable):</strong> Leírod szöveggel, mit szeretnél, es az AI megépíti &mdash; programozás nélkül, de profi eredménnyel!</li>
+              <li><strong className="text-foreground">AI-alapú (Lovable):</strong> Leírod szöveggel, mit szeretnél, és az AI megépíti &mdash; programozás nélkül, de profi eredménnyel!</li>
             </ul>
           </div>
         </div>

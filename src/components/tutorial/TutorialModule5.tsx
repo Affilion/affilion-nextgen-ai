@@ -46,7 +46,7 @@ const TutorialModule5 = () => {
           <p className="text-muted-foreground mb-4">A Lovable a <strong className="text-foreground">Supabase</strong>-t használja backend-kent. Ez egy nyílt forráskódú Firebase alternatíva, PostgreSQL adatbázissal. A Lovable-ből egyetlen kattintással bekapcsolhatod.</p>
 
           <TutorialAccordion title="Adatbázis (PostgreSQL)">
-            <p className="text-muted-foreground">Teljes SQL adatbázis, amit a Lovable automatikusan letreohoz az utasításaid alapján. Például: &bdquo;Hozz létre egy termékek táblát névvel, leírással, árral és kép URL-lel&rdquo; &mdash; es kész!</p>
+            <p className="text-muted-foreground">Teljes SQL adatbázis, amit a Lovable automatikusan letreohoz az utasításaid alapján. Például: &bdquo;Hozz létre egy termékek táblát névvel, leírással, árral és kép URL-lel&rdquo; &mdash; és kész!</p>
           </TutorialAccordion>
 
           <TutorialAccordion title="Felhasználó-hitelesítés (Auth)">

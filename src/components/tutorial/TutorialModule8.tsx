@@ -60,7 +60,7 @@ const TutorialModule8 = () => {
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Teljesítmény-optimalizálás</h3>
           <TutorialAccordion title="Képek optimalizálása">
-            <p className="text-muted-foreground mb-3">A nagy képfájlok lelassítják az oldaladat. Használj WebP vagy AVIF formátumot, es állíts be lazy loading-ot:</p>
+            <p className="text-muted-foreground mb-3">A nagy képfájlok lelassítják az oldaladat. Használj WebP vagy AVIF formátumot, és állíts be lazy loading-ot:</p>
             <TutorialPromptBox label="Prompt">{`Optimize áll images: add lazy loading, use WebP format where possible, and add proper width/height attributes to prevent layout shifts.`}</TutorialPromptBox>
           </TutorialAccordion>
           <TutorialAccordion title="Speed Tool használata">
@@ -71,16 +71,16 @@ const TutorialModule8 = () => {
         {/* GitHub sync */}
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Biztonsági mentés &mdash; GitHub Sync</h3>
-          <p className="text-muted-foreground mb-4">A Lovable ketaranyu GitHub szinkront kínál. Ez azt jelenti, hogy a weboldalad teljes forráskódja automatikusan mentésre kerül a GitHub fiókodon. Ha bármi tortenae, onnan bármikor visszaállíthatod.</p>
+          <p className="text-muted-foreground mb-4">A Lovable kétirányú GitHub szinkront kínál. Ez azt jelenti, hogy a weboldalad teljes forráskódja automatikusan mentésre kerül a GitHub fiókodon. Ha bármi történne, onnan bármikor visszaállíthatod.</p>
           <TutorialTipBox variant="pro" icon="🎯" title="Pro tipp">
-            <p>Kapcsold be a GitHub sync-et minél hamarabb! Ez nemcsak biztonsági mentés, hanem lehetővé teszi, hogy másokat is bevonj a projektbe, es akár más platformra is átvidd a kódot.</p>
+            <p>Kapcsold be a GitHub sync-et minél hamarabb! Ez nemcsak biztonsági mentés, hanem lehetővé teszi, hogy másokat is bevonj a projektbe, és akár más platformra is átvidd a kódot.</p>
           </TutorialTipBox>
         </div>
 
         {/* Cookie GDPR */}
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Cookie hozzájárulás és GDPR</h3>
-          <p className="text-muted-foreground mb-4">Ha a weboldalad bármilyen cookie-t (sütit) használ &mdash; például Google Analytics-et &mdash;, akkor a magyar és EU-s jogszabályok (GDPR) értelmében köteles vagy erről tájékoztatni a látogatóidat, es beleegyezésüket kérni.</p>
+          <p className="text-muted-foreground mb-4">Ha a weboldalad bármilyen cookie-t (sütit) használ &mdash; például Google Analytics-et &mdash;, akkor a magyar és EU-s jogszabályok (GDPR) értelmében köteles vagy erről tájékoztatni a látogatóidat, és beleegyezésüket kérni.</p>
 
           <div className="glass-card mb-4">
             <h4 className="font-heading font-semibold mb-3">🍪 Mi az a cookie (süti)?</h4>
@@ -89,7 +89,7 @@ const TutorialModule8 = () => {
 
           <div className="glass-card mb-4">
             <h4 className="font-heading font-semibold mb-3">🛡️ GDPR egyszerűen</h4>
-            <p className="text-muted-foreground leading-relaxed mb-3">A GDPR (General Data Protection Regulation) az EU adatvédelmi rendelete. Lényege: a felhasználóknak joguk van tudni, milyen adatokat gyűjtesz róluk, es <strong className="text-foreground">előzetesen bele kell egyezniük</strong>. Ez azt jelenti:</p>
+            <p className="text-muted-foreground leading-relaxed mb-3">A GDPR (General Data Protection Regulation) az EU adatvédelmi rendelete. Lényege: a felhasználóknak joguk van tudni, milyen adatokat gyűjtesz róluk, és <strong className="text-foreground">előzetesen bele kell egyezniük</strong>. Ez azt jelenti:</p>
             <ul className="text-muted-foreground pl-5 space-y-1 list-disc">
               <li>A weboldalon megjelenik egy &bdquo;cookie banner&rdquo; &mdash; egy kis sáv, ami tájékoztat a sütikről</li>
               <li>A látogató elfogadhatja vagy elutasíthatja a sütiket</li>

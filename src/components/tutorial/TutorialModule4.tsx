@@ -11,13 +11,13 @@ const TutorialModule4 = () => {
             <span className="tutorial-label-line" /> Modul 4
           </div>
           <h2 className="text-3xl md:text-4xl font-bold font-heading mb-3">Weblap Építése</h2>
-          <p className="text-muted-foreground">Most jön a lényeg &mdash; tanuld még, hogyan írj hatékony promptokat és építsd fel az oldaladat lépésről lépésre.</p>
+          <p className="text-muted-foreground">Most jön a lényeg &mdash; tanuld meg, hogyan írj hatékony promptokat és építsd fel az oldaladat lépésről lépésre.</p>
         </div>
 
         {/* Prompt tippek */}
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Prompt-írási tippek (Prompt Engineering)</h3>
-          <p className="text-muted-foreground mb-4">Az AI minősége a te utasításaid minosoegetol függ. Íme a legjobb gyakorlatok:</p>
+          <p className="text-muted-foreground mb-4">Az AI minősége a te utasításaid minőségétől függ. Íme a legjobb gyakorlatok:</p>
 
           <TutorialTipBox variant="pro" icon="🎯" title="Az aranyszabály: Legyél konkrét!">
             <p>Minél részletesebb a leírásod, annál jobb lesz az eredmény. Ne csak azt írd: &bdquo;csinálj szép oldalt&rdquo;, hanem írd le pontosan, mit szeretnél látni.</p>
@@ -26,15 +26,99 @@ const TutorialModule4 = () => {
           <div className="glass-card">
             <h4 className="font-heading font-semibold mb-2">❌ Rossz prompt:</h4>
             <p className="text-red-400 mb-4">&bdquo;Csinálj egy weboldalt.&rdquo;</p>
-            <h4 className="font-heading font-semibold mb-2">✅ Jo prompt:</h4>
-            <p className="text-green-400">&bdquo;Készíts egy modern portfólió weboldalt egy fotós számára. Legyen sötét háttér, nagy képek, egy galéria szekció 3 oszlopos grid-del, rólam szekció, es egy kapcsolat űrlap. A színvilág legyen meleg szürke és arány akcentus.&rdquo;</p>
+            <h4 className="font-heading font-semibold mb-2">✅ Jó prompt:</h4>
+            <p className="text-green-400">&bdquo;Készíts egy modern portfólió weboldalt egy fotós számára. Legyen sötét háttér, nagy képek, egy galéria szekció 3 oszlopos grid-del, rólam szekció, és egy kapcsolat űrlap. A színvilág legyen meleg szürke és arány akcentus.&rdquo;</p>
           </div>
+        </div>
+
+        {/* Weboldal felépítés vizuális */}
+        <div className="mb-8 tutorial-fade-up">
+          <h3 className="text-xl font-bold font-heading mb-3">Egy weboldal felépítése — szekciók vizuálisan</h3>
+          <p className="text-muted-foreground mb-4">Mielőtt elkezded építeni a weboldalad, fontos megérteni, hogy egy tipikus weboldal milyen részekből (szekciókból) áll. Íme egy vizuális áttekintés:</p>
+
+          <div className="tutorial-site-anatomy">
+            {/* Navigáció */}
+            <div className="tutorial-anatomy-section tutorial-anatomy-nav">
+              <div className="tutorial-anatomy-label">
+                <span className="tutorial-anatomy-icon">🧭</span>
+                <strong>Navigáció (menü)</strong>
+              </div>
+              <p className="tutorial-anatomy-desc">Az oldal tetején található menüsor. Itt vannak a linkek az egyes oldalakra (Főoldal, Rólunk, Szolgáltatások, Kapcsolat). Mobilon ez általában egy &bdquo;hamburger menü&rdquo; ikon (☰) mögé rejtőzik.</p>
+            </div>
+
+            {/* Hero */}
+            <div className="tutorial-anatomy-section tutorial-anatomy-hero">
+              <div className="tutorial-anatomy-label">
+                <span className="tutorial-anatomy-icon">🌟</span>
+                <strong>Hero szekció</strong>
+              </div>
+              <p className="tutorial-anatomy-desc">Az oldal legelső, legnagyobb része — ez az, amit a látogató először lát. Általában tartalmaz egy erős címsort, egy rövid leírást és egy CTA gombot (pl. &bdquo;Kapcsolatfelvétel&rdquo;, &bdquo;Ingyenes próba&rdquo;). Gyakran van mögötte egy háttérkép vagy gradiens.</p>
+            </div>
+
+            {/* Rólunk */}
+            <div className="tutorial-anatomy-section tutorial-anatomy-about">
+              <div className="tutorial-anatomy-label">
+                <span className="tutorial-anatomy-icon">👥</span>
+                <strong>Rólunk / Bemutatkozás</strong>
+              </div>
+              <p className="tutorial-anatomy-desc">Ki áll a weboldal mögött? Itt mutatkozol be te vagy a céged. Általában tartalmaz egy rövid szöveget, képet, és néha számokat (pl. &bdquo;10+ év tapasztalat&rdquo;, &bdquo;500+ elégedett ügyfél&rdquo;).</p>
+            </div>
+
+            {/* Szolgáltatások */}
+            <div className="tutorial-anatomy-section tutorial-anatomy-services">
+              <div className="tutorial-anatomy-label">
+                <span className="tutorial-anatomy-icon">⚡</span>
+                <strong>Szolgáltatások / Funkciók</strong>
+              </div>
+              <p className="tutorial-anatomy-desc">Mit kínálsz? Általában 3-4 kártya egymás mellett, mindegyiken egy ikon, cím és rövid leírás. Ez segít a látogatónak gyorsan átlátni, miben tudsz segíteni.</p>
+            </div>
+
+            {/* Vélemények */}
+            <div className="tutorial-anatomy-section tutorial-anatomy-testimonials">
+              <div className="tutorial-anatomy-label">
+                <span className="tutorial-anatomy-icon">💬</span>
+                <strong>Vélemények / Referenciák</strong>
+              </div>
+              <p className="tutorial-anatomy-desc">Korábbi ügyfelek véleményei. Ez építi a bizalmat! Általában idézetek kártyákon, a személy nevével és fotójával. Nagyon fontos a hitelesség szempontjából.</p>
+            </div>
+
+            {/* CTA szekció */}
+            <div className="tutorial-anatomy-section tutorial-anatomy-cta">
+              <div className="tutorial-anatomy-label">
+                <span className="tutorial-anatomy-icon">🎯</span>
+                <strong>CTA szekció (felhívás cselekvésre)</strong>
+              </div>
+              <p className="tutorial-anatomy-desc">Egy kiemelkedő sáv, ami arra ösztönzi a látogatót, hogy tegyen valamit: &bdquo;Kérj ingyenes árajánlatot!&rdquo;, &bdquo;Próbáld ki ingyen!&rdquo;. Általában feltűnő háttérszínnel és nagy gombbal.</p>
+            </div>
+
+            {/* Kapcsolat */}
+            <div className="tutorial-anatomy-section tutorial-anatomy-contact">
+              <div className="tutorial-anatomy-label">
+                <span className="tutorial-anatomy-icon">📧</span>
+                <strong>Kapcsolat</strong>
+              </div>
+              <p className="tutorial-anatomy-desc">Hogyan érhetnek el? Email, telefon, cím és gyakran egy kapcsolatfelvételi űrlap. Néha Google Maps térkép is kerül ide.</p>
+            </div>
+
+            {/* Footer */}
+            <div className="tutorial-anatomy-section tutorial-anatomy-footer">
+              <div className="tutorial-anatomy-label">
+                <span className="tutorial-anatomy-icon">📋</span>
+                <strong>Lábléc (Footer)</strong>
+              </div>
+              <p className="tutorial-anatomy-desc">Az oldal alja. Itt szoktak lenni: linkek az aloldalakra, közösségi média ikonok, copyright szöveg, és jogi linkek (Adatvédelem, ÁSZF). Minden weboldalnak kell lábléc!</p>
+            </div>
+          </div>
+
+          <TutorialTipBox variant="pro" icon="💡" title="Nem kell minden szekció!">
+            <p>Egy egyszerű bemutatkozó oldalhoz elég a Navigáció + Hero + Rólunk + Kapcsolat + Lábléc. A többi szekciót később bármikor hozzáadhatod, ahogy fejlődik a weboldalad.</p>
+          </TutorialTipBox>
         </div>
 
         {/* Prompt sablonok */}
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Részletes prompt sablonok</h3>
-          <p className="text-muted-foreground mb-4">Az alábbiakban kész, kiproobalt prompt sablonokat találsz különböző típusú weboldalakhoz. Csak másold be a Lovable chat-be!</p>
+          <p className="text-muted-foreground mb-4">Az alábbiakban kész, kipróbált prompt sablonokat találsz különböző típusú weboldalakhoz. Csak másold be a Lovable chat-be!</p>
 
           {/* Étterem */}
           <div className="tutorial-prompt-template">
@@ -48,7 +132,7 @@ const TutorialModule4 = () => {
 Az oldalon legyen:
 - Hero szekció egy nagy háttérképpel és "Foglalj asztalt" gombbal
 - Étlap/Menü szekció kategóriákkal (Előételek, Főételek, Desszertek, Italok) — minden ételhez név, rövid leírás és ár
-- Rólunk szekció a séf bemutatásaval
+- Rólunk szekció a séf bemutatásával
 - Galéria szekció az étterem fotóival (6 kép grid)
 - Nyitvatartás és elérhetőség (cím, telefon, email)
 - Asztalfoglalási űrlap (név, email, telefon, dátum, vendégszám, megjegyzés)
@@ -151,7 +235,7 @@ Az oldalon legyen:
         {/* Hasznos promptok */}
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Hasznos promptok</h3>
-          <TutorialPromptBox label="Szekció hozzáadása">{`Add hozzá a főoldalhoz egy „Vélemények" szekciót. Legyen 3 kártya, mindegyiken egy idézet, a személy neve, es csillagos értékelés (5/5). Használj glassmorphism kártya-designt.`}</TutorialPromptBox>
+          <TutorialPromptBox label="Szekció hozzáadása">{`Add hozzá a főoldalhoz egy „Vélemények" szekciót. Legyen 3 kártya, mindegyiken egy idézet, a személy neve, és csillagos értékelés (5/5). Használj glassmorphism kártya-designt.`}</TutorialPromptBox>
           <TutorialPromptBox label="Reszponzív design">{`Tedd az egész weboldalt teljesen reszponzívvá. Mobilon egymás alá kerüljenek a kártyák, a menü legyen hamburger menü, a szöveg jól olvasható legyen kis képernyőn is.`}</TutorialPromptBox>
           <TutorialPromptBox label="Képek kezelése">{`Cseréld le az összes placeholder képet Unsplash képekre. A hero kép legyen egy modern irodai környezet, a szolgáltatások szekció képei legyenek tech-témájúak.`}</TutorialPromptBox>
         </div>

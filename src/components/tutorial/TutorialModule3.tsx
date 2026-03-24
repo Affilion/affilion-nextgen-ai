@@ -20,16 +20,16 @@ const TutorialModule3 = () => {
 
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Mi az a Lovable?</h3>
-          <p className="text-muted-foreground mb-4">A <a href={LOVABLE_URL} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">Lovable.dev</a> egy mesterséges intelligenciával működő webfejlesztő platform. Ahelyett, hogy kódot írnál, egyszerűen <strong className="text-foreground">leírod, mit szeretnél</strong>, es az AI megépíti neked!</p>
+          <p className="text-muted-foreground mb-4">A <a href={LOVABLE_URL} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">Lovable.dev</a> egy mesterséges intelligenciával működő webfejlesztő platform. Ahelyett, hogy kódot írnál, egyszerűen <strong className="text-foreground">leírod, mit szeretnél</strong>, és az AI megépíti neked!</p>
           <div className="glass-card">
             <h4 className="font-heading font-semibold mb-3">Főbb képességek:</h4>
             <ul className="text-muted-foreground pl-6 space-y-1.5 list-disc marker:text-primary">
               <li>AI-vezérelt fejlesztés &mdash; írd le szöveggel, mit szeretnél</li>
-              <li>React-alapu, modern frontend</li>
+              <li>React-alapú, modern frontend</li>
               <li>Vizuális szerkesztő + chat alapú szerkesztés</li>
               <li>Precision Edit &mdash; kattints bármely elemre és módosítsd</li>
               <li>Supabase integráció (adatbázis, hitelesítés, fájltárolás)</li>
-              <li>GitHub szinkron (ketaranyu)</li>
+              <li>GitHub szinkron (kétirányú)</li>
               <li>Figma &rarr; web konverzió</li>
               <li>Saját domain beállítás automatikus SSL-lel</li>
               <li>Lovable Cloud hosting (teljes menedzselt)</li>
@@ -92,13 +92,13 @@ const TutorialModule3 = () => {
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">A felület részei</h3>
           <TutorialAccordion title="Chat panel — beszélj az AI-jal">
-            <p className="text-muted-foreground">A bal oldalon talaalod a chat panelt. Ide írd le, mit szeretnél: &bdquo;Készíts egy modern portfólió oldalt sötét háttérrel&rdquo; &mdash; es az AI megépíti! Minden üzenet 1 kreditet használ, ha kódot módosít; a sima chat (kód nélkül) szintén 1 kreditet.</p>
+            <p className="text-muted-foreground">A bal oldalon találod a chat panelt. Ide írd le, mit szeretnél: &bdquo;Készíts egy modern portfólió oldalt sötét háttérrel&rdquo; &mdash; és az AI megépíti! Minden üzenet 1 kreditet használ, ha kódot módosít; a sima chat (kód nélkül) szintén 1 kreditet.</p>
           </TutorialAccordion>
           <TutorialAccordion title="Vizuális előnézet — lásd, amit építesz">
             <p className="text-muted-foreground">A jobb oldalon valós időben látod a weboldaladat, ahogy az AI dolgozik rajta. Az előnézet interaktív &mdash; kattinthatsz, görgethetsz, kiprobaalhatod.</p>
           </TutorialAccordion>
           <TutorialAccordion title="Precision Edit — kattints és szerkeszd">
-            <p className="text-muted-foreground">A Precision Edit funkcióval rákattinthatsz bármely elemre az elonozetben, es közvetlenül szerkesztheted a szöveget, színt, méretet. Nem kell mindent a chatben kérned!</p>
+            <p className="text-muted-foreground">A Precision Edit funkcióval rákattinthatsz bármely elemre az előnézetben, és közvetlenül szerkesztheted a szöveget, színt, méretet. Nem kell mindent a chatben kérned!</p>
           </TutorialAccordion>
           <TutorialAccordion title="Elozmoenyek — bármikor visszaléphetsz">
             <p className="text-muted-foreground">A Lovable automatikusan menti minden változatot. Ha valami rosszul sül el, egyszerűen visszatérhetsz egy korábbi verzióhoz. Ez olyan, mint a &bdquo;Ctrl+Z&rdquo; a végtelenségig!</p>
@@ -110,7 +110,7 @@ const TutorialModule3 = () => {
 
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Első projekt létrehozása</h3>
-          <p className="text-muted-foreground mb-4">Kattints a &bdquo;New Project&rdquo; gombra, adj nevét a projektednek, es írd be az első promptodat:</p>
+          <p className="text-muted-foreground mb-4">Kattints a &bdquo;New Project&rdquo; gombra, adj nevét a projektednek, és írd be az első promptodat:</p>
           <TutorialPromptBox label="Példa prompt">{`Készíts egy modern, letisztult bemutatkozó weboldalt egy magyar kis- vállalkozásnak. Legyen rajta:
 - Hero szekció egy figyelemfelkeltő szöveggel
 - Rólunk szekció
