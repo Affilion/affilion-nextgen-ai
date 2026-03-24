@@ -272,7 +272,7 @@ const TutorialModule5 = () => {
           <h3 className="text-xl font-bold font-heading mb-3">Mikor van szükséged backend-re?</h3>
           <div className="tutorial-backend-grid grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
             <div className="glass-card">
-              <h4 className="text-green-400 font-semibold mb-2">&#x2705; Kell backend, ha:</h4>
+              <h4 className="text-green-400 font-semibold mb-2">&#x2714;&#xfe0f; Kell backend, ha:</h4>
               <ul className="text-sm text-muted-foreground pl-5 space-y-1 list-disc">
                 <li>Felhasználói regisztráció/bejelentkezés</li>
                 <li>Kapcsolatfelvételi űrlap, ami ment</li>
@@ -357,7 +357,7 @@ Create:
 8. Make the forms responsive and modern looking
 9. Add Google login button as an option (OAuth)`}</TutorialPromptBox>
 
-          <TutorialTipBox variant="success" icon="&#x2705;" title="Eredmény">
+          <TutorialTipBox variant="success" icon="&#x2714;&#xfe0f;" title="Eredmény">
             <p>Ez a prompt egy komplett bejelentkezési rendszert hoz létre: regisztrációs oldal, bejelentkezési oldal, védett dashboard, kijelentkezés gomb, és még Google bejelentkezés is. Mindezt anélkül, hogy egyetlen sor kódot írnál!</p>
           </TutorialTipBox>
 
@@ -470,7 +470,7 @@ Requirements:
 8. Add a delete button on each image (only the uploader can delete)
 9. Show upload progress for each image`}</TutorialPromptBox>
 
-          <TutorialTipBox variant="success" icon="&#x2705;" title="A képek a felhőben vannak!">
+          <TutorialTipBox variant="success" icon="&#x2714;&#xfe0f;" title="A képek a felhőben vannak!">
             <p>A Lovable Cloud Storage a felhőben tárolja a képeket, tehát nem a te szerveredre kerülnek, és nincs helyszűke. Az ingyenes használat bőven elég a kezdéshez &mdash; több ezer képet tudsz tárolni!</p>
           </TutorialTipBox>
         </div>
@@ -741,10 +741,10 @@ Hungarian labels everywhere.`}</TutorialPromptBox>
                 ].map((row) => (
                   <tr key={row.func}>
                     <td className="text-foreground font-medium">{row.func}</td>
-                    <td>{row.cloud ? <span className="text-green-400">&#x2705;</span> : <span className="text-muted-foreground">&#x2014;</span>}</td>
-                    <td>{row.auth ? <span className="text-green-400">&#x2705;</span> : <span className="text-muted-foreground">&#x2014;</span>}</td>
-                    <td>{row.storage ? <span className="text-green-400">&#x2705;</span> : <span className="text-muted-foreground">&#x2014;</span>}</td>
-                    <td>{row.stripe ? <span className="text-green-400">&#x2705;</span> : <span className="text-muted-foreground text-xs">opcionális</span>}</td>
+                    <td>{row.cloud ? <span className="text-green-400">&#x2714;&#xfe0f;</span> : <span className="text-muted-foreground">&#x2014;</span>}</td>
+                    <td>{row.auth ? <span className="text-green-400">&#x2714;&#xfe0f;</span> : <span className="text-muted-foreground">&#x2014;</span>}</td>
+                    <td>{row.storage ? <span className="text-green-400">&#x2714;&#xfe0f;</span> : <span className="text-muted-foreground">&#x2014;</span>}</td>
+                    <td>{row.stripe ? <span className="text-green-400">&#x2714;&#xfe0f;</span> : <span className="text-muted-foreground text-xs">opcionális</span>}</td>
                   </tr>
                 ))}
               </tbody>

@@ -114,6 +114,22 @@ const TutorialModule9 = () => {
             </TutorialAccordion>
           ))}
         </div>
+
+        {/* Közösségi CTA */}
+        <div className="mt-12 tutorial-fade-up">
+          <div className="glass-card text-center py-10 px-6">
+            <h3 className="text-xl md:text-2xl font-bold font-heading mb-3">További kérdésed van?</h3>
+            <p className="text-muted-foreground mb-6 max-w-md mx-auto">Csatlakozz bátran az <strong className="text-foreground">Affilion AI Club</strong> zárt csoporthoz, ahol felteheted a kérdéseidet és segítséget kaphatsz. Várunk szeretettel!</p>
+            <a
+              href="https://affilionai.hu/csatlakozas"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="neon-button inline-flex items-center gap-2 px-8 py-3 text-sm font-semibold"
+            >
+              Csatlakozom a csoporthoz &rarr;
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );

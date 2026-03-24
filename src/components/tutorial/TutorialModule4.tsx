@@ -26,7 +26,7 @@ const TutorialModule4 = () => {
           <div className="glass-card">
             <h4 className="font-heading font-semibold mb-2">❌ Rossz prompt:</h4>
             <p className="text-red-400 mb-4">&bdquo;Csinálj egy weboldalt.&rdquo;</p>
-            <h4 className="font-heading font-semibold mb-2">✅ Jó prompt:</h4>
+            <h4 className="font-heading font-semibold mb-2">&#x2714;&#xfe0f; Jó prompt:</h4>
             <p className="text-green-400">&bdquo;Készíts egy modern portfólió weboldalt egy fotós számára. Legyen sötét háttér, nagy képek, egy galéria szekció 3 oszlopos grid-del, rólam szekció, és egy kapcsolat űrlap. A színvilág legyen meleg szürke és arány akcentus.&rdquo;</p>
           </div>
         </div>

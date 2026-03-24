@@ -53,7 +53,7 @@ const TutorialModule6 = () => {
 
               {/* GOOD - Custom */}
               <div>
-                <div className="text-[9px] font-semibold uppercase tracking-wider text-green-400 mb-2">&#x2705; JÓ &mdash; ha beállítod:</div>
+                <div className="text-[9px] font-semibold uppercase tracking-wider text-green-400 mb-2">&#x2714;&#xfe0f; JÓ &mdash; ha beállítod:</div>
                 <div className="flex items-center">
                   <div className="flex items-center gap-2 px-3 py-2 rounded-t-lg border border-white/[0.08] border-b-0 max-w-[280px]" style={{ background: "hsl(var(--card) / 0.8)" }}>
                     <div className="w-4 h-4 rounded flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)))" }}>
@@ -87,7 +87,7 @@ const TutorialModule6 = () => {
             </div>
             <div className="p-5 space-y-5" style={{ background: "hsl(var(--card) / 0.5)" }}>
               {/* Icon & title */}
-              <div className="relative">
+              <div>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-foreground text-xs font-semibold">Icon &amp; title</span>
                   <span className="text-muted-foreground text-[10px]">0/60</span>
@@ -98,41 +98,29 @@ const TutorialModule6 = () => {
                   </div>
                   <div className="flex-1 px-3 py-2 rounded-lg border border-white/[0.08] bg-white/[0.03] text-muted-foreground text-[12px]">Lovable app</div>
                 </div>
-                {/* Arrow annotation */}
-                <div className="absolute -right-2 top-1 md:right-[-140px] md:top-8">
-                  <div className="hidden md:flex items-center gap-1">
-                    <span className="text-green-400 text-lg">&larr;</span>
-                    <span className="text-green-400 text-[10px] font-bold leading-tight">Ide írd a cégneved!<br/>Ez a böngésző fülén<br/>jelenik meg + a Google-ben</span>
-                  </div>
-                </div>
-                <div className="md:hidden mt-1.5 flex items-center gap-1">
+                {/* Annotation below */}
+                <div className="mt-2 flex items-start gap-1.5 pl-12">
                   <span className="text-green-400 text-sm">&uarr;</span>
-                  <span className="text-green-400 text-[9px] font-bold">Ide írd a cégneved! Ez jelenik meg a böngésző fülén + Google-ben</span>
+                  <span className="text-green-400 text-[10px] font-bold leading-snug">Ide írd a cégneved! Ez jelenik meg a böngésző fülén + a Google keresőben</span>
                 </div>
               </div>
 
               {/* Description */}
-              <div className="relative">
+              <div>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-foreground text-xs font-semibold">Description</span>
                   <span className="text-muted-foreground text-[10px]">0/160</span>
                 </div>
                 <div className="px-3 py-2.5 rounded-lg border border-white/[0.08] bg-white/[0.03] text-muted-foreground text-[12px] min-h-[48px]">Lovable Generated Project</div>
-                {/* Arrow annotation */}
-                <div className="absolute -right-2 top-0 md:right-[-140px] md:top-6">
-                  <div className="hidden md:flex items-center gap-1">
-                    <span className="text-primary text-lg">&larr;</span>
-                    <span className="text-primary text-[10px] font-bold leading-tight">Ez a Google keresőben<br/>jelenik meg az oldalad<br/>neve alatt (SEO!)</span>
-                  </div>
-                </div>
-                <div className="md:hidden mt-1.5 flex items-center gap-1">
+                {/* Annotation below */}
+                <div className="mt-2 flex items-start gap-1.5">
                   <span className="text-primary text-sm">&uarr;</span>
-                  <span className="text-primary text-[9px] font-bold">Ez a Google keresőben jelenik meg az oldalad neve alatt (SEO!)</span>
+                  <span className="text-primary text-[10px] font-bold leading-snug">Ez a Google keresőben jelenik meg az oldalad neve alatt &mdash; SEO szempontból nagyon fontos!</span>
                 </div>
               </div>
 
               {/* Social image */}
-              <div className="relative">
+              <div>
                 <span className="text-foreground text-xs font-semibold block mb-2">Social image</span>
                 <div className="flex items-center gap-2">
                   <div className="flex-1 px-3 py-2.5 rounded-lg border border-white/[0.08] bg-white/[0.03] text-muted-foreground text-[12px] flex items-center gap-2">
@@ -140,16 +128,10 @@ const TutorialModule6 = () => {
                   </div>
                   <div className="px-4 py-2.5 rounded-lg border border-white/[0.08] bg-white/[0.03] text-muted-foreground text-[12px]">Generate</div>
                 </div>
-                {/* Arrow annotation */}
-                <div className="absolute -right-2 top-0 md:right-[-140px] md:top-5">
-                  <div className="hidden md:flex items-center gap-1">
-                    <span className="text-purple-400 text-lg">&larr;</span>
-                    <span className="text-purple-400 text-[10px] font-bold leading-tight">Ez jelenik meg ha<br/>Facebookon / WhatsApp-on<br/>megosztják az oldalt</span>
-                  </div>
-                </div>
-                <div className="md:hidden mt-1.5 flex items-center gap-1">
+                {/* Annotation below */}
+                <div className="mt-2 flex items-start gap-1.5">
                   <span className="text-purple-400 text-sm">&uarr;</span>
-                  <span className="text-purple-400 text-[9px] font-bold">Ez a kép jelenik meg Facebookon / WhatsApp-on megosztáskor</span>
+                  <span className="text-purple-400 text-[10px] font-bold leading-snug">Ez a kép jelenik meg ha Facebookon / WhatsApp-on megosztják az oldalt</span>
                 </div>
               </div>
 
