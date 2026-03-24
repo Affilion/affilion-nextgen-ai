@@ -5,7 +5,7 @@ const faqItems = [
     q: "Mennyibe kerül összesen egy weboldal elkészítése?",
     a: <>
       <p className="text-muted-foreground mb-2">Az abszolút minimum: egy <strong className="text-foreground">.hu domain (622 Ft/év bruttó)</strong> + <strong className="text-foreground">Lovable Free csomag ($0)</strong>. Tehát akár <strong className="text-foreground">622 forintból</strong> elindulhatsz!</p>
-      <p className="text-muted-foreground">Ha saját domaint szeretnél használni (nem lovable.app aldomain), szükséged lesz a <strong className="text-foreground">Lovable Pro csomagra ($25/ho, ~9 500 Ft)</strong>. A Google Analytics és Search Console teljesen ingyenes. Osszehasonlitaskeppp: egy programozooval készíttetett weboldal 200 000 - 2 000 000 Ft, egy WordPress fejlesztés 50 000 - 500 000 Ft.</p>
+      <p className="text-muted-foreground">Ha saját domaint szeretnél használni (nem lovable.app aldomain), szükséged lesz a <strong className="text-foreground">Lovable Pro csomagra ($25/hó, ~9 500 Ft)</strong>. A Google Analytics és Search Console teljesen ingyenes. Összehasonlításképpen: egy programozóval készíttetett weboldal 200 000 - 2 000 000 Ft, egy WordPress fejlesztés 50 000 - 500 000 Ft.</p>
     </>,
   },
   {
@@ -59,10 +59,10 @@ const faqItems = [
     </>,
   },
   {
-    q: "Mi az a Supabase és szükségem van ra?",
+    q: "Mi az a Supabase és szükségem van rá?",
     a: <>
       <p className="text-muted-foreground mb-2">A <strong className="text-foreground">Supabase</strong> egy nyílt forráskódú backend-szolgáltatás (adatbázis, felhasználó-kezelés, fájltárolás). A Lovable ezt használja háttérrendszerként.</p>
-      <p className="text-muted-foreground mb-2"><strong className="text-foreground">Szükséged van ra, ha:</strong> a weboldaladnak adatokat kell kezelnie &mdash; például űrlap beküldés mentése, felhasználói regisztráció, kép feltöltés, blog adminisztráció, webshop.</p>
+      <p className="text-muted-foreground mb-2"><strong className="text-foreground">Szükséged van rá, ha:</strong> a weboldaladnak adatokat kell kezelnie &mdash; például űrlap beküldés mentése, felhasználói regisztráció, kép feltöltés, blog adminisztráció, webshop.</p>
       <p className="text-muted-foreground mb-2"><strong className="text-foreground">Nem kell, ha:</strong> egyszerű, statikus bemutatkozó/portfólió oldalt építesz szövegekkel és képekkel.</p>
       <p className="text-muted-foreground">A Lovable-ből egy kattintással aktiválhatod &mdash; nem kell külön regisztrálnod.</p>
     </>,

@@ -28,7 +28,7 @@ const glossaryItems = [
   { term: "SEO", badge: "Marketing", def: "Search Engine Optimization — keresőoptimalizálás. Az a folyamat, amivel eléred, hogy a Google-ben magasabban jelenjen még a weboldalad." },
   { term: "Sitemap", badge: "SEO", def: "XML fájl, ami a weboldalad összes oldalát felsorolja. Segíti a Google-t, hogy megtalálja és indexelje az oldalaidat." },
   { term: "SPA", badge: "Fejlesztés", def: "Single Page Application — egyoldalas alkalmazás. A weboldal egyetlen HTML oldalból áll, es JavaScript-tel tölti be a különböző nézeteket. A Lovable ilyen oldalakat készít." },
-  { term: "Supabase", badge: "Backend", def: "Nyílt forráskódú backend-szolgáltatás (adatbázis, hitelesítés, fájltárolás). A Lovable ezt használja backend-kent, ha szükséged van ra." },
+  { term: "Supabase", badge: "Backend", def: "Nyílt forráskódú backend-szolgáltatás (adatbázis, hitelesítés, fájltárolás). A Lovable ezt használja backend-kent, ha szükséged van rá." },
   { term: "TXT rekord", badge: "DNS", def: "DNS bejegyzés szöveges adatokkal. Leggyakrabban domain-verifikációra használják (pl. Google Search Console, Lovable domain megerősítés)." },
   { term: "URL", badge: "Alap", def: "Uniform Resource Locator — a weboldal pontos „postacíme” (pl. https://példa.hu/kapcsolat). Minden weboldalnak és aloldalnak saját URL-je van." },
   { term: "UX/UI", badge: "Design", def: "UX = felhasználói élmény (mennyire intuitív, könnyű használni). UI = felhasználói felület (hogy néz ki, gombok, színek, elrendezés)." },

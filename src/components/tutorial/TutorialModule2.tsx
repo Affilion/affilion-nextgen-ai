@@ -40,7 +40,7 @@ const TutorialModule2 = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr><td><strong className="text-foreground">.hu</strong></td><td className="tutorial-price-highlight">490 Ft/év</td><td>2 200 Ft/év</td><td><span className="tutorial-price-badge">Legjobb ar!</span></td></tr>
+                <tr><td><strong className="text-foreground">.hu</strong></td><td className="tutorial-price-highlight">490 Ft/év</td><td>2 200 Ft/év</td><td><span className="tutorial-price-badge">Legjobb ár!</span></td></tr>
                 <tr><td><strong className="text-foreground">.eu</strong></td><td className="tutorial-price-highlight">490 Ft/év</td><td>2 500 Ft/év</td><td><span className="tutorial-price-badge">EU-s opció</span></td></tr>
                 <tr><td><strong className="text-foreground">.com</strong></td><td>6 000 Ft/év</td><td>6 000 Ft/év</td><td></td></tr>
                 <tr><td><strong className="text-foreground">.org</strong></td><td>5 500 Ft/év</td><td>5 500 Ft/év</td><td></td></tr>

@@ -43,11 +43,11 @@ const TutorialModule4 = () => {
               <h5 className="text-sm font-semibold text-foreground">Étterem weboldal</h5>
             </div>
             <div className="tutorial-prompt-template-body">
-              <TutorialPromptBox label="Étterem prompt sablon">{`Készíts egy elegáns étterem weboldalt. A stílus legyen sötét háttér arány akcentus színekkel.
+              <TutorialPromptBox label="Étterem prompt sablon">{`Készíts egy elegáns étterem weboldalt. A stílus legyen sötét háttér, arany akcentus színekkel.
 
 Az oldalon legyen:
 - Hero szekció egy nagy háttérképpel és "Foglalj asztalt" gombbal
-- Étlap/Menü szekció kategóriákkal (Előételek, Főételek, Desszertek, Italok) — minden ételhez név, rövid leírás és ar
+- Étlap/Menü szekció kategóriákkal (Előételek, Főételek, Desszertek, Italok) — minden ételhez név, rövid leírás és ár
 - Rólunk szekció a séf bemutatásaval
 - Galéria szekció az étterem fotóival (6 kép grid)
 - Nyitvatartás és elérhetőség (cím, telefon, email)
@@ -88,7 +88,7 @@ Az oldalon legyen:
 
 Az oldalon legyen:
 - Hero szekció figyelemfelkeltő szöveggel és "Időpontfoglalás" CTA gombbal
-- Szolgáltatások szekció: legalább 6 szolgáltatás kártyán (ikon, cím, rövid leírás, ar)
+- Szolgáltatások szekció: legalább 6 szolgáltatás kártyán (ikon, cím, rövid leírás, ár)
 - Árlista táblázat a szolgáltatásokkal és árakkal
 - Rólunk szekció: a csapat bemutatása fotókkal és rövid bióval
 - Vélemények szekció: 4-5 ugyfélvelemeny kártya (idézet, név, csillagos értékelés)
@@ -112,8 +112,8 @@ Az oldalon legyen:
 - Hero szekció a fő termékkel és "Vásárlás" gombbal
 - Termék kategóriák szekció (3-4 kategória kártya képpel)
 - Kiemelt termékek grid: 8 termék kártya (kép, név, ár, "Kosárba" gomb, kedvezmény badge ha van)
-- Termék szűrés és rendezés lehetőség (kategória, ar)
-- Egyedi termék oldal: nagy kép, leírás, ar, méret/szín választó, "Kosárba" gomb
+- Termék szűrés és rendezés lehetőség (kategória, ár)
+- Egyedi termék oldal: nagy kép, leírás, ár, méret/szín választó, "Kosárba" gomb
 - Vásárlói vélemények az egyes termékeknél
 - Szállítási információk szekció
 - GYIK (Gyakran Ismételt Kérdések) szekció accordion stílusban
