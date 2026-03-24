@@ -34,8 +34,8 @@ const TutorialModule2 = () => {
               <thead>
                 <tr>
                   <th>Kiterjesztés</th>
-                  <th>Regisztráció (nettó/ev)</th>
-                  <th>Hosszabbítás (nettó/ev)</th>
+                  <th>Regisztráció (nettó/év)</th>
+                  <th>Hosszabbítás (nettó/év)</th>
                   <th></th>
                 </tr>
               </thead>
