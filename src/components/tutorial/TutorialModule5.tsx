@@ -4,24 +4,55 @@ import TutorialTipBox from "./TutorialTipBox";
 
 /* ========== MINI MOCKUP COMPONENTS ========== */
 
-const SupabaseConnectMockup = () => (
+const CloudEnableMockup = () => (
   <div className="tutorial-ui-mockup tutorial-fade-up">
-    <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/[0.06]" style={{ background: "hsl(var(--background))" }}>
-      <div className="flex items-center gap-2">
-        <div className="w-6 h-6 rounded-md flex items-center justify-center text-white text-sm font-bold" style={{ background: "linear-gradient(135deg, #3ecf8e, #1a9f60)" }}>S</div>
-        <span className="text-foreground text-xs font-medium">Supabase Bekapcsolása</span>
-      </div>
-    </div>
-    <div className="p-5 flex flex-col items-center gap-4">
-      <div className="flex items-center gap-3 w-full max-w-xs">
-        <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm" style={{ background: "linear-gradient(135deg, #e44d8a, hsl(var(--secondary)))" }}>L</div>
-        <div className="flex-1 h-[2px] bg-gradient-to-r from-pink-500 via-primary to-green-500 relative">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-background border-2 border-primary flex items-center justify-center text-[10px]">&#x2194;</div>
+    {/* Top bar with Cloud tab highlighted + arrow */}
+    <div className="flex items-center gap-1.5 px-3 py-2 border-b border-white/[0.06]" style={{ background: "hsl(var(--background))" }}>
+      <div className="w-6 h-6 rounded flex items-center justify-center text-[10px] text-muted-foreground border border-white/[0.08]">&#x1f310;</div>
+      <div className="w-6 h-6 rounded flex items-center justify-center text-[10px] text-muted-foreground border border-white/[0.08]">&#x1f4c4;</div>
+      <div className="relative">
+        <div className="px-3 py-1 rounded-md text-[11px] font-semibold text-white flex items-center gap-1.5" style={{ background: "linear-gradient(135deg, #3b82f6, #6366f1)" }}>
+          <span className="text-[10px]">&#x2601;</span> Cloud
         </div>
-        <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm text-white font-bold" style={{ background: "linear-gradient(135deg, #3ecf8e, #1a9f60)" }}>S</div>
+        {/* Arrow pointing to Cloud tab */}
+        <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center">
+          <div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px] border-b-green-400" />
+          <div className="text-green-400 text-[9px] font-bold whitespace-nowrap mt-0.5">IDE KATTINTS!</div>
+        </div>
       </div>
-      <p className="text-muted-foreground text-[11px] text-center">Lovable &harr; Supabase egyetlen kattintással</p>
-      <div className="px-4 py-2 rounded-lg text-xs font-semibold text-white" style={{ background: "linear-gradient(135deg, #3ecf8e, #1a9f60)" }}>Enable Supabase</div>
+      <div className="w-6 h-6 rounded flex items-center justify-center text-[10px] text-muted-foreground border border-white/[0.08]">&lt;/&gt;</div>
+      <div className="w-6 h-6 rounded flex items-center justify-center text-[10px] text-muted-foreground border border-white/[0.08]">&#x1f4ca;</div>
+      <div className="ml-auto text-foreground text-xs font-medium">Cloud</div>
+    </div>
+    {/* Cloud enable panel */}
+    <div className="p-8 flex flex-col items-center">
+      <div className="w-full max-w-sm rounded-xl border border-white/[0.08] p-6" style={{ background: "hsl(var(--card) / 0.8)" }}>
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded-md" style={{ background: "linear-gradient(135deg, #ff6b35, #e44d8a)" }} />
+            <span className="text-foreground text-sm font-semibold">Lovable Cloud</span>
+          </div>
+          <span className="text-primary text-[11px]">Read more</span>
+        </div>
+        <p className="text-muted-foreground text-[11px] mb-4">Complete backend and AI models out of the box, so you can focus on building your app.</p>
+        <div className="space-y-3 mb-5">
+          {[
+            { icon: "&#x2261;", title: "Built-in backend", desc: "Database, storage, authentication, and backend logic" },
+            { icon: "&#x26a1;", title: "Add an LLM to your app", desc: "Powerful AI models with zero setup" },
+            { icon: "&#x1f4c8;", title: "Free to start, pay as you scale", desc: "Free usage included everywhere" },
+          ].map((item) => (
+            <div key={item.title} className="flex items-start gap-2.5">
+              <div className="w-5 h-5 rounded flex items-center justify-center text-[10px] text-muted-foreground border border-white/[0.06] flex-shrink-0 mt-0.5" dangerouslySetInnerHTML={{ __html: item.icon }} />
+              <div>
+                <div className="text-foreground text-[11px] font-semibold">{item.title}</div>
+                <div className="text-muted-foreground text-[10px]">{item.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="w-full py-2.5 rounded-lg text-center text-white text-sm font-semibold" style={{ background: "#3b82f6" }}>Enable Cloud</div>
+      </div>
+      <p className="text-muted-foreground text-[10px] mt-3">Already have a Supabase project? <span className="text-primary">Connect it here</span></p>
     </div>
   </div>
 );
@@ -108,13 +139,13 @@ const BlogMockup = () => (
         <span className="text-sm">&#x1f4dd;</span>
         <span className="text-foreground text-xs font-medium">Blog Admin</span>
       </div>
-      <div className="px-3 py-1 rounded-md text-[11px] font-medium text-white" style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)))" }}>+ Uj bejegyzes</div>
+      <div className="px-3 py-1 rounded-md text-[11px] font-medium text-white" style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)))" }}>+ Új bejegyzés</div>
     </div>
     <div className="p-4 space-y-2" style={{ background: "hsl(var(--card) / 0.5)" }}>
       {[
-        { title: "5 tipp a jobb weboldalhoz", date: "2026. marc. 20.", status: "Publikus", color: "#10b981" },
-        { title: "Miert fontos az SEO?", date: "2026. marc. 18.", status: "Publikus", color: "#10b981" },
-        { title: "Lovable tippek kezdoknek", date: "2026. marc. 15.", status: "Piszkozat", color: "#f59e0b" },
+        { title: "5 tipp a jobb weboldalhoz", date: "2026. márc. 20.", status: "Publikus", color: "#10b981" },
+        { title: "Miért fontos az SEO?", date: "2026. márc. 18.", status: "Publikus", color: "#10b981" },
+        { title: "Lovable tippek kezdőknek", date: "2026. márc. 15.", status: "Piszkozat", color: "#f59e0b" },
       ].map((post) => (
         <div key={post.title} className="flex items-center justify-between p-3 rounded-lg border border-white/[0.06] bg-white/[0.02]">
           <div>
@@ -136,16 +167,16 @@ const AdminPanelMockup = () => (
     </div>
     <div className="flex min-h-[200px]">
       <div className="w-[140px] border-r border-white/[0.06] p-2 space-y-1" style={{ background: "hsl(var(--background))" }}>
-        {["Dashboard", "Felhasznalok", "Termekek", "Rendelesek", "Beallitasok"].map((item, i) => (
+        {["Dashboard", "Felhasználók", "Termékek", "Rendelések", "Beállítások"].map((item, i) => (
           <div key={item} className={`px-3 py-1.5 rounded text-[10px] ${i === 0 ? "bg-primary/10 text-primary font-semibold" : "text-muted-foreground"}`}>{item}</div>
         ))}
       </div>
       <div className="flex-1 p-4">
         <div className="grid grid-cols-3 gap-2 mb-3">
           {[
-            { label: "Felhasznalok", value: "248", icon: "&#x1f465;", color: "hsl(var(--primary))" },
-            { label: "Rendelesek", value: "1,847", icon: "&#x1f6d2;", color: "#10b981" },
-            { label: "Bevetel", value: "2.4M Ft", icon: "&#x1f4b0;", color: "#f59e0b" },
+            { label: "Felhasználók", value: "248", color: "hsl(var(--primary))" },
+            { label: "Rendelések", value: "1,847", color: "#10b981" },
+            { label: "Bevétel", value: "2.4M Ft", color: "#f59e0b" },
           ].map((stat) => (
             <div key={stat.label} className="p-2.5 rounded-lg border border-white/[0.06] bg-white/[0.02]">
               <div className="text-[9px] text-muted-foreground mb-1">{stat.label}</div>
@@ -184,7 +215,7 @@ const WebshopMockup = () => (
     <div className="p-4" style={{ background: "hsl(var(--card) / 0.5)" }}>
       <div className="grid grid-cols-3 gap-2">
         {[
-          { name: "Premium Polo", price: "12,900 Ft" },
+          { name: "Premium Póló", price: "12,900 Ft" },
           { name: "Lenvászon Táska", price: "8,500 Ft" },
           { name: "Bőr Készlet", price: "24,900 Ft" },
         ].map((product) => (
@@ -264,26 +295,30 @@ const TutorialModule5 = () => {
           </div>
 
           <TutorialTipBox variant="info" icon="&#x1f4a1;" title="Ne ijedj meg a backend szótól!">
-            <p>A Lovable + Supabase kombináció miatt neked szó szerint semmilyen programozási tudásra nincs szükséged. Mindent promptokkal (utasításokkal) kérsz, és az AI megcsinálja. Ebben a modulban minden funkciónál megkapod a kész promptot &mdash; csak másold be!</p>
+            <p>A Lovable beépített <strong className="text-foreground">Lovable Cloud</strong> rendszere miatt neked szó szerint semmilyen programozási tudásra nincs szükséged. Mindent promptokkal (utasításokkal) kérsz, és az AI megcsinálja. Ebben a modulban minden funkciónál megkapod a kész promptot &mdash; csak másold be!</p>
           </TutorialTipBox>
         </div>
 
-        {/* ===================== SUPABASE BEKAPCSOLÁSA ===================== */}
+        {/* ===================== LOVABLE CLOUD BEKAPCSOLÁSA ===================== */}
         <div className="mb-8 tutorial-fade-up">
-          <h3 className="text-xl font-bold font-heading mb-3">0. lépés: Supabase bekapcsolása</h3>
-          <p className="text-muted-foreground mb-4">Mielőtt bármelyik backend funkciót használnád, be kell kapcsolnod a Supabase-t a projektedben. Ez egyetlen kattintás:</p>
+          <h3 className="text-xl font-bold font-heading mb-3">0. lépés: Lovable Cloud bekapcsolása</h3>
+          <p className="text-muted-foreground mb-4">Mielőtt bármelyik backend funkciót használnád, be kell kapcsolnod a <strong className="text-foreground">Lovable Cloud</strong>-ot a projektedben. Ez a Lovable saját, beépített backend rendszere &mdash; adatbázis, felhasználó-kezelés, fájltárolás, és még AI funkciók is, egyetlen kattintással:</p>
 
-          <SupabaseConnectMockup />
+          <CloudEnableMockup />
 
           <StepFlow steps={[
             { num: "1", title: "Nyisd meg a projektedet a Lovable-ben", desc: "Menj a Lovable-be, nyisd meg azt a projektet, amihez backend-et szeretnél." },
-            { num: "2", title: "Kattints a Supabase ikonra", desc: "A bal oldali menüben (vagy felül) találsz egy zöld Supabase ikont. Kattints rá." },
-            { num: "3", title: "Kattints az 'Enable Supabase' gombra", desc: "A Lovable automatikusan létrehozza a Supabase projektet és összeköti az oldaladdal. Ez 10-20 másodpercet vesz igénybe." },
-            { num: "4", title: "Kész!", desc: "Mostantól használhatsz adatbázist, felhasználó-kezelést, fájltárolást és mindent, amit ebben a modulban megtanulsz." },
+            { num: "2", title: "Kattints a 'Cloud' fülre", desc: "A felső menüsorban (az előnézet mellett) látsz egy 'Cloud' feliratú gombot egy felhő ikonnal. Kattints rá!" },
+            { num: "3", title: "Kattints az 'Enable Cloud' gombra", desc: "Megjelenik a Lovable Cloud panel, ahol egy kék 'Enable Cloud' gomb van. Kattints rá, és a Lovable automatikusan beállítja a teljes backend-et. Ez 10-20 másodpercet vesz igénybe." },
+            { num: "4", title: "Kész!", desc: "Mostantól használhatsz adatbázist, felhasználó-kezelést, fájltárolást és mindent, amit ebben a modulban megtanulsz. A Cloud fülön belül láthatod az adatbázisodat, felhasználóidat, és a beállításokat." },
           ]} />
 
-          <TutorialTipBox variant="warning" icon="&#x26a0;&#xfe0f;" title="Fontos: a Supabase ingyenes!">
-            <p>A Supabase alap csomagja ingyenes, és a legtöbb kis-közepes weboldalhoz tökéletesen elegendő. Fizetős csomag csak akkor kell, ha nagyon sok felhasználód vagy adatod van.</p>
+          <TutorialTipBox variant="warning" icon="&#x26a0;&#xfe0f;" title="Fontos: a Lovable Cloud ingyenesen indul!">
+            <p>A Lovable Cloud alap használata ingyenes (havi ~$25 értékig), és a legtöbb kis-közepes weboldalhoz tökéletesen elegendő. Fizetős csomag csak akkor kell, ha nagyon sok felhasználód vagy adatod van. A használatodat a Cloud &rarr; Usage fülön követheted.</p>
+          </TutorialTipBox>
+
+          <TutorialTipBox variant="pro" icon="&#x1f4a1;" title="Mi az a Lovable Cloud, pontosan?">
+            <p>A Lovable Cloud a Lovable saját, beépített backend rendszere. A háttérben Supabase (nyílt forráskódú) technológiát használ, de neked erről nem kell tudnod &mdash; minden a Lovable felületén belül elérhető, külön fiók nélkül. Adatbázist, felhasználó-kezelést (Auth), fájltárolást (Storage), szerveroldali kódot (Edge Functions), és még AI funkciókat is kapsz hozzá automatikusan.</p>
           </TutorialTipBox>
         </div>
 
@@ -304,12 +339,12 @@ const TutorialModule5 = () => {
           <h4 className="text-base font-bold font-heading mt-6 mb-3">Hogyan csináld? &mdash; lépésről lépésre</h4>
 
           <StepFlow steps={[
-            { num: "1", title: "Kapcsold be a Supabase-t (ha még nem tetted)", desc: "Lásd fentebb a 0. lépést." },
+            { num: "1", title: "Kapcsold be a Lovable Cloud-ot (ha még nem tetted)", desc: "Lásd fentebb a 0. lépést." },
             { num: "2", title: "Másold be az alábbi promptot a Lovable chat-be", desc: "A Lovable automatikusan létrehozza a bejelentkezési és regisztrációs oldalt, az adatbázis táblákat, és a hitelesítési logikát." },
             { num: "3", title: "Teszteld", desc: "Regisztrálj egy teszt email-lel, majd próbáld meg a bejelentkezést. Ha működik, kész vagy!" },
           ]} />
 
-          <TutorialPromptBox label="Prompt &mdash; Masold be a Lovable-be">{`Add user authentication to my website using Supabase Auth.
+          <TutorialPromptBox label="Prompt &mdash; Másold be a Lovable-be">{`Add user authentication to my website using Lovable Cloud Auth.
 
 Create:
 1. A login page with email and password fields, a "Login" button, and a "Register" link
@@ -327,7 +362,7 @@ Create:
           </TutorialTipBox>
 
           <TutorialTipBox variant="pro" icon="&#x1f4a1;" title="Google bejelentkezés beállítása">
-            <p>A Google login-hoz a Supabase dashboard-on be kell állítanod a Google OAuth kulcsokat. A Supabase honlapján ezt a <strong>Authentication &rarr; Providers &rarr; Google</strong> menüben találod. A Lovable akár ebben is segít, ha megkéred: &bdquo;Guide me through setting up Google OAuth in Supabase&rdquo;.</p>
+            <p>A Google login-hoz a Lovable Cloud felületen belül be kell állítanod a Google OAuth-ot. Menj a <strong>Cloud &rarr; Users &amp; Auth</strong> menübe, ott találod a Google bejelentkezés beállítását. A Lovable akár ebben is segít, ha megkéred: &bdquo;Guide me through setting up Google OAuth&rdquo;.</p>
           </TutorialTipBox>
         </div>
 
@@ -348,12 +383,12 @@ Create:
           <h4 className="text-base font-bold font-heading mt-6 mb-3">Hogyan csináld?</h4>
 
           <StepFlow steps={[
-            { num: "1", title: "Kapcsold be a Supabase-t", desc: "Ha még nem tetted meg, lásd a 0. lépést." },
+            { num: "1", title: "Kapcsold be a Lovable Cloud-ot", desc: "Ha még nem tetted meg, lásd a 0. lépést." },
             { num: "2", title: "Add meg az alábbi promptot", desc: "Ez létrehoz egy komplett űrlapot, adatbázis táblát, és a mentési logikát." },
-            { num: "3", title: "Teszteld az űrlapot", desc: "Töltsd ki teszt adatokkal. Utána menj a Supabase dashboardra, és nézd meg a 'contact_messages' táblában a beérkezett üzenetet." },
+            { num: "3", title: "Teszteld az űrlapot", desc: "Töltsd ki teszt adatokkal. Utána menj a Cloud fülre, ott a Database szekcióban láthatod a 'contact_messages' táblában a beérkezett üzenetet." },
           ]} />
 
-          <TutorialPromptBox label="Prompt &mdash; Alap kapcsolat urlap">{`Create a contact form section for my website.
+          <TutorialPromptBox label="Prompt &mdash; Alap kapcsolat űrlap">{`Create a contact form section for my website.
 
 The form should have these fields:
 - Full name (required)
@@ -362,7 +397,7 @@ The form should have these fields:
 - Subject dropdown (General question, Price request, Cooperation, Other)
 - Message textarea (required, minimum 10 characters)
 
-Save all submissions to a Supabase table called "contact_messages" with columns: id, created_at, full_name, email, phone, subject, message, is_read (boolean, default false).
+Save all submissions to a database table called "contact_messages" with columns: id, created_at, full_name, email, phone, subject, message, is_read (boolean, default false).
 
 After successful submission, show a green success toast: "Köszönjük! Üzenetét megkaptuk, hamarosan válaszolunk."
 Clear the form after submission.
@@ -373,17 +408,17 @@ Make the form responsive and modern.`}</TutorialPromptBox>
             <p>Ha azt is szeretnéd, hogy emailben értesítést kapj, amikor valaki kitölti az űrlapot, add hozzá ezt a kiegészítő promptot:</p>
           </TutorialTipBox>
 
-          <TutorialPromptBox label="Prompt &mdash; Email ertesites (bonusz)">{`When someone submits the contact form, also send me an email notification using a Supabase Edge Function.
+          <TutorialPromptBox label="Prompt &mdash; Email értesítés (bónusz)">{`When someone submits the contact form, also send me an email notification using an Edge Function.
 
 The email should contain the sender's name, email, subject, and message.
 Use Resend (resend.com) as email provider.
 Send the notification to: TE-EMAIL-CIMED-IDE@gmail.com
 Email subject: "Új üzenet érkezett a weboldalról: [sender name]"
 
-Add the RESEND_API_KEY to Supabase secrets.`}</TutorialPromptBox>
+Add the RESEND_API_KEY to the project secrets (Cloud -> Secrets).`}</TutorialPromptBox>
 
           <TutorialTipBox variant="info" icon="&#x2139;&#xfe0f;" title="Hol olvasod az üzeneteket?">
-            <p>A Supabase dashboard-on a <strong>Table Editor &rarr; contact_messages</strong> táblában láthatod az összes beérkezett üzenetet. De ha admin panelt is készítesz (lásd lejjebb), az is mutatja őket!</p>
+            <p>A Lovable Cloud felületen belül a <strong>Cloud &rarr; Database</strong> menüben a <strong>contact_messages</strong> táblában láthatod az összes beérkezett üzenetet. De ha admin panelt is készítesz (lásd lejjebb), az is mutatja őket!</p>
           </TutorialTipBox>
         </div>
 
@@ -397,46 +432,46 @@ Add the RESEND_API_KEY to Supabase secrets.`}</TutorialPromptBox>
             </div>
           </div>
 
-          <p className="text-muted-foreground mb-4">Ha a felhasználóidnak képeket vagy fájlokat kell feltölteniük (profilkép, portfólió, termékfotó, dokumentum), a Supabase Storage megoldja.</p>
+          <p className="text-muted-foreground mb-4">Ha a felhasználóidnak képeket vagy fájlokat kell feltölteniük (profilkép, portfólió, termékfotó, dokumentum), a Lovable Cloud Storage megoldja.</p>
 
           <ImageUploadMockup />
 
           <h4 className="text-base font-bold font-heading mt-6 mb-3">Hogyan csináld?</h4>
 
           <StepFlow steps={[
-            { num: "1", title: "Supabase bekapcsolva?", desc: "A Storage automatikusan elérhető, amint a Supabase be van kapcsolva." },
-            { num: "2", title: "Prompt beküldése", desc: "Az alábbi prompt létrehozza a feltöltési felületet, a Supabase Storage bucket-et, és a mentési logikát." },
-            { num: "3", title: "Teszteld", desc: "Próbálj meg egy képet feltölteni. A Supabase dashboardon a Storage menüben láthatod a feltöltött fájlokat." },
+            { num: "1", title: "Lovable Cloud bekapcsolva?", desc: "A Storage automatikusan elérhető, amint a Cloud be van kapcsolva." },
+            { num: "2", title: "Prompt beküldése", desc: "Az alábbi prompt létrehozza a feltöltési felületet, a fájltárolót (Storage bucket), és a mentési logikát." },
+            { num: "3", title: "Teszteld", desc: "Próbálj meg egy képet feltölteni. A Cloud fülön a Storage menüben láthatod a feltöltött fájlokat." },
           ]} />
 
-          <TutorialPromptBox label="Prompt &mdash; Profilkep feltoltes">{`Add a profile picture upload feature to the user dashboard.
+          <TutorialPromptBox label="Prompt &mdash; Profilkép feltöltés">{`Add a profile picture upload feature to the user dashboard.
 
 Requirements:
 1. Show the current profile picture (or a default avatar with the user's initials if no picture)
 2. Add an "Upload photo" button that opens a file picker
 3. Accept only image files: PNG, JPG, WEBP (max 5 MB)
-4. Upload the image to Supabase Storage in a bucket called "avatars"
+4. Upload the image to Cloud Storage in a bucket called "avatars"
 5. Store the image URL in the user's profile in the database (profiles table, avatar_url column)
 6. Show a preview of the image before uploading
 7. Show a loading spinner during upload
 8. After successful upload, show the new profile picture immediately
 9. Add a "Remove photo" option to delete the current picture`}</TutorialPromptBox>
 
-          <TutorialPromptBox label="Prompt &mdash; Galeria / Toebb kep feltoltese">{`Add an image gallery feature where users can upload multiple images.
+          <TutorialPromptBox label="Prompt &mdash; Galéria / Több kép feltöltése">{`Add an image gallery feature where users can upload multiple images.
 
 Requirements:
 1. Create a gallery page with a drag-and-drop upload area
 2. Users can upload multiple images at once (up to 10)
 3. Accept PNG, JPG, WEBP files (max 5 MB each)
-4. Store images in Supabase Storage bucket called "gallery"
-5. Save image metadata (title, upload date, file URL) to a "gallery_images" Supabase table
+4. Store images in Cloud Storage bucket called "gallery"
+5. Save image metadata (title, upload date, file URL) to a "gallery_images" database table
 6. Display uploaded images in a responsive masonry grid layout
 7. Click on an image to open a lightbox viewer
 8. Add a delete button on each image (only the uploader can delete)
 9. Show upload progress for each image`}</TutorialPromptBox>
 
           <TutorialTipBox variant="success" icon="&#x2705;" title="A képek a felhőben vannak!">
-            <p>A Supabase Storage a felhőben tárolja a képeket, tehát nem a te szerveredre kerülnek, és nincs helyszűke. Az ingyenes csomag 1 GB tárhelyet ad &mdash; ez több ezer képnek elég!</p>
+            <p>A Lovable Cloud Storage a felhőben tárolja a képeket, tehát nem a te szerveredre kerülnek, és nincs helyszűke. Az ingyenes használat bőven elég a kezdéshez &mdash; több ezer képet tudsz tárolni!</p>
           </TutorialTipBox>
         </div>
 
@@ -457,7 +492,7 @@ Requirements:
           <h4 className="text-base font-bold font-heading mt-6 mb-3">Hogyan csináld?</h4>
 
           <StepFlow steps={[
-            { num: "1", title: "Supabase bekapcsolása", desc: "Ha még nem tetted, kapcsold be a 0. lépés szerint." },
+            { num: "1", title: "Lovable Cloud bekapcsolása", desc: "Ha még nem tetted, kapcsold be a 0. lépés szerint." },
             { num: "2", title: "Blog rendszer létrehozása", desc: "Az alábbi prompt egy komplett blog rendszert hoz létre: listázó oldal, egyedi cikk oldal, és admin felület a bejegyzések kezeléséhez." },
             { num: "3", title: "Írj egy teszt bejegyzést", desc: "Menj az admin felületre, hozz létre egy bejegyzést, és nézd meg a blog oldalon, hogyan jelenik meg." },
           ]} />
@@ -485,14 +520,14 @@ ADMIN PAGES (only logged-in admin can access):
    - Title field
    - Slug field (auto-generated from title)
    - Category dropdown
-   - Featured image upload (Supabase Storage)
+   - Featured image upload (Cloud Storage)
    - Rich text editor for content (use TipTap or similar)
    - Excerpt field (short description)
    - Status toggle: Draft / Published
    - Save and Publish buttons
 
 DATABASE:
-- Supabase table "blog_posts" with columns: id, created_at, updated_at, title, slug (unique), excerpt, content, featured_image_url, category, status (draft/published), author_id, reading_time
+- Table "blog_posts" with columns: id, created_at, updated_at, title, slug (unique), excerpt, content, featured_image_url, category, status (draft/published), author_id, reading_time
 - Row Level Security: anyone can read published posts, only authenticated admin can create/edit/delete
 
 Make everything responsive and Hungarian-friendly.`}</TutorialPromptBox>
@@ -501,7 +536,7 @@ Make everything responsive and Hungarian-friendly.`}</TutorialPromptBox>
             <p>Ha azt szeretnéd, hogy a blog bejegyzéseid megjelenjenek a Google keresőben, add hozzá ezt a promptot is:</p>
           </TutorialTipBox>
 
-          <TutorialPromptBox label="Prompt &mdash; Blog SEO kiegeszites">{`Add SEO meta tags to each blog post page:
+          <TutorialPromptBox label="Prompt &mdash; Blog SEO kiegészítés">{`Add SEO meta tags to each blog post page:
 - Dynamic page title: "[Post Title] | [Site Name]"
 - Meta description from the post excerpt
 - Open Graph tags (og:title, og:description, og:image) for social media sharing
@@ -528,7 +563,7 @@ Make everything responsive and Hungarian-friendly.`}</TutorialPromptBox>
           <StepFlow steps={[
             { num: "1", title: "Győződj meg róla, hogy van bejelentkezési rendszered", desc: "Az admin panelhez kell az 1. pontban leírt bejelentkezési rendszer. Ha még nincs, először azt készítsd el." },
             { num: "2", title: "Hozd létre az admin panelt", desc: "Az alábbi prompt egy komplett admin dashboard-ot készít, statisztikákkal, táblázatokkal és kezelési lehetőségekkel." },
-            { num: "3", title: "Állítsd be, ki az admin", desc: "A Supabase-ben a te email címedet admin-nak kell jelölni. A prompt ezt is beállítja." },
+            { num: "3", title: "Állítsd be, ki az admin", desc: "A promptban cseréld ki az email címet a sajátodra. Ezzel az email-lel regisztrálva automatikusan admin jogot kapsz." },
           ]} />
 
           <TutorialPromptBox label="Prompt &mdash; Admin panel">{`Create a complete admin dashboard for my website at /admin route.
@@ -537,7 +572,7 @@ AUTHENTICATION & SECURITY:
 - Only users with admin role can access /admin pages
 - Add a "role" column to the profiles table (default: "user", can be: "admin")
 - If a non-admin user tries to access /admin, redirect to homepage
-- My email (ADMIN-EMAIL-CIM@gmail.com) should be set as admin
+- My email (ADMIN-EMAIL-CIMED@gmail.com) should be set as admin
 
 DASHBOARD HOME (/admin):
 - Show stats cards: Total users, Total messages, Total orders (if applicable), Revenue
@@ -568,7 +603,7 @@ Make all tables sortable and searchable.
 Use Hungarian labels everywhere.`}</TutorialPromptBox>
 
           <TutorialTipBox variant="warning" icon="&#x26a0;&#xfe0f;" title="Fontos: admin email cím">
-            <p>A promptban cseréld ki az <strong>ADMIN-EMAIL-CIM@gmail.com</strong> részt a saját valós email címedre! Ezzel az email címmel regisztrálva automatikusan admin jogot kapsz.</p>
+            <p>A promptban cseréld ki az <strong>ADMIN-EMAIL-CIMED@gmail.com</strong> részt a saját valós email címedre! Ezzel az email címmel regisztrálva automatikusan admin jogot kapsz.</p>
           </TutorialTipBox>
         </div>
 
@@ -582,20 +617,20 @@ Use Hungarian labels everywhere.`}</TutorialPromptBox>
             </div>
           </div>
 
-          <p className="text-muted-foreground mb-4">Ha termékeket szeretnél árulni az oldaladon, a Lovable + Supabase + Stripe kombináció egy teljes webshopot tud neked készíteni. Nézzük lépésről lépésre!</p>
+          <p className="text-muted-foreground mb-4">Ha termékeket szeretnél árulni az oldaladon, a Lovable + Lovable Cloud + Stripe kombináció egy teljes webshopot tud neked készíteni. Nézzük lépésről lépésre!</p>
 
           <WebshopMockup />
 
           <h4 className="text-base font-bold font-heading mt-6 mb-3">Hogyan csináld? &mdash; lépésről lépésre</h4>
 
           <StepFlow steps={[
-            { num: "1", title: "Supabase bekapcsolása + Auth beállítása", desc: "Webshophoz kell adatbázis ÉS felhasználó-kezelés. Ha még nincs, nézd meg az 1. pontot (regisztráció) és a 0. lépést." },
+            { num: "1", title: "Lovable Cloud bekapcsolása + Auth beállítása", desc: "Webshophoz kell adatbázis ÉS felhasználó-kezelés. Ha még nincs, nézd meg az 1. pontot (regisztráció) és a 0. lépést." },
             { num: "2", title: "Termékek és kosár létrehozása", desc: "Az alábbi prompt létrehozza a termék-listát, termék-részletek oldalt és a kosár funkciót." },
             { num: "3", title: "Stripe fizetés bekapcsolása (opcionális)", desc: "Ha online kártyás fizetést is szeretnél, add hozzá a Stripe integrációt a második prompttal." },
             { num: "4", title: "Admin felület a termékekhez", desc: "A harmadik prompt egy admin felületet ad a termékek kezeléséhez." },
           ]} />
 
-          <TutorialPromptBox label="Prompt &mdash; Webshop alap (termekek + kosar)">{`Create an e-commerce / webshop section for my website.
+          <TutorialPromptBox label="Prompt &mdash; Webshop alap (termékek + kosár)">{`Create an e-commerce / webshop section for my website.
 
 PRODUCTS PAGE (/shop or /termekek):
 1. Product grid showing all products from the database
@@ -624,9 +659,9 @@ SHOPPING CART:
 6. Save cart to localStorage (works without login too)
 
 DATABASE:
-- Supabase table "products": id, created_at, name, slug, description, price, sale_price, category, image_url, images (array), stock_quantity, is_featured, is_active
-- Supabase table "orders": id, created_at, user_id, items (json), subtotal, shipping, total, status (pending/paid/shipped/delivered), shipping_address
-- Supabase table "order_items": id, order_id, product_id, quantity, price
+- Table "products": id, created_at, name, slug, description, price, sale_price, category, image_url, images (array), stock_quantity, is_featured, is_active
+- Table "orders": id, created_at, user_id, items (json), subtotal, shipping, total, status (pending/paid/shipped/delivered), shipping_address
+- Table "order_items": id, order_id, product_id, quantity, price
 
 All prices in Hungarian Forints (Ft). Use Hungarian labels.
 Make everything fully responsive.`}</TutorialPromptBox>
@@ -635,7 +670,7 @@ Make everything fully responsive.`}</TutorialPromptBox>
             <p>Ha kártyás fizetést is szeretnél (Visa, Mastercard), ahhoz a Stripe szolgáltatást használhatod. A Stripe Magyarországon is elérhető, és ingyenes regisztráció után azonnal használható. Az alábbi prompt bekapcsolja:</p>
           </TutorialTipBox>
 
-          <TutorialPromptBox label="Prompt &mdash; Stripe fizetes (opcionalis)">{`Add Stripe payment integration to the webshop checkout.
+          <TutorialPromptBox label="Prompt &mdash; Stripe fizetés (opcionális)">{`Add Stripe payment integration to the webshop checkout.
 
 Requirements:
 1. Create a checkout page (/checkout) with:
@@ -643,19 +678,19 @@ Requirements:
    - Shipping address form (name, address, city, zip code, phone)
    - "Pay with card" button
 2. When clicking "Pay with card", redirect to Stripe Checkout (hosted payment page)
-3. Create a Supabase Edge Function that:
+3. Create an Edge Function that:
    - Creates a Stripe Checkout Session with the cart items
    - Sets success_url and cancel_url
 4. After successful payment:
    - Redirect to a /thank-you page with order confirmation
    - Update the order status to "paid" in the database
    - Send order confirmation (optional)
-5. Add STRIPE_SECRET_KEY to Supabase Edge Function secrets
+5. Add STRIPE_SECRET_KEY to project secrets (Cloud -> Secrets)
 
 Use Stripe test mode first for testing (test API keys).
 All prices in Hungarian Forints (HUF).`}</TutorialPromptBox>
 
-          <TutorialPromptBox label="Prompt &mdash; Termek admin felulet">{`Create a product management admin page at /admin/products.
+          <TutorialPromptBox label="Prompt &mdash; Termék admin felület">{`Create a product management admin page at /admin/products.
 
 Requirements:
 1. Product list table with: image thumbnail, name, price, category, stock, status (active/inactive), edit/delete buttons
@@ -666,7 +701,7 @@ Requirements:
    - Price and Sale price fields
    - Category dropdown
    - Stock quantity
-   - Image upload (multiple images, first one is the main image) using Supabase Storage
+   - Image upload (multiple images, first one is the main image) using Cloud Storage
    - Active/Inactive toggle
 3. Edit product form (same as above, pre-filled)
 4. Delete product with confirmation dialog
@@ -689,7 +724,7 @@ Hungarian labels everywhere.`}</TutorialPromptBox>
               <thead>
                 <tr>
                   <th>Funkció</th>
-                  <th>Supabase</th>
+                  <th>Cloud</th>
                   <th>Auth</th>
                   <th>Storage</th>
                   <th>Stripe</th>
@@ -697,16 +732,16 @@ Hungarian labels everywhere.`}</TutorialPromptBox>
               </thead>
               <tbody>
                 {[
-                  { func: "Regisztráció / Bejelentkezés", supa: true, auth: true, storage: false, stripe: false },
-                  { func: "Kapcsolat űrlap", supa: true, auth: false, storage: false, stripe: false },
-                  { func: "Kép / Fájl feltöltés", supa: true, auth: true, storage: true, stripe: false },
-                  { func: "Blog", supa: true, auth: true, storage: true, stripe: false },
-                  { func: "Admin panel", supa: true, auth: true, storage: false, stripe: false },
-                  { func: "Webshop", supa: true, auth: true, storage: true, stripe: true },
+                  { func: "Regisztráció / Bejelentkezés", cloud: true, auth: true, storage: false, stripe: false },
+                  { func: "Kapcsolat űrlap", cloud: true, auth: false, storage: false, stripe: false },
+                  { func: "Kép / Fájl feltöltés", cloud: true, auth: true, storage: true, stripe: false },
+                  { func: "Blog", cloud: true, auth: true, storage: true, stripe: false },
+                  { func: "Admin panel", cloud: true, auth: true, storage: false, stripe: false },
+                  { func: "Webshop", cloud: true, auth: true, storage: true, stripe: true },
                 ].map((row) => (
                   <tr key={row.func}>
                     <td className="text-foreground font-medium">{row.func}</td>
-                    <td>{row.supa ? <span className="text-green-400">&#x2705;</span> : <span className="text-muted-foreground">&#x2014;</span>}</td>
+                    <td>{row.cloud ? <span className="text-green-400">&#x2705;</span> : <span className="text-muted-foreground">&#x2014;</span>}</td>
                     <td>{row.auth ? <span className="text-green-400">&#x2705;</span> : <span className="text-muted-foreground">&#x2014;</span>}</td>
                     <td>{row.storage ? <span className="text-green-400">&#x2705;</span> : <span className="text-muted-foreground">&#x2014;</span>}</td>
                     <td>{row.stripe ? <span className="text-green-400">&#x2705;</span> : <span className="text-muted-foreground text-xs">opcionális</span>}</td>
@@ -720,7 +755,7 @@ Hungarian labels everywhere.`}</TutorialPromptBox>
         {/* ===================== ZÁRÓ TIPP ===================== */}
         <div className="tutorial-fade-up">
           <TutorialTipBox variant="pro" icon="&#x1f680;" title="A sorrend számít!">
-            <p>Ha több funkciót is szeretnél, javasolt sorrend: <strong>1.</strong> Supabase bekapcsolása &rarr; <strong>2.</strong> Regisztráció/Auth &rarr; <strong>3.</strong> Ami kell (űrlap, blog, webshop) &rarr; <strong>4.</strong> Admin panel. Így minden szépen egymásra épül, és a Lovable nem keveredik össze.</p>
+            <p>Ha több funkciót is szeretnél, javasolt sorrend: <strong>1.</strong> Cloud bekapcsolása &rarr; <strong>2.</strong> Regisztráció/Auth &rarr; <strong>3.</strong> Ami kell (űrlap, blog, webshop) &rarr; <strong>4.</strong> Admin panel. Így minden szépen egymásra épül, és a Lovable nem keveredik össze.</p>
           </TutorialTipBox>
 
           <TutorialTipBox variant="info" icon="&#x1f4a1;" title="Lépésenként haladj!">
