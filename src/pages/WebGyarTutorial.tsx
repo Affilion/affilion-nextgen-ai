@@ -108,7 +108,7 @@ const WebGyarTutorial = () => {
             onClick={() => setSidebarOpen(true)}
             aria-label="Modulok"
           >
-            <Menü size={20} />
+            <Menu size={20} />
           </button>
 
           {/* Spacer for desktop symmetry */}
