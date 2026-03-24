@@ -26,7 +26,7 @@ const TutorialModule7 = () => {
 
           <div className="tutorial-seo-pillars">
             <div className="tutorial-seo-pillar">
-              <div className="w-12 h-12 rounded-xl mx-auto mb-3.5 flex items-center justify-center text-2xl bg-blue-500/[0.12]">\u2699\uFE0F</div>
+              <div className="w-12 h-12 rounded-xl mx-auto mb-3.5 flex items-center justify-center text-2xl bg-blue-500/[0.12]">⚙️</div>
               <h4 className="font-heading font-bold mb-2">Technikai SEO</h4>
               <p className="text-sm text-muted-foreground mb-2">Megtalaalja-e a Google az oldaladat?</p>
               <ul className="list-none p-0 text-xs text-muted-foreground space-y-0.5">
@@ -38,7 +38,7 @@ const TutorialModule7 = () => {
               </ul>
             </div>
             <div className="tutorial-seo-pillar">
-              <div className="w-12 h-12 rounded-xl mx-auto mb-3.5 flex items-center justify-center text-2xl bg-green-500/[0.12]">\uD83D\uDCDD</div>
+              <div className="w-12 h-12 rounded-xl mx-auto mb-3.5 flex items-center justify-center text-2xl bg-green-500/[0.12]">📝</div>
               <h4 className="font-heading font-bold mb-2">On-Page SEO</h4>
               <p className="text-sm text-muted-foreground mb-2">Mit mond az oldalad a Google-nek?</p>
               <ul className="list-none p-0 text-xs text-muted-foreground space-y-0.5">
@@ -50,7 +50,7 @@ const TutorialModule7 = () => {
               </ul>
             </div>
             <div className="tutorial-seo-pillar">
-              <div className="w-12 h-12 rounded-xl mx-auto mb-3.5 flex items-center justify-center text-2xl bg-yellow-500/[0.12]">\uD83D\uDD17</div>
+              <div className="w-12 h-12 rounded-xl mx-auto mb-3.5 flex items-center justify-center text-2xl bg-yellow-500/[0.12]">🔗</div>
               <h4 className="font-heading font-bold mb-2">Off-Page SEO</h4>
               <p className="text-sm text-muted-foreground mb-2">Ki linkel rad? Ki ajanl teged?</p>
               <ul className="list-none p-0 text-xs text-muted-foreground space-y-0.5">
@@ -63,7 +63,7 @@ const TutorialModule7 = () => {
             </div>
           </div>
 
-          <TutorialTipBox variant="info" icon="\uD83D\uDCA1" title="Kezdoknek">
+          <TutorialTipBox variant="info" icon="💡" title="Kezdoknek">
             <p>Ne aggodj, ha ez sok! A Lovable a technikai SEO nagy reszet automatikusan kezeli. A te dolgod foleg az on-page SEO: jo szovegek, kulcsszavak, es a meta tagek beallitasa. Az off-page SEO idovel, a tartalom minosegevel epitheto.</p>
           </TutorialTipBox>
         </div>
@@ -127,7 +127,7 @@ const TutorialModule7 = () => {
           </ol>
           <TutorialPromptBox label="GA4 beillesztes prompt">{`Add Google Analytics 4 tracking to the site. Add the gtag.js script to the head section with measurement ID: G-XXXXXXXXX (replace with your actual ID). Make sure it tracks page views on route changes.`}</TutorialPromptBox>
 
-          <TutorialTipBox variant="warning" icon="\u26A0\uFE0F" title="Fontos: Data Retention beallitas">
+          <TutorialTipBox variant="warning" icon="⚠️" title="Fontos: Data Retention beallitas">
             <p>Az Admin &rarr; Data Settings &rarr; Data Retention menuben allitsd a megorzesi idot <strong className="text-foreground">14 honapra</strong>! Az alapertelmezett 2 honap nagyon keves az eves trendek elemzesehez.</p>
           </TutorialTipBox>
 

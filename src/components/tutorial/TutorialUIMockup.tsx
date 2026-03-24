@@ -29,7 +29,7 @@ export const LovableEditorMockup = () => (
         <div className="absolute top-1.5 right-4 text-[10px] text-secondary font-semibold uppercase tracking-wider">Elo elonezet &rarr;</div>
         <div className="tutorial-mini-site mt-4">
           <div className="tutorial-mini-nav">
-            <div className="text-white text-[11px] font-bold">\uD83C\uDF7D Ristorante</div>
+            <div className="text-white text-[11px] font-bold">🍽 Ristorante</div>
             <div className="flex gap-2.5">
               <span className="text-muted-foreground text-[9px]">Menu</span>
               <span className="text-muted-foreground text-[9px]">Rolunk</span>
@@ -61,7 +61,7 @@ export const DNSPanelMockup = () => (
   <div className="tutorial-ui-mockup tutorial-fade-up">
     <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]" style={{ background: "hsl(var(--background))" }}>
       <div className="flex items-center gap-2">
-        <div className="w-7 h-7 rounded-md flex items-center justify-center text-white text-sm" style={{ background: "linear-gradient(135deg, #2563eb, hsl(var(--primary)))" }}>\u2699</div>
+        <div className="w-7 h-7 rounded-md flex items-center justify-center text-white text-sm" style={{ background: "linear-gradient(135deg, #2563eb, hsl(var(--primary)))" }}>⚙</div>
         <div>
           <h5 className="text-foreground text-[13px] font-semibold">DNS Rekordok &mdash; sajatdomain.hu</h5>
           <p className="text-muted-foreground text-[10px]">Rackhost Vezerlopult</p>
@@ -114,7 +114,7 @@ export const GSCDashboardMockup = () => {
         </div>
         <div className="flex items-center gap-1 px-2.5 py-1 bg-white/[0.04] border border-white/[0.08] rounded text-muted-foreground text-[11px]">
           <span>sajatdomain.hu</span>
-          <span className="text-[9px]">\u25BC</span>
+          <span className="text-[9px]">▼</span>
         </div>
       </div>
       <div className="tutorial-gsc-body">
@@ -170,9 +170,9 @@ export const GA4DashboardMockup = () => (
       <div className="flex-1 p-4">
         <div className="tutorial-ga4-metrics">
           {[
-            { label: "Felhasznalok", value: "1,247", delta: "\u2191 +12.3%" },
-            { label: "Munkamenetek", value: "2,891", delta: "\u2191 +8.7%" },
-            { label: "Atl. ido", value: "2:34", delta: "\u2191 +5.1%" },
+            { label: "Felhasznalok", value: "1,247", delta: "↑ +12.3%" },
+            { label: "Munkamenetek", value: "2,891", delta: "↑ +8.7%" },
+            { label: "Atl. ido", value: "2:34", delta: "↑ +5.1%" },
           ].map((m) => (
             <div key={m.label} className="tutorial-ga4-metric">
               <div className="tutorial-metric-label">{m.label}</div>

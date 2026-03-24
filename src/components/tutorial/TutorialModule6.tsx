@@ -46,11 +46,11 @@ const TutorialModule6 = () => {
         </div>
 
         <div className="mb-8 tutorial-fade-up">
-          <TutorialTipBox variant="warning" icon="\u26A0\uFE0F" title="Fontos: DNS propagacio">
+          <TutorialTipBox variant="warning" icon="⚠️" title="Fontos: DNS propagacio">
             <p>A DNS modositasok akar 72 oraig is tarthatnak, amig &bdquo;vegigfutnak&rdquo; az interneten. Altalaban par oran belul mukodik. A <a href="https://dnschecker.org" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">dnschecker.org</a> oldalon ellenorizheted a propagacio allapotat.</p>
           </TutorialTipBox>
 
-          <TutorialTipBox variant="info" icon="\uD83D\uDCA1" title="www aldomain">
+          <TutorialTipBox variant="info" icon="💡" title="www aldomain">
             <p>Ha a www.sajatdomain.hu cimet is szeretned hasznalni, azt kulon kell hozzaadnod a Lovable domain beallitasaiban. Az elso hozzaadott domain lesz az elsodleges, a tobbi automatikusan atiranyit.</p>
           </TutorialTipBox>
         </div>

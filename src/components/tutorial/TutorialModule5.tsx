@@ -18,7 +18,7 @@ const TutorialModule5 = () => {
           <h3 className="text-xl font-bold font-heading mb-3">Mikor van szukseged backend-re?</h3>
           <div className="tutorial-backend-grid grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
             <div className="glass-card">
-              <h4 className="text-green-400 font-semibold mb-2">\u2705 Kell backend, ha:</h4>
+              <h4 className="text-green-400 font-semibold mb-2">✅ Kell backend, ha:</h4>
               <ul className="text-sm text-muted-foreground pl-5 space-y-1 list-disc">
                 <li>Felhasznaloi regisztracio/bejelentkezes</li>
                 <li>Kapcsolatfelveteli urlap, ami ment</li>
@@ -29,7 +29,7 @@ const TutorialModule5 = () => {
               </ul>
             </div>
             <div className="glass-card">
-              <h4 className="text-red-400 font-semibold mb-2">\u274C Nem kell backend, ha:</h4>
+              <h4 className="text-red-400 font-semibold mb-2">❌ Nem kell backend, ha:</h4>
               <ul className="text-sm text-muted-foreground pl-5 space-y-1 list-disc">
                 <li>Egyszeru bemutatkozo oldal</li>
                 <li>Portfolio, galeria</li>
@@ -58,7 +58,7 @@ const TutorialModule5 = () => {
             <p className="text-muted-foreground">Kepek, dokumentumok es mas fajlok feltoltese es tarolasa. Tokeletes profilkepekhez, termekfotokhoz vagy dokumentumkezelohoz.</p>
           </TutorialAccordion>
 
-          <TutorialAccordion title="Edge Functions \u2014 szerver nelkuli logika">
+          <TutorialAccordion title="Edge Functions — szerver nelkuli logika">
             <p className="text-muted-foreground">Ha osszetettebb logikara van szukseged (e-mail kuldes, API hivas, fizetes feldolgozas), az Edge Functions serverless hatter-kodot futtat JavaScript/TypeScript-ben. Titkos kulcsokat (Stripe, OpenAI) a Secrets managerben tarolhatsz biztonsagosan.</p>
           </TutorialAccordion>
         </div>
@@ -67,7 +67,7 @@ const TutorialModule5 = () => {
           <h3 className="text-xl font-bold font-heading mb-3">Gyakorlati pelda: Kapcsolat urlap</h3>
           <TutorialPromptBox label="Prompt az AI-nak">{`Create a contact form with name, email, phone, and message fields. Save submissions to a Supabase "contact_messages" table. Show a success toast notification after submission. Add form validation.`}</TutorialPromptBox>
 
-          <TutorialTipBox variant="success" icon="\u2705" title="Eredmeny">
+          <TutorialTipBox variant="success" icon="✅" title="Eredmeny">
             <p>Ez a prompt letrehoz egy teljes, mukodo kapcsolatfelveteli urlapot, ami elmenti az uzeneteket az adatbazisba. A Supabase admin panelen lathatod az osszes beerkez uzenetet!</p>
           </TutorialTipBox>
         </div>

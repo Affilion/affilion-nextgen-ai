@@ -36,7 +36,7 @@ const TutorialPromptBox = ({ label, children }: TutorialPromptBoxProps) => {
           copied ? "text-green-400 border-green-400" : "text-muted-foreground hover:text-foreground"
         }`}
       >
-        {copied ? "\u2713 Masolva" : "Masolas"}
+        {copied ? "✓ Masolva" : "Masolas"}
       </button>
       {children}
     </div>

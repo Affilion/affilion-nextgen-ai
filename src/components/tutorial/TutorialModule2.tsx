@@ -50,7 +50,7 @@ const TutorialModule2 = () => {
             </table>
           </div>
 
-          <TutorialTipBox variant="info" icon="\uD83D\uDCA1" title="Tipp">
+          <TutorialTipBox variant="info" icon="💡" title="Tipp">
             <p>Ha magyar celkozonsegnek keszul a weboldalad, a .hu domain a legjobb valasztas. Elso evre mindossze 490 Ft (brutto 622 Ft) &mdash; ez a legolcsobb opcio!</p>
           </TutorialTipBox>
         </div>
@@ -67,7 +67,7 @@ const TutorialModule2 = () => {
             <li>Vard meg a regisztracio befejezeset (.hu: ~3 munkanap, nemzetkozi: ~24 ora)</li>
           </ol>
 
-          <TutorialTipBox variant="warning" icon="\u26A0\uFE0F" title="Fontos">
+          <TutorialTipBox variant="warning" icon="⚠️" title="Fontos">
             <p>.hu domain eseten a tulajdonosi adatok megerositese kotelezo! Ha nem erositedd meg idoben, a regisztracio meghiusulhat. Figyeld az e-mailjeidet.</p>
           </TutorialTipBox>
 

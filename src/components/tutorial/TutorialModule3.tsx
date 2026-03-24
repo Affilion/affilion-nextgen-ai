@@ -73,7 +73,7 @@ const TutorialModule3 = () => {
             </div>
           </div>
 
-          <TutorialTipBox variant="pro" icon="\uD83C\uDFAF" title="Pro tipp: Diakoknak akar 50% kedvezmeny!">
+          <TutorialTipBox variant="pro" icon="🎯" title="Pro tipp: Diakoknak akar 50% kedvezmeny!">
             <p>Ha van egyetemi e-mail cimed, akar 50%-os kedvezmenyt kaphatsz. A kreditek honaprol honapra atgordunek (az eves/havi limitig).</p>
           </TutorialTipBox>
         </div>
@@ -91,16 +91,16 @@ const TutorialModule3 = () => {
 
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">A felulet reszei</h3>
-          <TutorialAccordion title="Chat panel \u2014 beszelj az AI-jal">
+          <TutorialAccordion title="Chat panel — beszelj az AI-jal">
             <p className="text-muted-foreground">A bal oldalon talaalod a chat panelt. Ide ird le, mit szeretnel: &bdquo;Keszits egy modern portfolio oldalt sotet hatterrel&rdquo; &mdash; es az AI megepiti! Minden uzenet 1 kreditet hasznal, ha kodot modosit; a sima chat (kod nelkul) szinten 1 kreditet.</p>
           </TutorialAccordion>
-          <TutorialAccordion title="Vizualis elonezet \u2014 lasd, amit epitesz">
+          <TutorialAccordion title="Vizualis elonezet — lasd, amit epitesz">
             <p className="text-muted-foreground">A jobb oldalon valos idoben latod a weboldaladat, ahogy az AI dolgozik rajta. Az elonezet interaktiv &mdash; kattinthatsz, gorgethetsz, kiprobaalhatod.</p>
           </TutorialAccordion>
-          <TutorialAccordion title="Precision Edit \u2014 kattints es szerkeszd">
+          <TutorialAccordion title="Precision Edit — kattints es szerkeszd">
             <p className="text-muted-foreground">A Precision Edit funkcioval rakattinthatsz barmely elemre az elonozetben, es kozvetlenul szerkesztheted a szoveget, szint, meretet. Nem kell mindent a chatben kerned!</p>
           </TutorialAccordion>
-          <TutorialAccordion title="Elozmoenyek \u2014 barmikor visszalephetsz">
+          <TutorialAccordion title="Elozmoenyek — barmikor visszalephetsz">
             <p className="text-muted-foreground">A Lovable automatikusan menti minden valtozatot. Ha valami rosszul sul el, egyszeruen visszaterhetsz egy korabbi verziohoz. Ez olyan, mint a &bdquo;Ctrl+Z&rdquo; a vegtelensegig!</p>
           </TutorialAccordion>
 

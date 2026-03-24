@@ -19,14 +19,14 @@ const TutorialModule4 = () => {
           <h3 className="text-xl font-bold font-heading mb-3">Prompt-irasi tippek (Prompt Engineering)</h3>
           <p className="text-muted-foreground mb-4">Az AI minosege a te utasitasaid minosoegetol fugg. Ime a legjobb gyakorlatok:</p>
 
-          <TutorialTipBox variant="pro" icon="\uD83C\uDFAF" title="Az aranyszabaly: Legyel konkret!">
+          <TutorialTipBox variant="pro" icon="🎯" title="Az aranyszabaly: Legyel konkret!">
             <p>Minel reszletesebb a leirasod, annal jobb lesz az eredmeny. Ne csak azt ird: &bdquo;csinalj szep oldalt&rdquo;, hanem ird le pontosan, mit szeretnel latni.</p>
           </TutorialTipBox>
 
           <div className="glass-card">
-            <h4 className="font-heading font-semibold mb-2">\u274C Rossz prompt:</h4>
+            <h4 className="font-heading font-semibold mb-2">❌ Rossz prompt:</h4>
             <p className="text-red-400 mb-4">&bdquo;Csinalj egy weboldalt.&rdquo;</p>
-            <h4 className="font-heading font-semibold mb-2">\u2705 Jo prompt:</h4>
+            <h4 className="font-heading font-semibold mb-2">✅ Jo prompt:</h4>
             <p className="text-green-400">&bdquo;Keszits egy modern portfolio weboldalt egy fotos szamara. Legyen sotet hatter, nagy kepek, egy galeria szekcio 3 oszlopos grid-del, rolam szekcio, es egy kapcsolat urlap. A szinvilag legyen meleg szurke es arany akcentus.&rdquo;</p>
           </div>
         </div>
@@ -39,7 +39,7 @@ const TutorialModule4 = () => {
           {/* Etterem */}
           <div className="tutorial-prompt-template">
             <div className="tutorial-prompt-template-header">
-              <span className="text-xl">\uD83C\uDF7D</span>
+              <span className="text-xl">🍽</span>
               <h5 className="text-sm font-semibold text-foreground">Etterem weboldal</h5>
             </div>
             <div className="tutorial-prompt-template-body">
@@ -60,7 +60,7 @@ Az oldalon legyen:
           {/* Portfolio */}
           <div className="tutorial-prompt-template">
             <div className="tutorial-prompt-template-header">
-              <span className="text-xl">\uD83D\uDC64</span>
+              <span className="text-xl">👤</span>
               <h5 className="text-sm font-semibold text-foreground">Szemelyes portfolio</h5>
             </div>
             <div className="tutorial-prompt-template-body">
@@ -80,7 +80,7 @@ Az oldalon legyen:
           {/* Szolgaltato */}
           <div className="tutorial-prompt-template">
             <div className="tutorial-prompt-template-header">
-              <span className="text-xl">\u2702\uFE0F</span>
+              <span className="text-xl">✂️</span>
               <h5 className="text-sm font-semibold text-foreground">Szolgaltato ceg (pl. fodrasz, szerviz)</h5>
             </div>
             <div className="tutorial-prompt-template-body">
@@ -102,7 +102,7 @@ Az oldalon legyen:
           {/* Webshop */}
           <div className="tutorial-prompt-template">
             <div className="tutorial-prompt-template-header">
-              <span className="text-xl">\uD83D\uDED2</span>
+              <span className="text-xl">🛒</span>
               <h5 className="text-sm font-semibold text-foreground">Webshop / Termekbemutato</h5>
             </div>
             <div className="tutorial-prompt-template-body">
@@ -123,7 +123,7 @@ Az oldalon legyen:
             </div>
           </div>
 
-          <TutorialTipBox variant="info" icon="\uD83D\uDCA1" title="Tipp: Testreszabas">
+          <TutorialTipBox variant="info" icon="💡" title="Tipp: Testreszabas">
             <p>Ezek kiindulopontok &mdash; szabadon modositsd a szineket, szekciokat es a szoveget az igenyyeidnek megfeleloen. Minel reszletesebb a leirasod, annal jobb lesz az eredmeny!</p>
           </TutorialTipBox>
         </div>
@@ -134,10 +134,10 @@ Az oldalon legyen:
           <p className="text-muted-foreground mb-4">A legtobb weboldal ezekbol az oldalakbol all:</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
             {[
-              { icon: "\uD83C\uDFE0", name: "Fooldal", desc: "Hero, bemutatkozas, CTA" },
-              { icon: "\uD83D\uDC64", name: "Rolunk", desc: "Tortenet, csapat, ertekek" },
-              { icon: "\u26A1", name: "Szolgaltatasok", desc: "Mit kinalsz?" },
-              { icon: "\uD83D\uDCEC", name: "Kapcsolat", desc: "Urlap, terkep, elerhetoseg" },
+              { icon: "🏠", name: "Fooldal", desc: "Hero, bemutatkozas, CTA" },
+              { icon: "👤", name: "Rolunk", desc: "Tortenet, csapat, ertekek" },
+              { icon: "⚡", name: "Szolgaltatasok", desc: "Mit kinalsz?" },
+              { icon: "📬", name: "Kapcsolat", desc: "Urlap, terkep, elerhetoseg" },
             ].map((p) => (
               <div key={p.name} className="glass-card text-center">
                 <div className="text-3xl mb-2">{p.icon}</div>
