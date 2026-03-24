@@ -96,7 +96,7 @@ const WebGyarTutorial = () => {
             to="/"
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
           >
-            <ArrowLeft size={16} /> Fooldal
+            <ArrowLeft size={16} /> Főoldal
           </Link>
 
           <h1 className="text-lg font-bold glow-text font-heading hidden sm:block">

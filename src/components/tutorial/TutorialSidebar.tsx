@@ -1,17 +1,17 @@
 import { useCallback } from "react";
 
 const modules = [
-  { id: "module-0", num: "0", label: "Bevezetes" },
-  { id: "module-1", num: "1", label: "Elokeszuletek" },
-  { id: "module-2", num: "2", label: "Domain Regisztracio" },
-  { id: "module-3", num: "3", label: "Ismerkedes a Lovable-lel" },
-  { id: "module-4", num: "4", label: "Weblap Epitese" },
-  { id: "module-5", num: "5", label: "Backend es Adatbazis" },
-  { id: "module-6", num: "6", label: "Domain Bekotes" },
-  { id: "module-7", num: "7", label: "SEO es Analytics" },
-  { id: "module-8", num: "8", label: "Karbantartas" },
+  { id: "module-0", num: "0", label: "Bevezetés" },
+  { id: "module-1", num: "1", label: "Előkészületek" },
+  { id: "module-2", num: "2", label: "Domain Regisztráció" },
+  { id: "module-3", num: "3", label: "Ismerkedés a Lovable-lel" },
+  { id: "module-4", num: "4", label: "Weblap Építése" },
+  { id: "module-5", num: "5", label: "Backend és Adatbázis" },
+  { id: "module-6", num: "6", label: "Domain Bekötés" },
+  { id: "module-7", num: "7", label: "SEO és Analytics" },
+  { id: "module-8", num: "8", label: "Karbantartás" },
   { id: "module-9", num: "9", label: "GYIK" },
-  { id: "module-10", num: "10", label: "Fogalomtar" },
+  { id: "module-10", num: "10", label: "Fogalomtár" },
 ];
 
 interface TutorialSidebarProps {

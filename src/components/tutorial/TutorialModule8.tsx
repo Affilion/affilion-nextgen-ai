@@ -10,9 +10,9 @@ const maintenanceItems = [
   "Tartalom frissitese (legalabb havonta egyszer)",
   "Analytics adatok attekintese (heti/havi)",
   "Search Console hibak ellenorzese",
-  "Mobil megjelenes tesztelese",
-  "Biztonsagi frissitesek (SSL aktiv-e?)",
-  "Biztonsagi mentes (GitHub sync bekapcsolas)",
+  "Mobil megjelenés tesztelese",
+  "Biztonsagi frissitesek (SSL aktív-e?)",
+  "Biztonsagi mentés (GitHub sync bekapcsolas)",
 ];
 
 const TutorialModule8 = () => {
@@ -33,13 +33,13 @@ const TutorialModule8 = () => {
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-primary mb-3">
             <span className="tutorial-label-line" /> Modul 8
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold font-heading mb-3">Karbantartas es Tovabbfejlesztes</h2>
-          <p className="text-muted-foreground">A weboldalad elkeszult &mdash; de a munka nem all meg! Tartsd karban es fejleszd folyamatosan.</p>
+          <h2 className="text-3xl md:text-4xl font-bold font-heading mb-3">Karbantartás és Tovabbfejlesztes</h2>
+          <p className="text-muted-foreground">A weboldalad elkeszult &mdash; de a munka nem áll meg! Tartsd karban és fejleszd folyamatosan.</p>
         </div>
 
         {/* Checklist */}
         <div className="mb-8 tutorial-fade-up">
-          <h3 className="text-xl font-bold font-heading mb-3">Rendszeres teendok</h3>
+          <h3 className="text-xl font-bold font-heading mb-3">Rendszeres teendők</h3>
           <ul className="tutorial-checklist list-none p-0 mb-5">
             {maintenanceItems.map((item, i) => (
               <li
@@ -58,85 +58,85 @@ const TutorialModule8 = () => {
 
         {/* Perf */}
         <div className="mb-8 tutorial-fade-up">
-          <h3 className="text-xl font-bold font-heading mb-3">Teljesitmeny-optimalizalas</h3>
-          <TutorialAccordion title="Kepek optimalizalasa">
-            <p className="text-muted-foreground mb-3">A nagy kepfajlok lelassitjak az oldaladat. Hasznalj WebP vagy AVIF formatumot, es allits be lazy loading-ot:</p>
-            <TutorialPromptBox label="Prompt">{`Optimize all images: add lazy loading, use WebP format where possible, and add proper width/height attributes to prevent layout shifts.`}</TutorialPromptBox>
+          <h3 className="text-xl font-bold font-heading mb-3">Teljesítmény-optimalizalas</h3>
+          <TutorialAccordion title="Kepek optimalizálása">
+            <p className="text-muted-foreground mb-3">A nagy kepfajlok lelassitjak az oldaladat. Használj WebP vagy AVIF formatumot, es allits be lazy loading-ot:</p>
+            <TutorialPromptBox label="Prompt">{`Optimize áll images: add lazy loading, use WebP format where possible, and add proper width/height attributes to prevent layout shifts.`}</TutorialPromptBox>
           </TutorialAccordion>
-          <TutorialAccordion title="Speed Tool hasznalata">
+          <TutorialAccordion title="Speed Tool használata">
             <p className="text-muted-foreground">A Lovable beepitett Speed eszkozevel merheted a Core Web Vitals ertekeket. Cel: LCP &lt; 2.5s, FID &lt; 100ms, CLS &lt; 0.1.</p>
           </TutorialAccordion>
         </div>
 
         {/* GitHub sync */}
         <div className="mb-8 tutorial-fade-up">
-          <h3 className="text-xl font-bold font-heading mb-3">Biztonsagi mentes &mdash; GitHub Sync</h3>
-          <p className="text-muted-foreground mb-4">A Lovable ketaranyu GitHub szinkront kinal. Ez azt jelenti, hogy a weboldalad teljes forraskodja automatikusan mentesre kerul a GitHub fiokodon. Ha barmi tortenae, onnan barmikor visszaallithatod.</p>
+          <h3 className="text-xl font-bold font-heading mb-3">Biztonsagi mentés &mdash; GitHub Sync</h3>
+          <p className="text-muted-foreground mb-4">A Lovable ketaranyu GitHub szinkront kinal. Ez azt jelenti, hogy a weboldalad teljes forraskodja automatikusan mentesre kerul a GitHub fiokodon. Ha bármi tortenae, onnan bármikor visszaallithatod.</p>
           <TutorialTipBox variant="pro" icon="🎯" title="Pro tipp">
-            <p>Kapcsold be a GitHub sync-et minel hamarabb! Ez nemcsak biztonsagi mentes, hanem lehetove teszi, hogy masokat is bevonj a projektbe, es akar mas platformra is atvidd a kodot.</p>
+            <p>Kapcsold be a GitHub sync-et minél hamarabb! Ez nemcsak biztonsági mentés, hanem lehetővé teszi, hogy masokat is bevonj a projektbe, es akár mas platformra is atvidd a kódot.</p>
           </TutorialTipBox>
         </div>
 
         {/* Cookie GDPR */}
         <div className="mb-8 tutorial-fade-up">
-          <h3 className="text-xl font-bold font-heading mb-3">Cookie hozzajarulas es GDPR</h3>
-          <p className="text-muted-foreground mb-4">Ha a weboldalad barmilyen cookie-t (sutit) hasznal &mdash; peldaul Google Analytics-et &mdash;, akkor a magyar es EU-s jogszabalyok (GDPR) ertelmeben koteles vagy errol tajekoztatni a latogatoidat, es beleegyezesüket kerni.</p>
+          <h3 className="text-xl font-bold font-heading mb-3">Cookie hozzajarulas és GDPR</h3>
+          <p className="text-muted-foreground mb-4">Ha a weboldalad barmilyen cookie-t (sutit) használ &mdash; például Google Analytics-et &mdash;, akkor a magyar és EU-s jogszabalyok (GDPR) ertelmeben koteles vagy errol tajekoztatni a latogatoidat, es beleegyezesüket kerni.</p>
 
           <div className="glass-card mb-4">
             <h4 className="font-heading font-semibold mb-3">🍪 Mi az a cookie (suti)?</h4>
-            <p className="text-muted-foreground leading-relaxed">A cookie egy apro szoveges fajl, amelyet a weboldal a latogato bongeszojeben tarol. Olyan, mint egy kis &bdquo;emlekezteto cetli&rdquo; &mdash; segit a weboldalnak megjegyezni dolgokat rolad (pl. hogy bejelentkeztel, mit tettel a kosarba, milyen nyelvet beszelsz).</p>
+            <p className="text-muted-foreground leading-relaxed">A cookie egy apro szöveges fájl, amelyet a weboldal a látogató bongeszojeben tarol. Olyan, mint egy kis &bdquo;emlekezteto cetli&rdquo; &mdash; segít a weboldalnak megjegyezni dolgokat rolad (pl. hogy bejelentkeztel, mit tettel a kosárba, milyen nyelvet beszelsz).</p>
           </div>
 
           <div className="glass-card mb-4">
-            <h4 className="font-heading font-semibold mb-3">🛡️ GDPR egyszeruen</h4>
-            <p className="text-muted-foreground leading-relaxed mb-3">A GDPR (General Data Protection Regulation) az EU adatvedelmi rendelete. Lenyege: a felhasznaloknak joguk van tudni, milyen adatokat gyujtesz roluk, es <strong className="text-foreground">elozetesen bele kell egyezniuk</strong>. Ez azt jelenti:</p>
+            <h4 className="font-heading font-semibold mb-3">🛡️ GDPR egyszerűen</h4>
+            <p className="text-muted-foreground leading-relaxed mb-3">A GDPR (General Data Protection Regulation) az EU adatvédelmi rendelete. Lenyege: a felhasználóknak joguk van tudni, milyen adatokat gyujtesz roluk, es <strong className="text-foreground">elozetesen bele kell egyezniuk</strong>. Ez azt jelenti:</p>
             <ul className="text-muted-foreground pl-5 space-y-1 list-disc">
-              <li>A weboldalon megjelenik egy &bdquo;cookie banner&rdquo; &mdash; egy kis sav, ami tajekoztat a sutikrol</li>
-              <li>A latogato elfogadhatja vagy elutasithatja a sutiket</li>
-              <li>Kell egy Adatvedelmi tajekoztato (Privacy Policy) oldal</li>
-              <li>Analytics kodot <strong className="text-foreground">csak az elfogadas utan</strong> szabad betolteni</li>
+              <li>A weboldalon megjelenik egy &bdquo;cookie banner&rdquo; &mdash; egy kis sav, ami tájékoztat a sutikrol</li>
+              <li>A látogató elfogadhatja vagy elutasithatja a sutiket</li>
+              <li>Kell egy Adatvedelmi tájékoztató (Privacy Policy) oldal</li>
+              <li>Analytics kódot <strong className="text-foreground">csak az elfogadas utan</strong> szabad betolteni</li>
             </ul>
           </div>
 
           <TutorialPromptBox label="Cookie consent banner prompt">{`Add a GDPR-compliant cookie consent banner to the site. It should appear at the bottom of the page on first visit with "Elfogadom" (Accept) and "Elutasitom" (Decline) buttons. Store the user's choice in the browser's local storage. Only load Google Analytics tracking code if the user accepts cookies. The banner should explain in Hungarian that the site uses cookies for analytics. Style it to match the site's dark theme with a glass-morphism effect.`}</TutorialPromptBox>
 
-          <TutorialPromptBox label="Adatvedelmi tajekoztato prompt">{`Create an Adatvedelmi Tajekoztato (Privacy Policy) page in Hungarian. Include sections about: what data is collected (Google Analytics cookies), purpose of data collection (website improvement), data retention period, user rights (access, deletion, modification), cookie policy details, and contact information for the data controller. Use clear, simple Hungarian language.`}</TutorialPromptBox>
+          <TutorialPromptBox label="Adatvedelmi tájékoztató prompt">{`Create an Adatvedelmi Tajekoztato (Privacy Policy) page in Hungarian. Include sections about: what data is collected (Google Analytics cookies), purpose of data collection (website improvement), data retention period, user rights (access, deletion, modification), cookie policy details, and contact information for the data controller. Use clear, simple Hungarian language.`}</TutorialPromptBox>
 
           <TutorialTipBox variant="warning" icon="⚠️" title="Fontos: Ha GA4-et hasznalsz, KELL cookie banner!">
-            <p>A Google Analytics cookie-kat helyez el a latogatok bongeszoijeben. GDPR szerint ehhez elozetes beleegyezes kell. Cookie banner nelkul jogsertest kovetsz el! Az NAIH (magyar adatvedelmi hatosag) buntetese akar tobb millio forint is lehet.</p>
+            <p>A Google Analytics cookie-kat helyez el a latogatok bongeszoijeben. GDPR szerint ehhez elozetes beleegyezes kell. Cookie banner nélkül jogsertest kovetsz el! Az NAIH (magyar adatvédelmi hatosag) buntetese akár több millio forint is lehet.</p>
           </TutorialTipBox>
         </div>
 
         {/* Impresszum */}
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Impresszum (Jogi nyilatkozat)</h3>
-          <p className="text-muted-foreground mb-4">A magyar jogszabalyok (2001. evi CVIII. torveny) szerint <strong className="text-foreground">minden kereskedelmi celu weboldalon</strong> kotelezo feltuntetni bizonyos adatokat. Ezt nevezzuk impresszumnak.</p>
+          <p className="text-muted-foreground mb-4">A magyar jogszabalyok (2001. évi CVIII. torveny) szerint <strong className="text-foreground">minden kereskedelmi celu weboldalon</strong> kotelezo feltuntetni bizonyos adatokat. Ezt nevezzuk impresszumnak.</p>
 
           <div className="glass-card mb-4">
             <h4 className="font-heading font-semibold mb-3">📋 Mit kell tartalmaznia az impresszumnak?</h4>
             <ul className="text-muted-foreground pl-5 space-y-1 list-disc">
-              <li><strong className="text-foreground">Egyeni vallalkozoknal:</strong> teljes nev, szekhely cime, adoszam, e-mail cim</li>
+              <li><strong className="text-foreground">Egyeni vallalkozoknal:</strong> teljes név, szekhely címe, adoszam, e-mail cím</li>
               <li><strong className="text-foreground">Cegeknel:</strong> cegnev, szekhely, cegjegyzekszam, adoszam, e-mail, telefon</li>
               <li><strong className="text-foreground">Tarhelyszolgaltato neve</strong> (ha van, pl. Lovable Cloud)</li>
-              <li><strong className="text-foreground">Felugyeleti szerv</strong> elerhetosege (ha relevans)</li>
+              <li><strong className="text-foreground">Felugyeleti szerv</strong> elerhetosege (ha releváns)</li>
             </ul>
           </div>
 
-          <TutorialPromptBox label="Impresszum oldal prompt">{`Create an Impresszum (Legal Notice) page in Hungarian. Include placeholder sections for: company/individual name, registered address, tax number (adoszam), company registration number (cegjegyzekszam), email contact, phone number, hosting provider information, and a note about the applicable Hungarian law (2001. evi CVIII. torveny). Style it to match the site's design.`}</TutorialPromptBox>
+          <TutorialPromptBox label="Impresszum oldal prompt">{`Create an Impresszum (Legal Notice) page in Hungarian. Include placeholder sections for: company/individual name, registered address, tax number (adoszam), company registration number (cegjegyzekszam), email contact, phone number, hosting provider information, and a note about the applicable Hungarian law (2001. évi CVIII. torveny). Style it to match the site's design.`}</TutorialPromptBox>
 
           <TutorialTipBox variant="warning" icon="⚠️" title="Figyelem: Az impresszum kihagyasa birsagot vonhat maga utan!">
-            <p>Ha a weboldaladnak barmilyen uzleti celja van (szolgaltatas, termekek, hirdetes), az impresszum kotelezo. Ennek hianya a fogyasztovedelmi hatosag birsagaval jarhat. Mindig tedd ki a lablecbe, jol lathato helyre!</p>
+            <p>Ha a weboldaladnak barmilyen uzleti celja van (szolgáltatás, termekek, hirdetes), az impresszum kotelezo. Ennek hianya a fogyasztovedelmi hatosag birsagaval jarhat. Mindig tedd ki a lablecbe, jol látható helyre!</p>
           </TutorialTipBox>
         </div>
 
         {/* Future developments */}
         <div className="mb-8 tutorial-fade-up">
-          <h3 className="text-xl font-bold font-heading mb-3">Jovobeli fejlesztesi lehetosegek</h3>
+          <h3 className="text-xl font-bold font-heading mb-3">Jovobeli fejlesztesi lehetőségek</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
             {[
-              { icon: "💳", name: "Fizetes (Stripe)", desc: "Online fizetes integralas" },
-              { icon: "📧", name: "E-mail marketing", desc: "Hirlevel es automatizacio" },
-              { icon: "🌐", name: "Tobbnyelvuseg", desc: "i18n tamogatas" },
+              { icon: "💳", name: "Fizetes (Stripe)", desc: "Online fizetés integralas" },
+              { icon: "📧", name: "E-mail marketing", desc: "Hirlevel és automatizacio" },
+              { icon: "🌐", name: "Tobbnyelvuseg", desc: "i18n támogatás" },
               { icon: "🤖", name: "AI Chatbot", desc: "Ugyfelszolgalati asszisztens" },
             ].map((item) => (
               <div key={item.name} className="glass-card text-center py-5">
@@ -150,11 +150,11 @@ const TutorialModule8 = () => {
 
         {/* Csomag valtas */}
         <div className="mb-8 tutorial-fade-up">
-          <h3 className="text-xl font-bold font-heading mb-3">Mikor erdemes csomagot valtani?</h3>
+          <h3 className="text-xl font-bold font-heading mb-3">Mikor érdemes csomagot valtani?</h3>
           <div className="glass-card">
             <ul className="text-muted-foreground pl-5 space-y-2 list-disc">
-              <li><strong className="text-foreground">Free &rarr; Pro:</strong> Ha sajat domaint szeretnel, vagy elfogynak a napi kreditjeid</li>
-              <li><strong className="text-foreground">Pro &rarr; Business:</strong> Ha csapatban dolgozol, SSO-ra van szukseged, vagy extra vedelmet szeretnel</li>
+              <li><strong className="text-foreground">Free &rarr; Pro:</strong> Ha saját domaint szeretnel, vagy elfogynak a napi kreditjeid</li>
+              <li><strong className="text-foreground">Pro &rarr; Business:</strong> Ha csapatban dolgozol, SSO-ra van szükséged, vagy extra vedelmet szeretnel</li>
             </ul>
           </div>
         </div>
@@ -162,7 +162,7 @@ const TutorialModule8 = () => {
         {/* CTA */}
         <div className="tutorial-cta-card tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-2 relative">🎉 Gratulalunk!</h3>
-          <p className="text-muted-foreground mb-6 relative mx-auto">Ha ideaig eljutottal, mar mindent tudsz ahhoz, hogy sajat weboldalt epitts es tartsd karban. Kezdj bele most!</p>
+          <p className="text-muted-foreground mb-6 relative mx-auto">Ha ideaig eljutottal, már mindent tudsz ahhoz, hogy saját weboldalt epitts és tartsd karban. Kezdj bele most!</p>
           <a
             href={LOVABLE_URL}
             target="_blank"

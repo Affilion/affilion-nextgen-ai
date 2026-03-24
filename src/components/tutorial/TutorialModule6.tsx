@@ -10,48 +10,48 @@ const TutorialModule6 = () => {
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-primary mb-3">
             <span className="tutorial-label-line" /> Modul 6
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold font-heading mb-3">Domain Bekotes es Publikalas</h2>
-          <p className="text-muted-foreground">Itt osszekapcsolod a Rackhost-nal regisztralt domainedet a Lovable-ben epitett weboldaladdal.</p>
+          <h2 className="text-3xl md:text-4xl font-bold font-heading mb-3">Domain Bekötés és Publikalas</h2>
+          <p className="text-muted-foreground">Itt összekapcsolod a Rackhost-nal regisztralt domainedet a Lovable-ben epitett weboldaladdal.</p>
         </div>
 
         <div className="mb-8 tutorial-fade-up">
-          <h3 className="text-xl font-bold font-heading mb-3">1. lepes: Publikalas Lovable aldomain-en</h3>
-          <p className="text-muted-foreground mb-4">Eloszor publikald a weboldaladat a Lovable ingyenes aldomain-jen (projektneved.lovable.app). Ez ingyenes es azonnal mukodik!</p>
+          <h3 className="text-xl font-bold font-heading mb-3">1. lépés: Publikalas Lovable aldomain-en</h3>
+          <p className="text-muted-foreground mb-4">Eloszor publikald a weboldaladat a Lovable ingyenes aldomain-jen (projektneved.lovable.app). Ez ingyenes és azonnal működik!</p>
           <ol className="tutorial-step-list">
-            <li>A Lovable projektedben kattints a jobb felso sarokban a &bdquo;Share&rdquo; &rarr; &bdquo;Publish&rdquo; gombra</li>
-            <li>A weboldalad azonnal elerheto lesz a <strong className="text-foreground">projektneved.lovable.app</strong> cimen</li>
-            <li>Teszteld: minden jol mukodik? Nezd meg mobilon is!</li>
+            <li>A Lovable projektedben kattints a jobb felső sarokban a &bdquo;Share&rdquo; &rarr; &bdquo;Publish&rdquo; gombra</li>
+            <li>A weboldalad azonnal elérhető lesz a <strong className="text-foreground">projektneved.lovable.app</strong> címen</li>
+            <li>Teszteld: minden jol működik? Nezd meg mobilon is!</li>
           </ol>
         </div>
 
         <div className="mb-8 tutorial-fade-up">
-          <h3 className="text-xl font-bold font-heading mb-3">2. lepes: Sajat domain beallitasa</h3>
-          <p className="text-muted-foreground mb-4">Ha szeretned, hogy a weboldalad a <strong className="text-foreground">sajatdomain.hu</strong> cimen legyen elerheto (ehhez fizetos Lovable csomag kell):</p>
+          <h3 className="text-xl font-bold font-heading mb-3">2. lépés: Saját domain beállítása</h3>
+          <p className="text-muted-foreground mb-4">Ha szeretned, hogy a weboldalad a <strong className="text-foreground">sajatdomain.hu</strong> címen legyen elérhető (ehhez fizetos Lovable csomag kell):</p>
           <ol className="tutorial-step-list">
             <li>A Lovable-ben: <strong className="text-foreground">Project &rarr; Settings &rarr; Domains &rarr; Connect domain</strong></li>
             <li>Ird be a domain nevedet (pl. sajatdomain.hu)</li>
-            <li>Valaszd a <strong className="text-foreground">Manual DNS setup</strong> opciot</li>
-            <li>A Lovable megadja neked az <strong className="text-foreground">A rekord</strong> IP-cimet es a <strong className="text-foreground">TXT rekord</strong> erteket &mdash; masold ki oket!</li>
+            <li>Válaszd a <strong className="text-foreground">Manual DNS setup</strong> opciot</li>
+            <li>A Lovable megadja neked az <strong className="text-foreground">A rekord</strong> IP-cimet és a <strong className="text-foreground">TXT rekord</strong> értéket &mdash; másold ki oket!</li>
             <li>Nyisd meg a <a href="https://www.rackhost.hu" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">Rackhost</a> admin paneledet</li>
             <li>Keresd meg a domain-edet &rarr; <strong className="text-foreground">DNS rekordok</strong></li>
-            <li>Adj hozza egy <strong className="text-foreground">A rekordot</strong> a Lovable altal megadott IP-vel</li>
-            <li>Adj hozza egy <strong className="text-foreground">TXT rekordot</strong> a Lovable altal megadott verifikacios ertekkel</li>
-            <li>Varj a verifikaciora &mdash; akar 72 ora, de altalaban nehany ora</li>
-            <li>Sikeres verifikacio utan az <strong className="text-foreground">SSL tanusitvany automatikusan</strong> generalodik</li>
+            <li>Adj hozza egy <strong className="text-foreground">A rekordot</strong> a Lovable által megadott IP-vel</li>
+            <li>Adj hozza egy <strong className="text-foreground">TXT rekordot</strong> a Lovable által megadott verifikacios ertekkel</li>
+            <li>Várj a verifikaciora &mdash; akár 72 óra, de általában nehany óra</li>
+            <li>Sikeres verifikacio utan az <strong className="text-foreground">SSL tanúsítvány automatikusan</strong> generalodik</li>
           </ol>
         </div>
 
         <div className="mb-8 tutorial-fade-up">
-          <TutorialVideoPlaceholder title="Domain bekotes lepesrol lepesre" />
+          <TutorialVideoPlaceholder title="Domain bekötés lépésről lepesre" />
         </div>
 
         <div className="mb-8 tutorial-fade-up">
           <TutorialTipBox variant="warning" icon="⚠️" title="Fontos: DNS propagacio">
-            <p>A DNS modositasok akar 72 oraig is tarthatnak, amig &bdquo;vegigfutnak&rdquo; az interneten. Altalaban par oran belul mukodik. A <a href="https://dnschecker.org" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">dnschecker.org</a> oldalon ellenorizheted a propagacio allapotat.</p>
+            <p>A DNS modositasok akár 72 oraig is tarthatnak, amig &bdquo;vegigfutnak&rdquo; az interneten. Általában par órán belul működik. A <a href="https://dnschecker.org" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">dnschecker.org</a> oldalon ellenorizheted a propagacio állapotát.</p>
           </TutorialTipBox>
 
           <TutorialTipBox variant="info" icon="💡" title="www aldomain">
-            <p>Ha a www.sajatdomain.hu cimet is szeretned hasznalni, azt kulon kell hozzaadnod a Lovable domain beallitasaiban. Az elso hozzaadott domain lesz az elsodleges, a tobbi automatikusan atiranyit.</p>
+            <p>Ha a www.sajatdomain.hu címet is szeretned használni, azt kulon kell hozzaadnod a Lovable domain beallitasaiban. Az első hozzaadott domain lesz az elsodleges, a tobbi automatikusan átirányít.</p>
           </TutorialTipBox>
         </div>
 
@@ -61,16 +61,16 @@ const TutorialModule6 = () => {
             <ul className="text-muted-foreground pl-5 space-y-1 list-disc">
               <li>Ellenorizd, hogy az A rekord IP-je megegyezik a Lovable-ben megadottal</li>
               <li>Ellenorizd a TXT rekordot a verifikaciohoz</li>
-              <li>Varj 24-72 orat &mdash; a DNS propagacio idobe telik</li>
-              <li>Nezd meg a <a href="https://dnschecker.org" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">dnschecker.org</a>-on, hogy a DNS rekordok mar frissultek-e</li>
+              <li>Várj 24-72 órát &mdash; a DNS propagacio idobe telik</li>
+              <li>Nezd meg a <a href="https://dnschecker.org" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">dnschecker.org</a>-on, hogy a DNS rekordok már frissultek-e</li>
             </ul>
           </TutorialAccordion>
-          <TutorialAccordion title="SSL hiba (nem biztonsagos)">
-            <p className="text-muted-foreground mb-2">Az SSL tanusitvany automatikusan generalodik a sikeres domain verifikacio utan. Ha nem mukodik:</p>
+          <TutorialAccordion title="SSL hiba (nem biztonságos)">
+            <p className="text-muted-foreground mb-2">Az SSL tanúsítvány automatikusan generalodik a sikeres domain verifikacio utan. Ha nem működik:</p>
             <ul className="text-muted-foreground pl-5 space-y-1 list-disc">
-              <li>Varj nehany orat a verifikacio utan</li>
+              <li>Várj nehany órát a verifikacio utan</li>
               <li>Ellenorizd, hogy a domain verifikacio sikeres volt-e a Lovable Settings-ben</li>
-              <li>Probald meg eltavolitani es ujra hozzaadni a domaint</li>
+              <li>Probald meg eltávolítani és újra hozzáadni a domaint</li>
             </ul>
           </TutorialAccordion>
         </div>

@@ -16,13 +16,13 @@ export const LovableEditorMockup = () => (
         <div className="absolute top-1.5 left-4 text-[10px] text-primary font-semibold uppercase tracking-wider">&larr; Chat panel</div>
         <div className="mt-5" />
         <div className="tutorial-mockup-msg tutorial-mockup-msg--user">
-          Keszits egy modern etterem weboldalt sotet temaval es elegans betutipussal
+          Készíts egy modern étterem weboldalt sotet temaval és elegáns betutipussal
         </div>
         <div className="tutorial-mockup-msg tutorial-mockup-msg--ai">
-          Rendben! Keszítek egy elegans etterem oldalt. Tartalmaz hero szekciot, menut, es foglalasi lehetoseget...
+          Rendben! Készítek egy elegáns étterem oldalt. Tartalmaz hero szekciót, menüt, es foglalási lehetőséget...
         </div>
         <div className="mt-auto p-2.5 px-3.5 rounded-[10px] bg-white/[0.04] border border-white/[0.08] text-muted-foreground text-xs">
-          Irj ide egy uzenetet...
+          Irj ide egy üzenetet...
         </div>
       </div>
       <div className="tutorial-mockup-preview" style={{ position: "relative" }}>
@@ -32,7 +32,7 @@ export const LovableEditorMockup = () => (
             <div className="text-white text-[11px] font-bold">🍽 Ristorante</div>
             <div className="flex gap-2.5">
               <span className="text-muted-foreground text-[9px]">Menu</span>
-              <span className="text-muted-foreground text-[9px]">Rolunk</span>
+              <span className="text-muted-foreground text-[9px]">Rólunk</span>
               <span className="text-muted-foreground text-[9px]">Foglalas</span>
             </div>
           </div>
@@ -67,7 +67,7 @@ export const DNSPanelMockup = () => (
           <p className="text-muted-foreground text-[10px]">Rackhost Vezerlopult</p>
         </div>
       </div>
-      <div className="px-3 py-1 rounded-md text-[11px] font-medium text-white" style={{ background: "linear-gradient(135deg, #2563eb, hsl(var(--primary)))" }}>+ Uj rekord</div>
+      <div className="px-3 py-1 rounded-md text-[11px] font-medium text-white" style={{ background: "linear-gradient(135deg, #2563eb, hsl(var(--primary)))" }}>+ Új rekord</div>
     </div>
     <table className="tutorial-dns-table">
       <thead>
@@ -119,7 +119,7 @@ export const GSCDashboardMockup = () => {
       </div>
       <div className="tutorial-gsc-body">
         <div className="tutorial-gsc-sidebar">
-          {["Teljesitmeny", "URL vizsgalat", "Indexeles", "Sitemaps", "Elmeny", "Beallitasok"].map((item, i) => (
+          {["Teljesítmény", "URL vizsgalat", "Indexeles", "Sitemaps", "Elmeny", "Beállítások"].map((item, i) => (
             <div key={item} className={`tutorial-gsc-menu-item ${i === 0 ? "tutorial-gsc-menu-item--active" : ""}`}>
               <div className="tutorial-gsc-menu-icon" />
               {item}
@@ -172,7 +172,7 @@ export const GA4DashboardMockup = () => (
           {[
             { label: "Felhasznalok", value: "1,247", delta: "↑ +12.3%" },
             { label: "Munkamenetek", value: "2,891", delta: "↑ +8.7%" },
-            { label: "Atl. ido", value: "2:34", delta: "↑ +5.1%" },
+            { label: "Atl. idő", value: "2:34", delta: "↑ +5.1%" },
           ].map((m) => (
             <div key={m.label} className="tutorial-ga4-metric">
               <div className="tutorial-metric-label">{m.label}</div>

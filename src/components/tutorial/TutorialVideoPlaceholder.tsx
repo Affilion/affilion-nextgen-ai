@@ -3,7 +3,7 @@ interface TutorialVideoPlaceholderProps {
   status?: string;
 }
 
-const TutorialVideoPlaceholder = ({ title, status = "🎬 Video hamarosan elerheto" }: TutorialVideoPlaceholderProps) => {
+const TutorialVideoPlaceholder = ({ title, status = "🎬 Video hamarosan elérhető" }: TutorialVideoPlaceholderProps) => {
   return (
     <div className="tutorial-video-placeholder">
       <div className="tutorial-video-play-btn" />

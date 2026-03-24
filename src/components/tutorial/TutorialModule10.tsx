@@ -1,38 +1,38 @@
 const glossaryItems = [
-  { term: "A rekord", badge: "DNS", def: "DNS bejegyzes, ami egy domain nevet egy konkret IP-cimhez (szerver cimehez) rendel. Ezzel mondod meg, melyik szerveren van a weboldalad." },
-  { term: "API", badge: "Fejlesztes", def: "Application Programming Interface — ket szoftver kozotti kommunikacios „nyelv”. Peldaul igy kuld adatot a Lovable a Supabase-nek." },
-  { term: "Backend", badge: "Webfejlesztes", def: "A weboldal hatterben futo resze — adatbazis, szerverlogika, felhasznalo-kezeles. Nem lathato a felhasznalo szamara." },
-  { term: "Bongeszo", badge: "Alap", def: "A program, amivel weboldalakat nezel (Chrome, Firefox, Safari, Edge). A bongeszo jeleníti meg a weboldalak tartalmat." },
-  { term: "CMS", badge: "Platform", def: "Content Management System — tartalomkezelo rendszer, pl. WordPress. Lehetove teszi weboldalak kezeleset programozas nelkul." },
-  { term: "CTA", badge: "Marketing", def: "Call to Action — cselekvesre osztonzo elem, pl. „Vedd meg most!”, „Regisztralj” gomb. A weboldal legfontosabb interakcios eleme." },
-  { term: "CSS", badge: "Kod", def: "Cascading Style Sheets — a weboldal „oltozeke”. Ez hatarozza meg a szineket, betutipusokat, elrendezest es megjelenest." },
-  { term: "DNS", badge: "Halozat", def: "Domain Name System — az internet „telefonkonyve”. A domain neveket (pelda.hu) leforditja IP-cimekre (szamsorokra), amit a szamitogepek megertenek." },
-  { term: "Domain", badge: "Alap", def: "A weboldalad egyedi neve/cime az interneten (pl. pelda.hu). Ezt gepeli be a latogato a bongeszojebe." },
-  { term: "Edge Function", badge: "Supabase", def: "Szerver nelkuli hatter-kod, ami a felhoben fut. Idealis e-mail kuldesre, fizetes-feldolgozasra, vagy API hivasokra." },
-  { term: "Frontend", badge: "Webfejlesztes", def: "A weboldal „vitrine” — minden, amit a latogato lat es hasznal: design, gombok, szovegek, kepek, animaciok." },
+  { term: "A rekord", badge: "DNS", def: "DNS bejegyzés, ami egy domain nevét egy konkrét IP-címhez (szerver címéhez) rendel. Ezzel mondod meg, melyik szerveren van a weboldalad." },
+  { term: "API", badge: "Fejlesztés", def: "Application Programming Interface — két szoftver közötti kommunikációs „nyelv”. Például így küld adatot a Lovable a Supabase-nek." },
+  { term: "Backend", badge: "Webfejlesztés", def: "A weboldal háttérben futó része — adatbázis, szerverlogika, felhasználó-kezeles. Nem látható a felhasználó számára." },
+  { term: "Bongeszo", badge: "Alap", def: "A program, amivel weboldalakat nezel (Chrome, Firefox, Safari, Edge). A böngésző jeleníti meg a weboldalak tartalmat." },
+  { term: "CMS", badge: "Platform", def: "Content Management System — tartalomkezelő rendszer, pl. WordPress. Lehetove teszi weboldalak kezeleset programozás nélkül." },
+  { term: "CTA", badge: "Marketing", def: "Call to Action — cselekvesre osztonzo elem, pl. „Vedd meg most!”, „Regisztrálj” gomb. A weboldal legfontosabb interakcios eleme." },
+  { term: "CSS", badge: "Kod", def: "Cascading Style Sheets — a weboldal „öltözéke”. Ez határozza meg a színeket, betűtípusokat, elrendezést és megjelenést." },
+  { term: "DNS", badge: "Halozat", def: "Domain Name System — az internet „telefonkonyve”. A domain neveket (példa.hu) leforditja IP-cimekre (szamsorokra), amit a számítógépek megertenek." },
+  { term: "Domain", badge: "Alap", def: "A weboldalad egyedi neve/cime az interneten (pl. példa.hu). Ezt gepeli be a látogató a bongeszojebe." },
+  { term: "Edge Function", badge: "Supabase", def: "Szerver nelkuli háttér-kod, ami a felhoben fut. Idealis e-mail kuldesre, fizetés-feldolgozasra, vagy API hivasokra." },
+  { term: "Frontend", badge: "Webfejlesztés", def: "A weboldal „vitrine” — minden, amit a látogató lát és használ: design, gombok, szövegek, képek, animációk." },
   { term: "GA4", badge: "Analytics", def: "Google Analytics 4 — a Google ingyenes statisztikai eszkoze, amellyel a weboldalad latogatoit kovetheted nyomon (hanyan jonnek, honnan, mit csinalnak)." },
-  { term: "GSC", badge: "SEO", def: "Google Search Console — ingyenes eszkoz, amivel megnezheted, hogyan teljesit a weboldalad a Google keresoben." },
-  { term: "Hosting", badge: "Infrastruktura", def: "Tarhelyszolgaltatas — a szerver, ahol a weboldalad fajljai „laknak” es az interneten elerhetok. A Lovable Cloud ezt automatikusan biztositja." },
-  { term: "HTML", badge: "Kod", def: "HyperText Markup Language — a weboldal „csontvaza”. Ez hatarozza meg a weboldal szervezetet (cimsorok, bekezdesek, kepek, linkek)." },
-  { term: "HTTPS/SSL", badge: "Biztonsag", def: "Titkositott kapcsolat a bongeszo es a szerver kozott. A bongeszoben lakat ikonnal jelolik. A Lovable automatikusan biztositja minden weboldalhoz." },
-  { term: "JavaScript", badge: "Kod", def: "Programozasi nyelv, ami a weboldalakat interaktivva teszi (gombok, animaciok, urlapok). A Lovable React-et hasznal, ami JavaScript-re epul." },
-  { term: "JSON-LD", badge: "SEO", def: "Strukturalt adat formatum, amivel a Google-nek extra informaciokat adsz a weboldaladrol (pl. ceg neve, cime, nyitvatartas)." },
-  { term: "Kulcsszo", badge: "SEO", def: "Az a szo vagy kifejezes, amire a celkozonseged keres a Google-ben. A jo SEO alapja: a megfelelo kulcsszavak hasznalata a weboldalad szovegeiben." },
-  { term: "Meta tag", badge: "SEO", def: "A weboldal fejleceben elhelyezett rejtett informacio, ami a keresomotoroknak es a kozossegi medianak szol (cim, leiras, kep)." },
-  { term: "Open Graph", badge: "Kozossegi", def: "Meta tag szabvany, ami meghatarozza, hogyan jelenik meg a weboldalad, ha megosztjak Facebookon, LinkedInen vagy mas kozossegi platformon." },
-  { term: "PostgreSQL", badge: "Adatbazis", def: "Nyilt forraskodu adatbazis-kezelo rendszer. A Supabase (es igy a Lovable) ezt hasznalja az adatok tarolasara." },
-  { term: "Prompt", badge: "AI", def: "Az AI-nak adott szoveges utasitas. Minel reszletesebb es pontosabb, annal jobb eredmenyt kapsz a Lovable-tol." },
+  { term: "GSC", badge: "SEO", def: "Google Search Console — ingyenes eszkoz, amivel megnézheted, hogyan teljesit a weboldalad a Google keresoben." },
+  { term: "Hosting", badge: "Infrastruktúra", def: "Tárhelyszolgáltatás — a szerver, ahol a weboldalad fájljai „laknak” és az interneten elérhetők. A Lovable Cloud ezt automatikusan biztosítja." },
+  { term: "HTML", badge: "Kod", def: "HyperText Markup Language — a weboldal „csontvaza”. Ez határozza meg a weboldal szervezetet (cimsorok, bekezdesek, képek, linkek)." },
+  { term: "HTTPS/SSL", badge: "Biztonság", def: "Titkosított kapcsolat a böngésző és a szerver között. A böngészőben lakat ikonnal jelölik. A Lovable automatikusan biztosítja minden weboldalhoz." },
+  { term: "JavaScript", badge: "Kod", def: "Programozasi nyelv, ami a weboldalakat interaktivva teszi (gombok, animációk, urlapok). A Lovable React-et használ, ami JavaScript-re epul." },
+  { term: "JSON-LD", badge: "SEO", def: "Strukturalt adat formatum, amivel a Google-nek extra informaciokat adsz a weboldaladrol (pl. cég neve, címe, nyitvatartas)." },
+  { term: "Kulcsszo", badge: "SEO", def: "Az a szo vagy kifejezes, amire a celkozonseged keres a Google-ben. A jo SEO alapja: a megfelelő kulcsszavak használata a weboldalad szovegeiben." },
+  { term: "Meta tag", badge: "SEO", def: "A weboldal fejlécében elhelyezett rejtett információ, ami a keresőmotoroknak és a közösségi médiának szól (cím, leírás, kép)." },
+  { term: "Open Graph", badge: "Kozossegi", def: "Meta tag szabvany, ami meghatarozza, hogyan jelenik meg a weboldalad, ha megosztjak Facebookon, LinkedInen vagy mas közösségi platformon." },
+  { term: "PostgreSQL", badge: "Adatbázis", def: "Nyilt forraskodu adatbázis-kezelo rendszer. A Supabase (es így a Lovable) ezt hasznalja az adatok tarolasara." },
+  { term: "Prompt", badge: "AI", def: "Az AI-nak adott szöveges utasítás. Minel részletesebb és pontosabb, annál jobb eredményt kapsz a Lovable-tol." },
   { term: "React", badge: "Kod", def: "Nepszeru JavaScript konyvtar weboldalak epitésehez. A Lovable ezt hasznalja a weboldalad kodjanak generálásahoz." },
-  { term: "Reszponziv", badge: "Design", def: "Alkalmazkodo megjelenes — a weboldal automatikusan igazodik a kepernyo meretehez (telefon, tablet, monitor)." },
-  { term: "Robots.txt", badge: "SEO", def: "Szoveges fajl, ami megmondja a keresorobotoknak, melyik oldalakat indexelhetik es melyeket ne." },
+  { term: "Reszponzív", badge: "Design", def: "Alkalmazkodó megjelenés — a weboldal automatikusan igazodik a képernyő meretehez (telefon, tablet, monitor)." },
+  { term: "Robots.txt", badge: "SEO", def: "Szöveges fájl, ami megmondja a keresorobotoknak, melyik oldalakat indexelhetik és melyeket ne." },
   { term: "SEO", badge: "Marketing", def: "Search Engine Optimization — keresooptimalizalas. Az a folyamat, amivel elered, hogy a Google-ben magasabban jelenjen meg a weboldalad." },
-  { term: "Sitemap", badge: "SEO", def: "XML fajl, ami a weboldalad osszes oldalat felsorolja. Segiti a Google-t, hogy megtalálja es indexelje az oldalaidat." },
-  { term: "SPA", badge: "Fejlesztes", def: "Single Page Application — egyoldalas alkalmazas. A weboldal egyetlen HTML oldalbol all, es JavaScript-tel tolti be a kulonbozo nezeteket. A Lovable ilyen oldalakat keszit." },
-  { term: "Supabase", badge: "Backend", def: "Nyilt forraskodu backend-szolgaltatas (adatbazis, hitelesites, fajltarolas). A Lovable ezt hasznalja backend-kent, ha szukseged van ra." },
-  { term: "TXT rekord", badge: "DNS", def: "DNS bejegyzes szoveges adatokkal. Leggyakrabban domain-verifikaciora hasznaljak (pl. Google Search Console, Lovable domain megerosites)." },
-  { term: "URL", badge: "Alap", def: "Uniform Resource Locator — a weboldal pontos „postacime” (pl. https://pelda.hu/kapcsolat). Minden weboldalnak es aloldalnak sajat URL-je van." },
-  { term: "UX/UI", badge: "Design", def: "UX = felhasznaloi elmeny (mennyire intuitiv, konnyu hasznalni). UI = felhasznaloi felulet (hogy nez ki, gombok, szinek, elrendezes)." },
-  { term: "Webshop", badge: "E-kereskedelem", def: "Online aruhaz/bolt, ahol termekeket vagy szolgaltatasokat arulhatsz. Kosar, fizetes es rendeléskezeles funkciokkal." },
+  { term: "Sitemap", badge: "SEO", def: "XML fájl, ami a weboldalad összes oldalát felsorolja. Segiti a Google-t, hogy megtalálja és indexelje az oldalaidat." },
+  { term: "SPA", badge: "Fejlesztés", def: "Single Page Application — egyoldalas alkalmazás. A weboldal egyetlen HTML oldalból áll, es JavaScript-tel tölti be a különböző nézeteket. A Lovable ilyen oldalakat készít." },
+  { term: "Supabase", badge: "Backend", def: "Nyilt forraskodu backend-szolgaltatas (adatbázis, hitelesítés, fajltarolas). A Lovable ezt hasznalja backend-kent, ha szükséged van ra." },
+  { term: "TXT rekord", badge: "DNS", def: "DNS bejegyzés szöveges adatokkal. Leggyakrabban domain-verifikaciora hasznaljak (pl. Google Search Console, Lovable domain megerősítés)." },
+  { term: "URL", badge: "Alap", def: "Uniform Resource Locator — a weboldal pontos „postacime” (pl. https://pelda.hu/kapcsolat). Minden weboldalnak és aloldalnak saját URL-je van." },
+  { term: "UX/UI", badge: "Design", def: "UX = felhasználói elmeny (mennyire intuitiv, konnyu használni). UI = felhasználói felület (hogy nez ki, gombok, színek, elrendezes)." },
+  { term: "Webshop", badge: "E-kereskedelem", def: "Online áruház/bolt, ahol termékeket vagy szolgáltatásokat árulhatsz. Kosár, fizetés és rendeléskezelés funkciókkal." },
 ];
 
 const TutorialModule10 = () => {
@@ -43,8 +43,8 @@ const TutorialModule10 = () => {
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-primary mb-3">
             <span className="tutorial-label-line" /> Modul 10
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold font-heading mb-3">Fogalomtar</h2>
-          <p className="text-muted-foreground">Az utmutatoban elofordulo osszes szakkifejezes magyarazata &mdash; egyszeru nyelven, abece-sorrendben.</p>
+          <h2 className="text-3xl md:text-4xl font-bold font-heading mb-3">Fogalomtár</h2>
+          <p className="text-muted-foreground">Az útmutatóban elofordulo összes szakkifejezes magyarazata &mdash; egyszerű nyelven, abece-sorrendben.</p>
         </div>
 
         <div className="tutorial-fade-up">

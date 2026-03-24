@@ -11,24 +11,24 @@ const TutorialHero = () => {
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/[0.12] border border-primary/25 rounded-full text-xs font-medium text-primary mb-7">
           <span className="tutorial-hero-badge-dot" />
-          2026 &mdash; Frissitett kiadas
+          2026 &mdash; Frissített kiadás
         </div>
 
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-5 glow-text font-heading">
-          Keszitsd el sajat weblapodat par ora alatt!
+          Készítsd el saját weblapodat par óra alatt!
         </h1>
 
         <p className="text-lg text-muted-foreground mb-10 max-w-[600px] mx-auto">
-          Komplett utmutato kezdoknek &mdash; a nullarol a kesz, mukodo weboldalig.
-          Programozoi tudas nelkul, mesterseges intelligencia segitsegevel.
+          Komplett útmutató kezdőknek &mdash; a nullarol a kész, működő weboldalig.
+          Programozói tudás nélkül, mesterséges intelligencia segítségével.
         </p>
 
         {/* Features */}
         <div className="flex flex-wrap gap-3 justify-center mb-10">
           {[
             { icon: Layers, text: "10 modul" },
-            { icon: Clock, text: "~3-5 ora" },
-            { icon: Users, text: "Kezdoknek" },
+            { icon: Clock, text: "~3-5 óra" },
+            { icon: Users, text: "Kezdőknek" },
             { icon: Zap, text: "AI-alapu" },
           ].map((f) => (
             <div key={f.text} className="inline-flex items-center gap-2 px-4 py-2 bg-white/[0.04] border border-white/[0.06] rounded-[10px] text-sm text-muted-foreground">
@@ -61,7 +61,7 @@ const TutorialHero = () => {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-white/[0.05] border border-white/10 text-foreground font-semibold rounded-[10px] transition-all duration-250 hover:bg-white/[0.08] hover:border-white/15"
           >
-            Lovable.dev megnyitasa
+            Lovable.dev megnyitása
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
           </a>
         </div>

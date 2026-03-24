@@ -11,31 +11,31 @@ const TutorialModule2 = () => {
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-primary mb-3">
             <span className="tutorial-label-line" /> Modul 2
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold font-heading mb-3">Domain Regisztracio</h2>
-          <p className="text-muted-foreground">Foglald le a weboldalad nevet. A Rackhost.hu a legjobb magyar szolgaltato erre a celra.</p>
+          <h2 className="text-3xl md:text-4xl font-bold font-heading mb-3">Domain Regisztráció</h2>
+          <p className="text-muted-foreground">Foglald le a weboldalad nevét. A Rackhost.hu a legjobb magyar szolgáltató erre a célra.</p>
         </div>
 
         <div className="mb-8 tutorial-fade-up">
-          <h3 className="text-xl font-bold font-heading mb-3">Miert a Rackhost?</h3>
-          <p className="text-muted-foreground mb-4">A <a href="https://www.rackhost.hu" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary transition-colors">Rackhost.hu</a> az egyik legmegbizhatobb magyar domain regisztrator. Elonyei:</p>
+          <h3 className="text-xl font-bold font-heading mb-3">Miért a Rackhost?</h3>
+          <p className="text-muted-foreground mb-4">A <a href="https://www.rackhost.hu" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary transition-colors">Rackhost.hu</a> az egyik legmegbízhatóbb magyar domain regisztrátor. Előnyei:</p>
           <ul className="text-muted-foreground pl-6 space-y-1.5 list-disc mb-4 marker:text-primary">
-            <li>Magyar nyelvu felulet es ugyfélszolgalat</li>
-            <li>Kifejezetten alacsony arak (.hu domain: 490 Ft/ev!)</li>
-            <li>Egyszeru DNS kezelofelulet</li>
-            <li>Gyors regisztracios folyamat</li>
-            <li>Megbizhato, evek ota mukodo szolgaltatas</li>
+            <li>Magyar nyelvű felület és ügyfélszolgálat</li>
+            <li>Kifejezetten alacsony árak (.hu domain: 490 Ft/ev!)</li>
+            <li>Egyszerű DNS kezelőfelület</li>
+            <li>Gyors regisztrációs folyamat</li>
+            <li>Megbízható, évek óta működő szolgáltatás</li>
           </ul>
         </div>
 
         <div className="mb-8 tutorial-fade-up">
-          <h3 className="text-xl font-bold font-heading mb-3">Domain arak (2026)</h3>
+          <h3 className="text-xl font-bold font-heading mb-3">Domain árak (2026)</h3>
           <div className="glass-card p-0 overflow-hidden">
             <table className="tutorial-price-table">
               <thead>
                 <tr>
                   <th>Kiterjesztes</th>
-                  <th>Regisztracio (netto/ev)</th>
-                  <th>Hosszabbitas (netto/ev)</th>
+                  <th>Regisztráció (nettó/ev)</th>
+                  <th>Hosszabbítás (nettó/ev)</th>
                   <th></th>
                 </tr>
               </thead>
@@ -51,24 +51,24 @@ const TutorialModule2 = () => {
           </div>
 
           <TutorialTipBox variant="info" icon="💡" title="Tipp">
-            <p>Ha magyar celkozonsegnek keszul a weboldalad, a .hu domain a legjobb valasztas. Elso evre mindossze 490 Ft (brutto 622 Ft) &mdash; ez a legolcsobb opcio!</p>
+            <p>Ha magyar célközönségnek készül a weboldalad, a .hu domain a legjobb választás. Első évre mindossze 490 Ft (bruttó 622 Ft) &mdash; ez a legolcsóbb opcio!</p>
           </TutorialTipBox>
         </div>
 
         <div className="mb-8 tutorial-fade-up">
-          <h3 className="text-xl font-bold font-heading mb-3">Regisztracios lepesek</h3>
+          <h3 className="text-xl font-bold font-heading mb-3">Regisztrációs lepesek</h3>
           <ol className="tutorial-step-list">
-            <li>Ellenorizd, szabad-e a kivant domain: menj a <a href="https://www.rackhost.hu" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">rackhost.hu</a> oldalra es ird be a kereso mezobe</li>
-            <li>Ha szabad, tedd a kosarba es valaszd ki, hany evre szeretned regisztralni</li>
-            <li>Add meg a szamlazasi adataidat (ceg vagy maganszemely)</li>
-            <li>Fogadd el az Altalanos Szerzodesi Felteteleket es kattints a &bdquo;Megrendel&rdquo; gombra</li>
-            <li>A felhasznaloi fiokodban add meg a tulajdonosi adatokat es fizess</li>
+            <li>Ellenorizd, szabad-e a kivant domain: menj a <a href="https://www.rackhost.hu" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">rackhost.hu</a> oldalra és írd be a kereso mezobe</li>
+            <li>Ha szabad, tedd a kosárba és válaszd ki, hány évre szeretned regisztrálni</li>
+            <li>Add meg a szamlazasi adataidat (cég vagy maganszemely)</li>
+            <li>Fogadd el az Általános Szerződési Feltételeket és kattints a &bdquo;Megrendel&rdquo; gombra</li>
+            <li>A felhasználói fiókodban add meg a tulajdonosi adatokat és fizess</li>
             <li><strong className="text-foreground">.hu domainnel:</strong> megerosito e-mailt kapsz &mdash; erositsd meg a tulajdonjogot elektronikusan</li>
-            <li>Vard meg a regisztracio befejezeset (.hu: ~3 munkanap, nemzetkozi: ~24 ora)</li>
+            <li>Vard meg a regisztráció befejezeset (.hu: ~3 munkanap, nemzetközi: ~24 óra)</li>
           </ol>
 
           <TutorialTipBox variant="warning" icon="⚠️" title="Fontos">
-            <p>.hu domain eseten a tulajdonosi adatok megerositese kotelezo! Ha nem erositedd meg idoben, a regisztracio meghiusulhat. Figyeld az e-mailjeidet.</p>
+            <p>.hu domain eseten a tulajdonosi adatok megerositese kotelezo! Ha nem erositedd meg idoben, a regisztráció meghiusulhat. Figyeld az e-mailjeidet.</p>
           </TutorialTipBox>
 
           <DNSPanelMockup />
