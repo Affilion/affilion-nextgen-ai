@@ -68,16 +68,7 @@ const TutorialHero = () => {
         </div>
 
         {/* Video Placeholder */}
-        <div className="tutorial-hero-video" id="hero-video">
-          <div className="tutorial-hero-video-inner">
-            <div className="tutorial-hero-video-play">
-              <Play size={28} className="text-primary ml-1" fill="hsl(var(--primary))" fillOpacity={0.3} />
-            </div>
-            <span className="tutorial-hero-video-label">
-              Üdvözlő videó &mdash; hamarosan
-            </span>
-          </div>
-        </div>
+        <HeroVideo />
       </div>
     </section>
   );
