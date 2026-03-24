@@ -1,6 +1,6 @@
 const costItems = [
   { icon: "🌐", bg: "bg-blue-500/[0.12]", label: "Domain (.hu, első ev)", note: "Rackhost.hu — legolcsóbb ajánlat", price: "622 Ft", priceNote: "(bruttó)", free: false },
-  { icon: "🔄", bg: "bg-primary/[0.12]", label: "Domain (.hu, megújítás)", note: "Évente, második évtől", price: "~2 200 Ft/ev", free: false },
+  { icon: "🔄", bg: "bg-primary/[0.12]", label: "Domain (.hu, megújítás)", note: "Évente, második évtől", price: "~2 200 Ft/év", free: false },
   { icon: "✨", bg: "bg-green-500/[0.12]", label: "Lovable Free csomag", note: "5 napi kredit, lovable.app aldomain", price: "Ingyenes", free: true },
   { icon: "⚡", bg: "bg-primary/[0.12]", label: "Lovable Pro csomag", note: "Saját domain + 100 kredit/ho", price: "$25/ho", priceNote: "(~9 500 Ft)", free: false },
   { icon: "📊", bg: "bg-green-500/[0.12]", label: "Google Analytics 4", price: "Ingyenes", free: true },
@@ -36,7 +36,7 @@ const TutorialCostCalculator = () => {
 
         <div className="tutorial-cost-row tutorial-cost-row--total">
           <div className="text-foreground font-semibold">
-            INDULASHOZ MINIMUM
+            INDULÁSHOZ MINIMUM
             <span className="text-xs text-muted-foreground font-normal block">Domain + Lovable Free</span>
           </div>
           <div className="text-lg font-bold glow-text">~622 Ft</div>

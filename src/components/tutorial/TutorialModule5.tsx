@@ -20,9 +20,9 @@ const TutorialModule5 = () => {
             <div className="glass-card">
               <h4 className="text-green-400 font-semibold mb-2">✅ Kell backend, ha:</h4>
               <ul className="text-sm text-muted-foreground pl-5 space-y-1 list-disc">
-                <li>Felhasznaloi regisztráció/bejelentkezes</li>
-                <li>Kapcsolatfelveteli űrlap, ami ment</li>
-                <li>Kep/fajl feltoltes</li>
+                <li>Felhasználói regisztráció/bejelentkezés</li>
+                <li>Kapcsolatfelvételi űrlap, ami ment</li>
+                <li>Kép/fájl feltöltés</li>
                 <li>Dinamikus tartalom (blog)</li>
                 <li>Admin panel</li>
                 <li>Webshop funkciók</li>
@@ -32,7 +32,7 @@ const TutorialModule5 = () => {
               <h4 className="text-red-400 font-semibold mb-2">❌ Nem kell backend, ha:</h4>
               <ul className="text-sm text-muted-foreground pl-5 space-y-1 list-disc">
                 <li>Egyszerű bemutatkozó oldal</li>
-                <li>Portfólió, galeria</li>
+                <li>Portfólió, galéria</li>
                 <li>Statikus tartalom</li>
                 <li>Landing page</li>
                 <li>Egyszerű informaacios oldal</li>
@@ -43,23 +43,23 @@ const TutorialModule5 = () => {
 
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Supabase &mdash; a backend partnered</h3>
-          <p className="text-muted-foreground mb-4">A Lovable a <strong className="text-foreground">Supabase</strong>-t hasznalja backend-kent. Ez egy nyilt forraskodu Firebase alternativa, PostgreSQL adatbázissal. A Lovable-bol egyetlen kattintással bekapcsolhatod.</p>
+          <p className="text-muted-foreground mb-4">A Lovable a <strong className="text-foreground">Supabase</strong>-t használja backend-kent. Ez egy nyílt forráskódú Firebase alternatíva, PostgreSQL adatbázissal. A Lovable-ből egyetlen kattintással bekapcsolhatod.</p>
 
           <TutorialAccordion title="Adatbázis (PostgreSQL)">
-            <p className="text-muted-foreground">Teljes SQL adatbázis, amit a Lovable automatikusan letreohoz az utasitasaid alapján. Például: &bdquo;Hozz letre egy termekek tablat nevvel, leirassal, arral és kép URL-lel&rdquo; &mdash; es kész!</p>
+            <p className="text-muted-foreground">Teljes SQL adatbázis, amit a Lovable automatikusan letreohoz az utasításaid alapján. Például: &bdquo;Hozz létre egy termékek táblát névvel, leírással, árral és kép URL-lel&rdquo; &mdash; es kész!</p>
           </TutorialAccordion>
 
-          <TutorialAccordion title="Felhasznalo-hitelesites (Auth)">
-            <p className="text-muted-foreground mb-3">Email/jelszo alapú regisztráció és bejelentkezés, valamint közösségi bejelentkezés (Google, GitHub, stb.). Az AI mindent beállit, te csak kerd!</p>
+          <TutorialAccordion title="Felhasználó-hitelesítés (Auth)">
+            <p className="text-muted-foreground mb-3">Email/jelszó alapú regisztráció és bejelentkezés, valamint közösségi bejelentkezés (Google, GitHub, stb.). Az AI mindent beállit, te csak kérd!</p>
             <TutorialPromptBox label="Prompt">{`Add authentication to the app with email/password login and registration. Include a protected dashboard page that only logged-in users can access.`}</TutorialPromptBox>
           </TutorialAccordion>
 
-          <TutorialAccordion title="Fajltarolas (Storage)">
-            <p className="text-muted-foreground">Kepek, dokumentumok és mas fájlok feltoltese és tárolása. Tokeletes profilkepekhez, termekfotokhoz vagy dokumentumkezelohoz.</p>
+          <TutorialAccordion title="Fájltárolás (Storage)">
+            <p className="text-muted-foreground">Képek, dokumentumok és más fájlok feltöltése és tárolása. Tökéletes profilképekhez, termékfotókhoz vagy dokumentumkezelőhöz.</p>
           </TutorialAccordion>
 
-          <TutorialAccordion title="Edge Functions — szerver nelkuli logika">
-            <p className="text-muted-foreground">Ha összetettebb logikara van szükséged (e-mail kuldes, API hivas, fizetés feldolgozas), az Edge Functions serverless háttér-kodot futtat JavaScript/TypeScript-ben. Titkos kulcsokat (Stripe, OpenAI) a Secrets managerben tarolhatsz biztonsagosan.</p>
+          <TutorialAccordion title="Edge Functions — szerver nélküli logika">
+            <p className="text-muted-foreground">Ha összetettebb logikára van szükséged (e-mail küldés, API hívás, fizetés feldolgozás), az Edge Functions serverless háttér-kódot futtat JavaScript/TypeScript-ben. Titkos kulcsokat (Stripe, OpenAI) a Secrets managerben tárolhatsz biztonságosan.</p>
           </TutorialAccordion>
         </div>
 
@@ -67,8 +67,8 @@ const TutorialModule5 = () => {
           <h3 className="text-xl font-bold font-heading mb-3">Gyakorlati példa: Kapcsolat űrlap</h3>
           <TutorialPromptBox label="Prompt az AI-nak">{`Create a contact form with name, email, phone, and message fields. Save submissions to a Supabase "contact_messages" table. Show a success toast notification after submission. Add form validation.`}</TutorialPromptBox>
 
-          <TutorialTipBox variant="success" icon="✅" title="Eredmeny">
-            <p>Ez a prompt letrehoz egy teljes, működő kapcsolatfelveteli űrlapot, ami elmenti az üzeneteket az adatbazisba. A Supabase admin panelen lathatod az összes beerkez üzenetet!</p>
+          <TutorialTipBox variant="success" icon="✅" title="Eredmény">
+            <p>Ez a prompt létrehoz egy teljes, működő kapcsolatfelvételi űrlapot, ami elmenti az üzeneteket az adatbázisba. A Supabase admin panelen láthatod az összes beerkez üzenetet!</p>
           </TutorialTipBox>
         </div>
       </div>

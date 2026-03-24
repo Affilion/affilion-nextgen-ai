@@ -16,33 +16,33 @@ export const LovableEditorMockup = () => (
         <div className="absolute top-1.5 left-4 text-[10px] text-primary font-semibold uppercase tracking-wider">&larr; Chat panel</div>
         <div className="mt-5" />
         <div className="tutorial-mockup-msg tutorial-mockup-msg--user">
-          Készíts egy modern étterem weboldalt sotet temaval és elegáns betutipussal
+          Készíts egy modern étterem weboldalt sötét témával és elegáns betűtípussal
         </div>
         <div className="tutorial-mockup-msg tutorial-mockup-msg--ai">
           Rendben! Készítek egy elegáns étterem oldalt. Tartalmaz hero szekciót, menüt, es foglalási lehetőséget...
         </div>
         <div className="mt-auto p-2.5 px-3.5 rounded-[10px] bg-white/[0.04] border border-white/[0.08] text-muted-foreground text-xs">
-          Irj ide egy üzenetet...
+          Írj ide egy üzenetet...
         </div>
       </div>
       <div className="tutorial-mockup-preview" style={{ position: "relative" }}>
-        <div className="absolute top-1.5 right-4 text-[10px] text-secondary font-semibold uppercase tracking-wider">Elo elonezet &rarr;</div>
+        <div className="absolute top-1.5 right-4 text-[10px] text-secondary font-semibold uppercase tracking-wider">Élő előnézet &rarr;</div>
         <div className="tutorial-mini-site mt-4">
           <div className="tutorial-mini-nav">
             <div className="text-white text-[11px] font-bold">🍽 Ristorante</div>
             <div className="flex gap-2.5">
-              <span className="text-muted-foreground text-[9px]">Menu</span>
+              <span className="text-muted-foreground text-[9px]">Menü</span>
               <span className="text-muted-foreground text-[9px]">Rólunk</span>
-              <span className="text-muted-foreground text-[9px]">Foglalas</span>
+              <span className="text-muted-foreground text-[9px]">Foglalás</span>
             </div>
           </div>
           <div className="tutorial-mini-hero">
             <h5 className="text-white text-[13px] font-bold mb-1.5">Autentikus olasz konyha</h5>
-            <p className="text-muted-foreground text-[9px] mb-2.5">Fedezd fel izeink vilagat egy kulonleges gasztronomiai elmenyben</p>
-            <div className="inline-block px-3 py-1 text-white text-[9px] font-semibold rounded" style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)))" }}>Asztal foglalas</div>
+            <p className="text-muted-foreground text-[9px] mb-2.5">Fedezd fel ízeink világát egy különleges gasztronómiai élményben</p>
+            <div className="inline-block px-3 py-1 text-white text-[9px] font-semibold rounded" style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)))" }}>Asztal foglalás</div>
           </div>
           <div className="tutorial-mini-cards">
-            {["Eloetelek", "Foetelek", "Desszertek"].map((name) => (
+            {["Előételek", "Főételek", "Desszertek"].map((name) => (
               <div key={name} className="tutorial-mini-card">
                 <div className="w-5 h-5 rounded-full mx-auto mb-1.5" style={{ background: "linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--secondary) / 0.15))" }} />
                 <h6 className="text-[9px] text-gray-800 font-semibold mb-0.5">{name}</h6>
@@ -64,7 +64,7 @@ export const DNSPanelMockup = () => (
         <div className="w-7 h-7 rounded-md flex items-center justify-center text-white text-sm" style={{ background: "linear-gradient(135deg, #2563eb, hsl(var(--primary)))" }}>⚙</div>
         <div>
           <h5 className="text-foreground text-[13px] font-semibold">DNS Rekordok &mdash; sajatdomain.hu</h5>
-          <p className="text-muted-foreground text-[10px]">Rackhost Vezerlopult</p>
+          <p className="text-muted-foreground text-[10px]">Rackhost Vezérlőpult</p>
         </div>
       </div>
       <div className="px-3 py-1 rounded-md text-[11px] font-medium text-white" style={{ background: "linear-gradient(135deg, #2563eb, hsl(var(--primary)))" }}>+ Új rekord</div>
@@ -72,9 +72,9 @@ export const DNSPanelMockup = () => (
     <table className="tutorial-dns-table">
       <thead>
         <tr>
-          <th>Tipus</th>
-          <th>Nev</th>
-          <th>Ertek</th>
+          <th>Típus</th>
+          <th>Név</th>
+          <th>Érték</th>
           <th>TTL</th>
         </tr>
       </thead>
@@ -119,7 +119,7 @@ export const GSCDashboardMockup = () => {
       </div>
       <div className="tutorial-gsc-body">
         <div className="tutorial-gsc-sidebar">
-          {["Teljesítmény", "URL vizsgalat", "Indexeles", "Sitemaps", "Elmeny", "Beállítások"].map((item, i) => (
+          {["Teljesítmény", "URL vizsgálat", "Indexelés", "Sitemaps", "Élmény", "Beállítások"].map((item, i) => (
             <div key={item} className={`tutorial-gsc-menu-item ${i === 0 ? "tutorial-gsc-menu-item--active" : ""}`}>
               <div className="tutorial-gsc-menu-icon" />
               {item}
@@ -129,10 +129,10 @@ export const GSCDashboardMockup = () => {
         <div className="flex-1 p-4">
           <div className="tutorial-gsc-metrics">
             {[
-              { label: "Kattintasok", value: "847", color: "#4285f4" },
-              { label: "Megjelenitesek", value: "12.4K", color: "#a855f7" },
-              { label: "Atl. CTR", value: "6.8%", color: "#10b981" },
-              { label: "Atl. pozicio", value: "14.2", color: "#f59e0b" },
+              { label: "Kattintások", value: "847", color: "#4285f4" },
+              { label: "Megjelenítések", value: "12.4K", color: "#a855f7" },
+              { label: "Átl. CTR", value: "6.8%", color: "#10b981" },
+              { label: "Átl. pozíció", value: "14.2", color: "#f59e0b" },
             ].map((m) => (
               <div key={m.label} className="tutorial-gsc-metric">
                 <div className="tutorial-metric-label">{m.label}</div>
@@ -160,7 +160,7 @@ export const GA4DashboardMockup = () => (
     </div>
     <div className="tutorial-ga4-body">
       <div className="tutorial-ga4-sidebar">
-        {["Kezdolap", "Jelentesek", "Felfedezes", "Hirdetes", "Adminisztracio"].map((item, i) => (
+        {["Kezdőlap", "Jelentések", "Felfedezés", "Hirdetés", "Adminisztráció"].map((item, i) => (
           <div key={item} className={`tutorial-ga4-menu-item ${i === 0 ? "tutorial-ga4-menu-item--active" : ""}`}>
             <div className="tutorial-ga4-menu-icon" />
             {item}
@@ -170,9 +170,9 @@ export const GA4DashboardMockup = () => (
       <div className="flex-1 p-4">
         <div className="tutorial-ga4-metrics">
           {[
-            { label: "Felhasznalok", value: "1,247", delta: "↑ +12.3%" },
+            { label: "Felhasználók", value: "1,247", delta: "↑ +12.3%" },
             { label: "Munkamenetek", value: "2,891", delta: "↑ +8.7%" },
-            { label: "Atl. idő", value: "2:34", delta: "↑ +5.1%" },
+            { label: "Átl. idő", value: "2:34", delta: "↑ +5.1%" },
           ].map((m) => (
             <div key={m.label} className="tutorial-ga4-metric">
               <div className="tutorial-metric-label">{m.label}</div>
@@ -193,13 +193,13 @@ export const GA4DashboardMockup = () => (
             <path d="M0,50 C30,45 60,40 90,35 C120,30 150,38 180,25 C210,12 240,18 270,15 C300,12 330,8 360,10 C380,11 400,5 400,5" fill="none" stroke="#f9ab00" strokeWidth="2" />
           </svg>
         </div>
-        <div className="text-[10px] text-muted-foreground mb-2 font-medium">FORGALMI FORRASOK</div>
+        <div className="text-[10px] text-muted-foreground mb-2 font-medium">FORGALMI FORRÁSOK</div>
         <div className="tutorial-ga4-sources">
           {[
-            { name: "Google kereso", pct: "42%", color: "#4285f4" },
-            { name: "Kozvetlen", pct: "28%", color: "#10b981" },
-            { name: "Kozossegi media", pct: "18%", color: "#f59e0b" },
-            { name: "Hivatkozas", pct: "12%", color: "#a855f7" },
+            { name: "Google kereső", pct: "42%", color: "#4285f4" },
+            { name: "Közvetlen", pct: "28%", color: "#10b981" },
+            { name: "Közösségi média", pct: "18%", color: "#f59e0b" },
+            { name: "Hivatkozás", pct: "12%", color: "#a855f7" },
           ].map((s) => (
             <div key={s.name} className="tutorial-ga4-source">
               <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: s.color }} />

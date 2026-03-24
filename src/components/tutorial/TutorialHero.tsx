@@ -15,11 +15,11 @@ const TutorialHero = () => {
         </div>
 
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-5 glow-text font-heading">
-          Készítsd el saját weblapodat par óra alatt!
+          Készítsd el saját weblapodat pár óra alatt!
         </h1>
 
         <p className="text-lg text-muted-foreground mb-10 max-w-[600px] mx-auto">
-          Komplett útmutató kezdőknek &mdash; a nullarol a kész, működő weboldalig.
+          Komplett útmutató kezdőknek &mdash; a nulláról a kész, működő weboldalig.
           Programozói tudás nélkül, mesterséges intelligencia segítségével.
         </p>
 
@@ -29,7 +29,7 @@ const TutorialHero = () => {
             { icon: Layers, text: "10 modul" },
             { icon: Clock, text: "~3-5 óra" },
             { icon: Users, text: "Kezdőknek" },
-            { icon: Zap, text: "AI-alapu" },
+            { icon: Zap, text: "AI-alapú" },
           ].map((f) => (
             <div key={f.text} className="inline-flex items-center gap-2 px-4 py-2 bg-white/[0.04] border border-white/[0.06] rounded-[10px] text-sm text-muted-foreground">
               <f.icon size={16} className="text-primary" />
@@ -52,7 +52,7 @@ const TutorialHero = () => {
               boxShadow: "0 4px 20px hsl(var(--primary) / 0.3)",
             }}
           >
-            Kezdjuk el!
+            Kezdjük el!
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
           </a>
           <a

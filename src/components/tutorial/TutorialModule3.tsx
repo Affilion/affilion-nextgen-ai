@@ -15,22 +15,22 @@ const TutorialModule3 = () => {
             <span className="tutorial-label-line" /> Modul 3
           </div>
           <h2 className="text-3xl md:text-4xl font-bold font-heading mb-3">Ismerkedés a Lovable-lel</h2>
-          <p className="text-muted-foreground">A Lovable egy AI-alapu weboldal-epito, amely szöveges utasitasokbol készít igazi, működő weboldalakat.</p>
+          <p className="text-muted-foreground">A Lovable egy AI-alapú weboldal-építő, amely szöveges utasításokból készít igazi, működő weboldalakat.</p>
         </div>
 
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Mi az a Lovable?</h3>
-          <p className="text-muted-foreground mb-4">A <a href={LOVABLE_URL} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">Lovable.dev</a> egy mesterséges intelligenciával működő webfejleszto platform. Ahelyett, hogy kódot irnal, egyszerűen <strong className="text-foreground">leirod, mit szeretnel</strong>, es az AI megepiti neked!</p>
+          <p className="text-muted-foreground mb-4">A <a href={LOVABLE_URL} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">Lovable.dev</a> egy mesterséges intelligenciával működő webfejlesztő platform. Ahelyett, hogy kódot írnál, egyszerűen <strong className="text-foreground">leírod, mit szeretnél</strong>, es az AI megépíti neked!</p>
           <div className="glass-card">
-            <h4 className="font-heading font-semibold mb-3">Fobb kepessegek:</h4>
+            <h4 className="font-heading font-semibold mb-3">Főbb képességek:</h4>
             <ul className="text-muted-foreground pl-6 space-y-1.5 list-disc marker:text-primary">
-              <li>AI-vezerelt fejlesztés &mdash; írd le szöveggel, mit szeretnel</li>
+              <li>AI-vezérelt fejlesztés &mdash; írd le szöveggel, mit szeretnél</li>
               <li>React-alapu, modern frontend</li>
-              <li>Vizualis szerkesztő + chat alapú szerkesztés</li>
+              <li>Vizuális szerkesztő + chat alapú szerkesztés</li>
               <li>Precision Edit &mdash; kattints bármely elemre és módosítsd</li>
-              <li>Supabase integracio (adatbázis, hitelesítés, fajltarolas)</li>
+              <li>Supabase integráció (adatbázis, hitelesítés, fájltárolás)</li>
               <li>GitHub szinkron (ketaranyu)</li>
-              <li>Figma &rarr; web konverzio</li>
+              <li>Figma &rarr; web konverzió</li>
               <li>Saját domain beállítás automatikus SSL-lel</li>
               <li>Lovable Cloud hosting (teljes menedzselt)</li>
               <li>SOC 2 Type 2 és ISO 27001 tanúsítvány</li>
@@ -57,7 +57,7 @@ const TutorialModule3 = () => {
                 <li>100 havi kredit + 5 napi bónusz</li>
                 <li>Privát projektek</li>
                 <li>Saját domain</li>
-                <li>Kod hozzáférés</li>
+                <li>Kód hozzáférés</li>
                 <li>Badge eltávolítás</li>
               </ul>
             </div>
@@ -81,51 +81,51 @@ const TutorialModule3 = () => {
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Fiók létrehozása</h3>
           <ol className="tutorial-step-list">
-            <li>Nyisd meg a <a href={LOVABLE_URL} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">Lovable.dev</a> oldalt</li>
+            <li>Nyisd még a <a href={LOVABLE_URL} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">Lovable.dev</a> oldalt</li>
             <li>Kattints a &bdquo;Sign Up&rdquo; gombra</li>
-            <li>Regisztrálj Google fiókkal vagy e-mail cimmel</li>
-            <li>Töltsd ki a profil adatokat (opcionalis)</li>
-            <li>Készen állsz! Az ingyenes csomag maris aktív</li>
+            <li>Regisztrálj Google fiókkal vagy e-mail címmel</li>
+            <li>Töltsd ki a profil adatokat (opcionális)</li>
+            <li>Készen állsz! Az ingyenes csomag máris aktív</li>
           </ol>
         </div>
 
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">A felület részei</h3>
-          <TutorialAccordion title="Chat panel — beszelj az AI-jal">
-            <p className="text-muted-foreground">A bal oldalon talaalod a chat panelt. Ide írd le, mit szeretnel: &bdquo;Készíts egy modern portfólió oldalt sotet hatterrel&rdquo; &mdash; es az AI megepiti! Minden üzenet 1 kreditet használ, ha kódot modosit; a sima chat (kód nélkül) szinten 1 kreditet.</p>
+          <TutorialAccordion title="Chat panel — beszélj az AI-jal">
+            <p className="text-muted-foreground">A bal oldalon talaalod a chat panelt. Ide írd le, mit szeretnél: &bdquo;Készíts egy modern portfólió oldalt sötét háttérrel&rdquo; &mdash; es az AI megépíti! Minden üzenet 1 kreditet használ, ha kódot módosít; a sima chat (kód nélkül) szintén 1 kreditet.</p>
           </TutorialAccordion>
-          <TutorialAccordion title="Vizualis elonezet — lásd, amit epitesz">
-            <p className="text-muted-foreground">A jobb oldalon valos idoben latod a weboldaladat, ahogy az AI dolgozik rajta. Az elonezet interaktiv &mdash; kattinthatsz, gorgethetsz, kiprobaalhatod.</p>
+          <TutorialAccordion title="Vizuális előnézet — lásd, amit építesz">
+            <p className="text-muted-foreground">A jobb oldalon valós időben látod a weboldaladat, ahogy az AI dolgozik rajta. Az előnézet interaktív &mdash; kattinthatsz, görgethetsz, kiprobaalhatod.</p>
           </TutorialAccordion>
           <TutorialAccordion title="Precision Edit — kattints és szerkeszd">
-            <p className="text-muted-foreground">A Precision Edit funkcioval rakattinthatsz bármely elemre az elonozetben, es közvetlenül szerkesztheted a szöveget, szint, méretet. Nem kell mindent a chatben kerned!</p>
+            <p className="text-muted-foreground">A Precision Edit funkcióval rákattinthatsz bármely elemre az elonozetben, es közvetlenül szerkesztheted a szöveget, színt, méretet. Nem kell mindent a chatben kérned!</p>
           </TutorialAccordion>
-          <TutorialAccordion title="Elozmoenyek — bármikor visszalephetsz">
-            <p className="text-muted-foreground">A Lovable automatikusan menti minden változatot. Ha valami rosszul sul el, egyszerűen visszaterhetsz egy korabbi verziohoz. Ez olyan, mint a &bdquo;Ctrl+Z&rdquo; a vegtelensegig!</p>
+          <TutorialAccordion title="Elozmoenyek — bármikor visszaléphetsz">
+            <p className="text-muted-foreground">A Lovable automatikusan menti minden változatot. Ha valami rosszul sül el, egyszerűen visszatérhetsz egy korábbi verzióhoz. Ez olyan, mint a &bdquo;Ctrl+Z&rdquo; a végtelenségig!</p>
           </TutorialAccordion>
 
           <LovableEditorMockup />
-          <span className="block text-center text-xs text-muted-foreground italic mt-3 mb-2">A Lovable szerkesztő felülete &mdash; bal oldalon a chat, jobb oldalon az elo elonezet</span>
+          <span className="block text-center text-xs text-muted-foreground italic mt-3 mb-2">A Lovable szerkesztő felülete &mdash; bal oldalon a chat, jobb oldalon az élő előnézet</span>
         </div>
 
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Első projekt létrehozása</h3>
           <p className="text-muted-foreground mb-4">Kattints a &bdquo;New Project&rdquo; gombra, adj nevét a projektednek, es írd be az első promptodat:</p>
-          <TutorialPromptBox label="Példa prompt">{`Készíts egy modern, letisztult bemutatkozó weboldalt egy magyar kis- vallalkozasnak. Legyen rajta:
+          <TutorialPromptBox label="Példa prompt">{`Készíts egy modern, letisztult bemutatkozó weboldalt egy magyar kis- vállalkozásnak. Legyen rajta:
 - Hero szekció egy figyelemfelkeltő szöveggel
 - Rólunk szekció
 - Szolgáltatások (3 kártya)
-- Kapcsolat szekció e-mail cimmel és telefonszammal
-- Legyen sotet háttér, modern tipografia, lila akcentus szín`}</TutorialPromptBox>
+- Kapcsolat szekció e-mail címmel és telefonszámmal
+- Legyen sötét háttér, modern tipográfia, lila akcentus szín`}</TutorialPromptBox>
         </div>
 
         <div className="mb-8 tutorial-fade-up">
-          <TutorialVideoPlaceholder title="Hogyan hozd letre az első projekted a Lovable-ben" />
+          <TutorialVideoPlaceholder title="Hogyan hozd létre az első projekted a Lovable-ben" />
         </div>
 
         <div className="tutorial-cta-card tutorial-fade-up">
-          <h3 className="text-xl font-bold font-heading mb-2 relative">{"🚀"} Készen állsz kiprobalni?</h3>
-          <p className="text-muted-foreground mb-6 relative mx-auto">Hozd letre ingyenes fiokodat a Lovable.dev-en és kezdj el építeni!</p>
+          <h3 className="text-xl font-bold font-heading mb-2 relative">{"🚀"} Készen állsz kipróbálni?</h3>
+          <p className="text-muted-foreground mb-6 relative mx-auto">Hozd létre ingyenes fiókodat a Lovable.dev-en és kezdj el építeni!</p>
           <a
             href={LOVABLE_URL}
             target="_blank"

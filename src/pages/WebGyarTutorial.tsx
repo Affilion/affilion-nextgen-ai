@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { ArrowLeft, Menu } from "lucide-react";
+import { ArrowLeft, Menü } from "lucide-react";
 import { Link } from "react-router-dom";
 import "@/styles/tutorial.css";
 
@@ -100,7 +100,7 @@ const WebGyarTutorial = () => {
           </Link>
 
           <h1 className="text-lg font-bold glow-text font-heading hidden sm:block">
-            WebGyar Tutorial
+            WebGyár Tutorial
           </h1>
 
           <button
@@ -108,7 +108,7 @@ const WebGyarTutorial = () => {
             onClick={() => setSidebarOpen(true)}
             aria-label="Modulok"
           >
-            <Menu size={20} />
+            <Menü size={20} />
           </button>
 
           {/* Spacer for desktop symmetry */}

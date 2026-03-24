@@ -6,10 +6,10 @@ import { Check } from "lucide-react";
 
 const checklistItems = [
   "Mi a célom a weboldallal? (bemutatkozás, szolgáltatás, portfólió, webshop?)",
-  "Ki a célközönségem? (maganszemelyek, cégek, fiatalok, idosebbek?)",
-  "Milyen oldalak kellenek? (Főoldal, Rolam, Szolgáltatások, Kapcsolat, stb.)",
-  "Milyen domain nevét szeretnek? (.hu, .com, .eu?)",
-  "Van-e szuksegem backend funkcionalitásra? (bejelentkezés, adatbázis, űrlap?)",
+  "Ki a célközönségem? (magánszemélyek, cégek, fiatalok, idősebbek?)",
+  "Milyen oldalak kellenek? (Főoldal, Rólam, Szolgáltatások, Kapcsolat, stb.)",
+  "Milyen domain nevét szeretnék? (.hu, .com, .eu?)",
+  "Van-e szükségem backend funkcionalitásra? (bejelentkezés, adatbázis, űrlap?)",
   "Összegyűjtöttem a szövegeket és képeket?",
 ];
 
@@ -40,79 +40,79 @@ const TutorialModule1 = () => {
         {/* Mi az a weboldal? */}
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Mi az a weboldal?</h3>
-          <p className="text-muted-foreground mb-4 leading-relaxed">Egy weboldal egyszerűen fájlok gyűjteménye, amelyeket egy szerver (számítógép) szolgaltat ki az interneten, es a bongeszod (Chrome, Firefox, Safari) megjeleníti. Nezzuk meg az alapvető fogalmakat:</p>
+          <p className="text-muted-foreground mb-4 leading-relaxed">Egy weboldal egyszerűen fájlok gyűjteménye, amelyeket egy szerver (számítógép) szolgáltat ki az interneten, es a böngésződ (Chrome, Firefox, Safari) megjeleníti. Nézzük még az alapvető fogalmakat:</p>
 
           <TutorialAccordion title="Domain név — a weboldalad címe">
-            <p className="text-muted-foreground mb-2">A domain név az az egyedi cím, amit az emberek beirnak a bongeszojukbe, hogy eljussanak a weboldaladra. Például: <strong className="text-foreground">példa.hu</strong> vagy <strong className="text-foreground">uzletem.com</strong>.</p>
-            <p className="text-muted-foreground">Gondolj ra ugy, mint a hazad postai cimere &mdash; ez alapján talaljak meg az internetezok a weboldalad.</p>
+            <p className="text-muted-foreground mb-2">A domain név az az egyedi cím, amit az emberek beírnak a böngészőjükbe, hogy eljussanak a weboldaladra. Például: <strong className="text-foreground">példa.hu</strong> vagy <strong className="text-foreground">uzletem.com</strong>.</p>
+            <p className="text-muted-foreground">Gondolj ra úgy, mint a házad postai címére &mdash; ez alapján találják még az internetezők a weboldalad.</p>
           </TutorialAccordion>
 
-          <TutorialAccordion title="Hosting (tarhelyszolgaltatas) — ahol a weboldalad „lakik”">
+          <TutorialAccordion title="Hosting (tárhelyszolgáltatás) — ahol a weboldalad „lakik”">
             <p className="text-muted-foreground">A hosting egy szerver (speciális számítógép), amely a weboldalad fájljait tárolja és folyamatosan elérhetővé teszi az interneten. Jó hír: a <strong className="text-foreground">Lovable</strong> automatikusan biztosít hosting-ot &mdash; ezt hívják <strong className="text-foreground">Lovable Cloud</strong>-nak. Ezzel neked nem kell foglalkoznod!</p>
           </TutorialAccordion>
 
           <TutorialAccordion title="Frontend vs. Backend — mit lát a felhasználó?">
             <p className="text-muted-foreground mb-2"><strong className="text-foreground">Frontend</strong>: Minden, amit a látogató lát és használ &mdash; a design, a gombok, a szövegek, a képek. Ez a &bdquo;vitrin&rdquo;.</p>
-            <p className="text-muted-foreground mb-2"><strong className="text-foreground">Backend</strong>: A háttérben futó logika &mdash; adatbázis, felhasználó-kezeles, űrlap-feldolgozas. Ez a &bdquo;raktar és iroda&rdquo;.</p>
-            <p className="text-muted-foreground">A Lovable mindkettot kepes létrehozni: a frontend-et React-tel, a backend-et pedig Supabase integracioval.</p>
+            <p className="text-muted-foreground mb-2"><strong className="text-foreground">Backend</strong>: A háttérben futó logika &mdash; adatbázis, felhasználó-kezelés, űrlap-feldolgozás. Ez a &bdquo;raktár és iroda&rdquo;.</p>
+            <p className="text-muted-foreground">A Lovable mindkettőt képes létrehozni: a frontend-et React-tel, a backend-et pedig Supabase integrációval.</p>
           </TutorialAccordion>
         </div>
 
         {/* Fontos fogalmak */}
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Fontos fogalmak egyszerűen</h3>
-          <p className="text-muted-foreground mb-4">Mielőtt tovabbmennenk, ismerd meg ezeket az alapfogalmakat &mdash; mindegyiket hetkoznapi nyelven magyarazzuk el:</p>
+          <p className="text-muted-foreground mb-4">Mielőtt továbbmennénk, ismerd még ezeket az alapfogalmakat &mdash; mindegyiket hétköznapi nyelven magyarázzuk el:</p>
 
           <div className="glass-card mb-4">
             <h4 className="font-heading font-semibold mb-3">🔒 SSL/HTTPS &mdash; A lakat ikon a bongészoben</h4>
-            <p className="text-muted-foreground leading-relaxed">Kepzeld el, hogy kuldol egy képeslapot (HTTP) &mdash; bárki olvashatja utkozben. Most kepzeld el, hogy zart, leragasztott borítékban kuldod (HTTPS) &mdash; csak a címzett nyithatja ki. Az <strong className="text-foreground">SSL tanúsítvány</strong> pontosan ezt csinaja: titkosítja a weboldal és a látogató közötti kommunikációt. A böngésző ezert mutat egy kis <strong className="text-foreground">lakat ikont</strong> 🔒 a biztonságos oldalaknál. Jó hír: a <strong className="text-foreground">Lovable automatikusan biztosít SSL-t</strong> &mdash; nem kell vele foglalkoznod!</p>
+            <p className="text-muted-foreground leading-relaxed">Képzeld el, hogy küldöl egy képeslapot (HTTP) &mdash; bárki olvashatja útközben. Most képzeld el, hogy zárt, leragasztott borítékban küldöd (HTTPS) &mdash; csak a címzett nyithatja ki. Az <strong className="text-foreground">SSL tanúsítvány</strong> pontosan ezt csinaja: titkosítja a weboldal és a látogató közötti kommunikációt. A böngésző ezért mutat egy kis <strong className="text-foreground">lakat ikont</strong> 🔒 a biztonságos oldalaknál. Jó hír: a <strong className="text-foreground">Lovable automatikusan biztosít SSL-t</strong> &mdash; nem kell vele foglalkoznod!</p>
           </div>
 
           <div className="glass-card mb-4">
             <h4 className="font-heading font-semibold mb-3">🔗 URL &mdash; A weboldalad pontos címe</h4>
-            <p className="text-muted-foreground leading-relaxed mb-3">Egy URL (Uniform Resource Locator) a weboldal pontos &bdquo;postacime&rdquo;. Nezzuk meg a reszeit:</p>
+            <p className="text-muted-foreground leading-relaxed mb-3">Egy URL (Uniform Resource Locator) a weboldal pontos &bdquo;postacíme&rdquo;. Nézzük még a részeit:</p>
             <div className="bg-black/30 rounded-lg p-3.5 px-4 mb-3 font-mono text-sm overflow-x-auto">
               <span className="text-green-400">https://</span>
               <span className="text-yellow-400">www.</span>
               <span className="text-primary">példa</span>
               <span className="text-blue-400">.hu</span>
-              <span className="text-muted-foreground">/szolgaltatasok</span>
+              <span className="text-muted-foreground">/szolgáltatások</span>
             </div>
             <ul className="text-sm text-muted-foreground pl-5 space-y-1 list-disc">
               <li><span className="text-green-400 font-semibold">https://</span> &mdash; Protokoll (biztonságos kapcsolat)</li>
-              <li><span className="text-yellow-400 font-semibold">www.</span> &mdash; Aldomain (opcionalis, ma már nem kotelezo)</li>
+              <li><span className="text-yellow-400 font-semibold">www.</span> &mdash; Aldomain (opcionális, ma már nem kötelező)</li>
               <li><span className="text-primary font-semibold">példa</span> &mdash; A domain neved</li>
-              <li><span className="text-blue-400 font-semibold">.hu</span> &mdash; Kiterjesztes (TLD)</li>
-              <li><span className="text-muted-foreground font-semibold">/szolgaltatasok</span> &mdash; Aloldal (utvonal)</li>
+              <li><span className="text-blue-400 font-semibold">.hu</span> &mdash; Kiterjesztés (TLD)</li>
+              <li><span className="text-muted-foreground font-semibold">/szolgáltatások</span> &mdash; Aloldal (útvonal)</li>
             </ul>
           </div>
 
           <div className="glass-card mb-4">
             <h4 className="font-heading font-semibold mb-3">📱 Reszponzív design &mdash; Alkalmazkodó megjelenés</h4>
-            <p className="text-muted-foreground leading-relaxed">Gondolj egy okos butorra, ami automatikusan atrendeződik, hogy belferjen egy kis szobaba is és egy nagy nappaliba is. A <strong className="text-foreground">reszponzív design</strong> ugyanezt csinaja: a weboldal automatikusan alkalmazkodik a képernyő meretehez &mdash; legyen az telefon, tablet, vagy monitor. A Lovable minden altala generált oldalt automatikusan reszponzivva tesz!</p>
+            <p className="text-muted-foreground leading-relaxed">Gondolj egy okos bútorra, ami automatikusan atrendeződik, hogy belférjen egy kis szobába is és egy nagy nappaliba is. A <strong className="text-foreground">reszponzív design</strong> ugyanezt csinaja: a weboldal automatikusan alkalmazkodik a képernyő méretéhez &mdash; legyen az telefon, tablet, vagy monitor. A Lovable minden általa generált oldalt automatikusan reszponzívvá tesz!</p>
           </div>
 
           <div className="glass-card mb-4">
-            <h4 className="font-heading font-semibold mb-3">🤖 CMS vs. Kod vs. AI &mdash; Hogyan építhetsz weboldalt?</h4>
-            <p className="text-muted-foreground leading-relaxed mb-3">Haromfelekeppen készíthetsz weboldalt:</p>
+            <h4 className="font-heading font-semibold mb-3">🤖 CMS vs. Kód vs. AI &mdash; Hogyan építhetsz weboldalt?</h4>
+            <p className="text-muted-foreground leading-relaxed mb-3">Háromféleképpen készíthetsz weboldalt:</p>
             <div className="tutorial-diagram">
               <div className="tutorial-diagram-box">
                 <div className="text-[11px] uppercase tracking-wider text-muted-foreground mb-1">CMS</div>
                 <div className="font-heading font-bold text-foreground">WordPress</div>
               </div>
               <div className="tutorial-diagram-box">
-                <div className="text-[11px] uppercase tracking-wider text-muted-foreground mb-1">Kod</div>
-                <div className="font-heading font-bold text-foreground">Fejleszto</div>
+                <div className="text-[11px] uppercase tracking-wider text-muted-foreground mb-1">Kód</div>
+                <div className="font-heading font-bold text-foreground">Fejlesztő</div>
               </div>
               <div className="tutorial-diagram-box" style={{ borderColor: "hsl(var(--primary) / 0.5)", background: "hsl(var(--primary) / 0.15)" }}>
-                <div className="text-[11px] uppercase tracking-wider text-primary mb-1">AI-alapu</div>
+                <div className="text-[11px] uppercase tracking-wider text-primary mb-1">AI-alapú</div>
                 <div className="font-heading font-bold text-foreground">Lovable ✨</div>
               </div>
             </div>
             <ul className="text-sm text-muted-foreground pl-5 space-y-1 list-disc">
-              <li><strong className="text-foreground">CMS (pl. WordPress):</strong> Kesz sablonokbol epitkezel, de korlátozott és gyakran lassu</li>
-              <li><strong className="text-foreground">Koddal:</strong> Maximalis szabadsag, de programozói tudás kell</li>
-              <li><strong className="text-foreground">AI-alapu (Lovable):</strong> Leirod szöveggel, mit szeretnel, es az AI megepiti &mdash; programozás nélkül, de profi eredmennyel!</li>
+              <li><strong className="text-foreground">CMS (pl. WordPress):</strong> Kész sablonokból építkezel, de korlátozott és gyakran lassú</li>
+              <li><strong className="text-foreground">Kóddal:</strong> Maximális szabadság, de programozói tudás kell</li>
+              <li><strong className="text-foreground">AI-alapú (Lovable):</strong> Leírod szöveggel, mit szeretnél, es az AI megépíti &mdash; programozás nélkül, de profi eredménnyel!</li>
             </ul>
           </div>
         </div>
@@ -122,7 +122,7 @@ const TutorialModule1 = () => {
           <h3 className="text-xl font-bold font-heading mb-3">Hogyan működik egy weboldal?</h3>
           <div className="tutorial-diagram">
             {[
-              { label: "1. Felhasznalo", value: "Bongeszo" },
+              { label: "1. Felhasználó", value: "Böngésző" },
               { label: "2. Domain", value: "példa.hu" },
               { label: "3. DNS", value: "IP keresés" },
               { label: "4. Szerver", value: "Lovable Cloud" },
@@ -139,10 +139,10 @@ const TutorialModule1 = () => {
           </div>
         </div>
 
-        {/* Tervezd meg */}
+        {/* Tervezd még */}
         <div className="mb-8 tutorial-fade-up">
-          <h3 className="text-xl font-bold font-heading mb-3">Tervezd meg a weboldaladat!</h3>
-          <p className="text-muted-foreground mb-4">Mielőtt akár egyetlen sort is irnal, gondold vegig ezeket:</p>
+          <h3 className="text-xl font-bold font-heading mb-3">Tervezd még a weboldaladat!</h3>
+          <p className="text-muted-foreground mb-4">Mielőtt akár egyetlen sort is írnál, gondold végig ezeket:</p>
           <ul className="tutorial-checklist list-none p-0 mb-5">
             {checklistItems.map((item, i) => (
               <li
@@ -170,7 +170,7 @@ const TutorialModule1 = () => {
             <ul className="list-none p-0 space-y-2">
               {[
                 "Egy modern böngésző (Chrome, Edge, Firefox)",
-                "Lovable.dev fiók (ingyenes is elég a kezdeshez)",
+                "Lovable.dev fiók (ingyenes is elég a kezdéshez)",
                 "Google fiók (Analytics-hoz és Search Console-hoz)",
                 "~3-5 óra szabad idő",
               ].map((item) => (
@@ -185,12 +185,12 @@ const TutorialModule1 = () => {
 
         {/* Cost calculator */}
         <div className="mb-8 tutorial-fade-up">
-          <h3 className="text-xl font-bold font-heading mb-3">Mennyibe kerul összesen?</h3>
-          <p className="text-muted-foreground mb-4">Az egyik legjobb dolog a Lovable-ben, hogy szinte ingyen elkezdhetsz. Ime a teljes költségbontás:</p>
+          <h3 className="text-xl font-bold font-heading mb-3">Mennyibe kerül összesen?</h3>
+          <p className="text-muted-foreground mb-4">Az egyik legjobb dolog a Lovable-ben, hogy szinte ingyen elkezdhetsz. Íme a teljes költségbontás:</p>
           <TutorialCostCalculator />
 
-          <TutorialTipBox variant="success" icon="🎉" title="Akar 1000 Ft alatt elkezdheted!">
-            <p>Az ingyenes Lovable csomaggal és egy .hu domainnel már indulhatsz. Később, ha kell, bármikor frissíthetsz Pro-ra a saját domain és több kredit érdekében.</p>
+          <TutorialTipBox variant="success" icon="🎉" title="Akár 1000 Ft alatt elkezdheted!">
+            <p>Az ingyenes Lovable csomaggal és egy .hu domainnél már indulhatsz. Később, ha kell, bármikor frissíthetsz Pro-ra a saját domain és több kredit érdekében.</p>
           </TutorialTipBox>
         </div>
       </div>
