@@ -15,6 +15,7 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import AiClubSuccess from "./pages/AiClubSuccess";
 import AiClubDiscordCallback from "./pages/AiClubDiscordCallback";
 import Csatlakozas from "./pages/Csatlakozas";
+import WebGyarTutorial from "@/pages/WebGyarTutorial";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
