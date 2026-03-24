@@ -1,0 +1,965 @@
+/* ========== WEBGYAR TUTORIAL STYLES ========== */
+/* Styles that complement Tailwind for the tutorial page */
+/* Uses the project's CSS variables (HSL format) */
+
+/* ========== HERO SECTION ========== */
+.tutorial-hero {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 80px 32px 60px;
+}
+
+.tutorial-hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, hsl(var(--primary) / 0.2) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, hsl(var(--secondary) / 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 30% at 20% 60%, hsl(var(--primary) / 0.08) 0%, transparent 40%);
+  animation: tutorialHeroPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes tutorialHeroPulse {
+  0% { opacity: 0.8; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.05); }
+}
+
+.tutorial-hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(hsl(var(--primary) / 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--primary) / 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
+}
+
+/* ========== HERO BADGE ========== */
+.tutorial-hero-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  animation: tutorialPulse 2s ease-in-out infinite;
+}
+
+@keyframes tutorialPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ========== SCROLL ANIMATIONS ========== */
+.tutorial-fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.tutorial-fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== SECTION LABEL LINE ========== */
+.tutorial-label-line {
+  width: 24px;
+  height: 2px;
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+  border-radius: 1px;
+}
+
+/* ========== PROMPT BOX ========== */
+.tutorial-prompt-box {
+  position: relative;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid hsl(var(--border) / 0.3);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: hsl(var(--primary) / 0.8);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ========== ACCORDION ========== */
+.tutorial-accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.tutorial-accordion.open .tutorial-accordion-content {
+  /* max-height set dynamically via JS */
+}
+
+.tutorial-accordion.open .tutorial-acc-icon {
+  transform: rotate(180deg);
+}
+
+/* ========== CHECKLIST ========== */
+.tutorial-checklist li .tutorial-check-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 2px solid hsl(var(--border));
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  margin-top: 1px;
+}
+
+.tutorial-checklist li.checked .tutorial-check-box {
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+  border-color: transparent;
+}
+
+.tutorial-checklist li.checked .tutorial-check-box::after {
+  content: '';
+  width: 6px;
+  height: 10px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg) translateY(-1px);
+}
+
+.tutorial-checklist li.checked {
+  color: hsl(var(--muted-foreground));
+  text-decoration: line-through;
+}
+
+/* ========== STEP LIST ========== */
+.tutorial-step-list {
+  list-style: none;
+  padding: 0;
+  counter-reset: steps;
+  margin-bottom: 24px;
+}
+
+.tutorial-step-list li {
+  counter-increment: steps;
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid hsl(var(--border) / 0.2);
+  color: hsl(var(--muted-foreground));
+}
+
+.tutorial-step-list li:last-child {
+  border-bottom: none;
+}
+
+.tutorial-step-list li::before {
+  content: counter(steps);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  background: hsl(var(--primary) / 0.12);
+  border: 1px solid hsl(var(--primary) / 0.25);
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+  color: hsl(var(--primary));
+  flex-shrink: 0;
+}
+
+/* ========== DIAGRAM ========== */
+.tutorial-diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 32px;
+  background: hsl(var(--card) / 0.5);
+  border: 1px solid hsl(var(--border) / 0.3);
+  border-radius: 16px;
+  margin-bottom: 24px;
+}
+
+.tutorial-diagram-box {
+  padding: 16px 24px;
+  background: hsl(var(--primary) / 0.08);
+  border: 1px solid hsl(var(--primary) / 0.2);
+  border-radius: 10px;
+  text-align: center;
+  min-width: 120px;
+}
+
+.tutorial-diagram-arrow {
+  color: hsl(var(--primary));
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+/* ========== PRICE TABLE ========== */
+.tutorial-price-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  font-size: 0.875rem;
+}
+
+.tutorial-price-table th,
+.tutorial-price-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid hsl(var(--border) / 0.3);
+}
+
+.tutorial-price-table th {
+  font-weight: 600;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.tutorial-price-table td {
+  color: hsl(var(--muted-foreground));
+}
+
+.tutorial-price-highlight {
+  font-weight: 700;
+  color: #10b981;
+}
+
+.tutorial-price-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 999px;
+}
+
+/* ========== PRICING GRID ========== */
+.tutorial-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.tutorial-pricing-card {
+  background: hsl(var(--card) / 0.5);
+  border: 1px solid hsl(var(--border) / 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.tutorial-pricing-card:hover {
+  border-color: hsl(var(--primary) / 0.3);
+  transform: translateY(-2px);
+}
+
+.tutorial-pricing-card.recommended {
+  border-color: hsl(var(--primary));
+  background: hsl(var(--primary) / 0.06);
+}
+
+.tutorial-pricing-card.recommended::before {
+  content: 'Ajanlott';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2px 12px;
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 999px;
+}
+
+/* ========== CTA CARD ========== */
+.tutorial-cta-card {
+  position: relative;
+  padding: 40px;
+  background: hsl(var(--primary) / 0.06);
+  border: 1px solid hsl(var(--primary) / 0.2);
+  border-radius: 24px;
+  text-align: center;
+  margin: 40px 0;
+  overflow: hidden;
+}
+
+.tutorial-cta-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, hsl(var(--primary) / 0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ========== SEO PILLARS ========== */
+.tutorial-seo-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.tutorial-seo-pillar {
+  background: hsl(var(--card) / 0.5);
+  border: 1px solid hsl(var(--border) / 0.3);
+  border-radius: 16px;
+  padding: 24px 18px;
+  text-align: center;
+  transition: all 0.25s ease;
+}
+
+.tutorial-seo-pillar:hover {
+  border-color: hsl(var(--primary) / 0.25);
+  transform: translateY(-2px);
+}
+
+/* ========== GLOSSARY GRID ========== */
+.tutorial-glossary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.tutorial-glossary-card {
+  background: hsl(var(--card) / 0.5);
+  border: 1px solid hsl(var(--border) / 0.3);
+  border-radius: 10px;
+  padding: 16px 18px;
+  transition: all 0.25s ease;
+}
+
+.tutorial-glossary-card:hover {
+  border-color: hsl(var(--primary) / 0.25);
+  background: hsl(var(--card) / 0.7);
+  transform: translateY(-1px);
+}
+
+/* ========== UI MOCKUPS ========== */
+.tutorial-ui-mockup {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border) / 0.4);
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 24px 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  font-size: 13px;
+}
+
+.tutorial-ui-mockup * {
+  box-sizing: border-box;
+}
+
+/* Lovable Editor Mockup */
+.tutorial-mockup-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: hsl(var(--background));
+  border-bottom: 1px solid hsl(var(--border) / 0.3);
+}
+
+.tutorial-mockup-logo {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #e44d8a, hsl(var(--secondary)));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.tutorial-mockup-body {
+  display: flex;
+  min-height: 320px;
+}
+
+.tutorial-mockup-chat {
+  width: 42%;
+  background: hsl(var(--background));
+  border-right: 1px solid hsl(var(--border) / 0.3);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+.tutorial-mockup-preview {
+  flex: 1;
+  background: hsl(var(--card));
+  padding: 16px;
+  position: relative;
+}
+
+.tutorial-mockup-msg {
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  max-width: 90%;
+  word-break: break-word;
+}
+
+.tutorial-mockup-msg--user {
+  background: hsl(var(--primary) / 0.15);
+  border: 1px solid hsl(var(--primary) / 0.25);
+  color: hsl(var(--primary) / 0.8);
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+.tutorial-mockup-msg--ai {
+  background: hsl(var(--card) / 0.8);
+  border: 1px solid hsl(var(--border) / 0.3);
+  color: hsl(var(--muted-foreground));
+}
+
+/* Mini site inside mockup */
+.tutorial-mini-site {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 100%;
+}
+
+.tutorial-mini-nav {
+  background: hsl(var(--card));
+  padding: 8px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tutorial-mini-hero {
+  background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--secondary) / 0.3) 100%);
+  padding: 24px 14px;
+  text-align: center;
+}
+
+.tutorial-mini-cards {
+  padding: 12px;
+  display: flex;
+  gap: 8px;
+  background: #f8f8fc;
+}
+
+.tutorial-mini-card {
+  flex: 1;
+  background: #fff;
+  border-radius: 6px;
+  padding: 10px 8px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* DNS Mockup */
+.tutorial-dns-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tutorial-dns-table th {
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: hsl(var(--muted-foreground));
+  background: hsl(var(--card) / 0.5);
+  border-bottom: 1px solid hsl(var(--border) / 0.3);
+}
+
+.tutorial-dns-table td {
+  padding: 12px 16px;
+  font-size: 12px;
+  color: hsl(var(--muted-foreground));
+  border-bottom: 1px solid hsl(var(--border) / 0.2);
+}
+
+.tutorial-dns-table tr:last-child td {
+  border-bottom: none;
+}
+
+.tutorial-dns-type {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: ui-monospace, monospace;
+}
+
+.tutorial-dns-type--a {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+}
+
+.tutorial-dns-type--txt {
+  background: hsl(var(--primary) / 0.12);
+  color: hsl(var(--primary));
+}
+
+.tutorial-dns-type--cname {
+  background: hsl(var(--secondary) / 0.12);
+  color: hsl(var(--secondary));
+}
+
+.tutorial-dns-value {
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  color: hsl(var(--primary) / 0.8);
+  word-break: break-all;
+}
+
+/* GSC Dashboard Mockup */
+.tutorial-gsc-body,
+.tutorial-ga4-body {
+  display: flex;
+  min-height: 290px;
+}
+
+.tutorial-gsc-sidebar,
+.tutorial-ga4-sidebar {
+  width: 180px;
+  background: hsl(var(--background));
+  border-right: 1px solid hsl(var(--border) / 0.3);
+  padding: 12px 0;
+}
+
+.tutorial-gsc-menu-item,
+.tutorial-ga4-menu-item {
+  padding: 8px 16px;
+  font-size: 11px;
+  color: hsl(var(--muted-foreground));
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: default;
+}
+
+.tutorial-gsc-menu-item--active {
+  color: #60a5fa;
+  background: rgba(59, 130, 246, 0.08);
+  border-right: 2px solid #60a5fa;
+}
+
+.tutorial-ga4-menu-item--active {
+  color: #f9ab00;
+  background: rgba(249, 171, 0, 0.08);
+  border-left: 2px solid #f9ab00;
+}
+
+.tutorial-gsc-menu-icon,
+.tutorial-ga4-menu-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  background: hsl(var(--border) / 0.3);
+  flex-shrink: 0;
+}
+
+.tutorial-gsc-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.tutorial-ga4-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.tutorial-gsc-metric,
+.tutorial-ga4-metric {
+  padding: 10px;
+  border-radius: 8px;
+  background: hsl(var(--card) / 0.5);
+  border: 1px solid hsl(var(--border) / 0.3);
+}
+
+.tutorial-metric-label {
+  font-size: 9px;
+  color: hsl(var(--muted-foreground));
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.tutorial-gsc-chart {
+  background: hsl(var(--card) / 0.5);
+  border: 1px solid hsl(var(--border) / 0.3);
+  border-radius: 8px;
+  padding: 16px;
+  height: 140px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.tutorial-gsc-chart-bar {
+  flex: 1;
+  background: linear-gradient(to top, #4285f4, hsl(var(--secondary)));
+  border-radius: 2px 2px 0 0;
+  opacity: 0.7;
+  min-height: 8px;
+}
+
+/* GA4 chart */
+.tutorial-ga4-chart {
+  background: hsl(var(--card) / 0.5);
+  border: 1px solid hsl(var(--border) / 0.3);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  height: 110px;
+  position: relative;
+  overflow: hidden;
+}
+
+.tutorial-ga4-sources {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.tutorial-ga4-source {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: hsl(var(--card) / 0.5);
+  border: 1px solid hsl(var(--border) / 0.2);
+}
+
+/* ========== VIDEO PLACEHOLDER ========== */
+.tutorial-video-placeholder {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--card)) 100%);
+  border: 1px solid hsl(var(--border) / 0.4);
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 24px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+
+.tutorial-video-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 50%, hsl(var(--primary) / 0.08) 0%, transparent 60%);
+}
+
+.tutorial-video-play-btn {
+  position: relative;
+  z-index: 2;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: hsl(var(--primary) / 0.2);
+  border: 2px solid hsl(var(--primary) / 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.tutorial-video-placeholder:hover .tutorial-video-play-btn {
+  background: hsl(var(--primary) / 0.35);
+  border-color: hsl(var(--primary) / 0.6);
+  transform: scale(1.05);
+}
+
+.tutorial-video-play-btn::after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 12px 0 12px 20px;
+  border-color: transparent transparent transparent rgba(255, 255, 255, 0.9);
+  margin-left: 4px;
+}
+
+/* ========== COST CALCULATOR ========== */
+.tutorial-cost-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  border-bottom: 1px solid hsl(var(--border) / 0.2);
+  font-size: 0.875rem;
+}
+
+.tutorial-cost-row:last-child {
+  border-bottom: none;
+}
+
+.tutorial-cost-row--total {
+  background: hsl(var(--primary) / 0.06);
+  padding: 18px 24px;
+  margin-top: 4px;
+}
+
+/* ========== PROMPT TEMPLATE CARDS ========== */
+.tutorial-prompt-template {
+  background: hsl(var(--card) / 0.5);
+  border: 1px solid hsl(var(--border) / 0.3);
+  border-radius: 16px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.tutorial-prompt-template-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: hsl(var(--primary) / 0.04);
+  border-bottom: 1px solid hsl(var(--border) / 0.3);
+}
+
+.tutorial-prompt-template-body .tutorial-prompt-box {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* ========== SIDEBAR ========== */
+.tutorial-sidebar {
+  position: fixed;
+  top: 57px; /* header height */
+  left: 0;
+  bottom: 0;
+  width: 280px;
+  background: hsl(var(--background));
+  border-right: 1px solid hsl(var(--border) / 0.2);
+  overflow-y: auto;
+  padding: 24px 0;
+  z-index: 40;
+  transition: transform 0.3s ease;
+}
+
+.tutorial-sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 24px;
+  font-size: 0.8125rem;
+  color: hsl(var(--muted-foreground));
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+  text-decoration: none;
+}
+
+.tutorial-sidebar-nav a:hover {
+  color: hsl(var(--foreground) / 0.8);
+  background: hsl(var(--primary) / 0.05);
+}
+
+.tutorial-sidebar-nav a.active {
+  color: hsl(var(--foreground));
+  background: hsl(var(--primary) / 0.08);
+  border-left-color: hsl(var(--primary));
+}
+
+.tutorial-nav-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: hsl(var(--card));
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+  color: hsl(var(--muted-foreground));
+  transition: all 0.2s ease;
+}
+
+.tutorial-sidebar-nav a.active .tutorial-nav-number {
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+  color: #fff;
+}
+
+/* ========== PROGRESS BAR ========== */
+.tutorial-progress-bar {
+  height: 100%;
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .tutorial-sidebar {
+    transform: translateX(-100%);
+    background: hsl(var(--background));
+    z-index: 110;
+    width: 280px;
+  }
+
+  .tutorial-sidebar.open {
+    transform: translateX(0);
+    box-shadow: 20px 0 60px rgba(0, 0, 0, 0.5);
+  }
+
+  .tutorial-main-content {
+    margin-left: 0 !important;
+  }
+
+  .tutorial-mockup-body {
+    flex-direction: column;
+  }
+
+  .tutorial-mockup-chat {
+    width: 100%;
+    min-height: 160px;
+    border-right: none;
+    border-bottom: 1px solid hsl(var(--border) / 0.3);
+  }
+
+  .tutorial-gsc-body,
+  .tutorial-ga4-body {
+    flex-direction: column;
+  }
+
+  .tutorial-gsc-sidebar,
+  .tutorial-ga4-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid hsl(var(--border) / 0.3);
+    padding: 8px 0;
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .tutorial-gsc-menu-item,
+  .tutorial-ga4-menu-item {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 640px) {
+  .tutorial-hero {
+    min-height: 80vh;
+    padding: 60px 20px 40px;
+  }
+
+  .tutorial-gsc-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tutorial-ga4-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .tutorial-ga4-sources {
+    grid-template-columns: 1fr;
+  }
+
+  .tutorial-seo-pillars {
+    grid-template-columns: 1fr;
+  }
+
+  .tutorial-glossary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tutorial-diagram {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .tutorial-diagram-arrow {
+    transform: rotate(90deg);
+  }
+
+  .tutorial-cta-card {
+    padding: 28px 20px;
+  }
+
+  .tutorial-pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tutorial-dns-table th:nth-child(4),
+  .tutorial-dns-table td:nth-child(4) {
+    display: none;
+  }
+}
+
+/* ========== SCROLL TO TOP ========== */
+.tutorial-scroll-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px hsl(var(--primary) / 0.4);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  z-index: 90;
+  border: none;
+  cursor: pointer;
+}
+
+.tutorial-scroll-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.tutorial-scroll-top:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px hsl(var(--primary) / 0.5);
+}
+
+/* ========== BACKEND GRID ========== */
+@media (max-width: 640px) {
+  .tutorial-backend-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
