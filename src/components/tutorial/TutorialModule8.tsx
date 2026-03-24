@@ -1,5 +1,4 @@
 import { useState, useCallback } from "react";
-import { Check } from "lucide-react";
 import TutorialAccordion from "./TutorialAccordion";
 import TutorialPromptBox from "./TutorialPromptBox";
 import TutorialTipBox from "./TutorialTipBox";
@@ -47,9 +46,7 @@ const TutorialModule8 = () => {
                 onClick={() => toggleCheck(i)}
                 className={`flex items-start gap-3 py-2.5 border-b border-white/[0.04] text-sm cursor-pointer transition-colors ${checked.has(i) ? "checked" : "text-muted-foreground"}`}
               >
-                <span className="tutorial-check-box">
-                  {checked.has(i) && <Check size={12} className="text-white" />}
-                </span>
+                <span className="tutorial-check-box" />
                 {item}
               </li>
             ))}
@@ -157,6 +154,64 @@ const TutorialModule8 = () => {
               <li><strong className="text-foreground">Pro &rarr; Business:</strong> Ha csapatban dolgozol, SSO-ra van szükséged, vagy extra védelmet szeretnél</li>
             </ul>
           </div>
+        </div>
+
+        {/* Leválás Lovable-ről */}
+        <div className="mb-8 tutorial-fade-up">
+          <h3 className="text-xl font-bold font-heading mb-3">Weboldal elvihetősége &mdash; Ha már nem akarod fizetni a Lovable-t</h3>
+          <p className="text-muted-foreground mb-4">Előfordulhat, hogy az oldalad <strong className="text-foreground">elkészült, nem akarod tovább fejleszteni</strong>, és nem szeretnéd havonta fizetni a $25-ös díjat. A jó hír: <strong className="text-foreground">a kódod a tiéd</strong>, bármikor elviheted máshová. Íme a lehetőségeid:</p>
+
+          <div className="glass-card mb-4">
+            <h4 className="font-heading font-semibold mb-3">&#x1f4cb; 0. lépés: Készíts biztonsági mentést (kötelező!)</h4>
+            <p className="text-muted-foreground leading-relaxed">Mielőtt bármit csinálnál, kapcsold be a <strong className="text-foreground">GitHub szinkront</strong> a Lovable-ben (Settings &rarr; GitHub &rarr; Connect). Ez elmenti a teljes forráskódodat a saját GitHub fiókodba. Ha már be van kapcsolva, akkor minden rendben &mdash; a kódod már biztonságban van!</p>
+          </div>
+
+          <div className="glass-card mb-4">
+            <h4 className="font-heading font-semibold mb-3">&#x1f3e0; 1. opció: Ingyenes tárhelyre költöztetés (legegyszerűbb)</h4>
+            <p className="text-muted-foreground leading-relaxed mb-3">Ha az oldalad <strong className="text-foreground">egyszerű bemutatkozó oldal</strong> (nincs adatbázis, bejelentkezés), akkor ingyen is hosztolhatod:</p>
+            <ol className="tutorial-step-list">
+              <li>A GitHub fiókodon már ott van a kódod (ha bekapcsoltad a szinkront)</li>
+              <li>Regisztrálj egy ingyenes fiókot a <a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">Netlify.com</a> vagy <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">Vercel.com</a> oldalon (mindkettő ingyenes!)</li>
+              <li>Kösd össze a GitHub repódat &rarr; a platform automatikusan felépíti és közzéteszi az oldaladat</li>
+              <li>Build beállítások: <strong className="text-foreground">Build command:</strong> npm run build &mdash; <strong className="text-foreground">Output:</strong> dist</li>
+              <li>Kösd be a saját domained (Rackhost DNS beállításokban az A rekordot írd át az új IP-re)</li>
+              <li>Kész! Az oldalad fut, és nem fizetsz érte semmit.</li>
+            </ol>
+          </div>
+
+          <div className="glass-card mb-4">
+            <h4 className="font-heading font-semibold mb-3">&#x1f5c4;&#xfe0f; 2. opció: Saját szerverre telepítés (haladó)</h4>
+            <p className="text-muted-foreground leading-relaxed mb-3">Ha van saját szervered (pl. VPS, Hetzner, DigitalOcean), a Lovable projektjeidet oda is telepítheted:</p>
+            <ol className="tutorial-step-list">
+              <li>Klónozd a GitHub repódat a szerveredre: <strong className="text-foreground">git clone [repo URL]</strong></li>
+              <li>Telepítsd a függőségeket: <strong className="text-foreground">npm install</strong></li>
+              <li>Építsd meg az oldalt: <strong className="text-foreground">npm run build</strong></li>
+              <li>A <strong className="text-foreground">dist/</strong> mappában lesz a kész weboldal &mdash; ezt szolgáld ki Nginx-szel vagy Apache-csal</li>
+              <li>Állítsd be az SSL tanúsítványt (pl. Let&rsquo;s Encrypt &mdash; ingyenes)</li>
+            </ol>
+          </div>
+
+          <div className="glass-card mb-4">
+            <h4 className="font-heading font-semibold mb-3">&#x1f4be; 3. opció: Backend (adatbázis) költöztetése</h4>
+            <p className="text-muted-foreground leading-relaxed mb-3">Ha az oldalad <strong className="text-foreground">Lovable Cloud-ot használ</strong> (adatbázis, felhasználó-kezelés, fájltárolás), azt is át kell költöztetni:</p>
+            <ol className="tutorial-step-list">
+              <li>Regisztrálj a <a href="https://supabase.com" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 decoration-primary/30 hover:decoration-primary">Supabase.com</a> oldalon (az első projekt ingyenes!)</li>
+              <li>Hozz létre egy új projektet a Supabase-en</li>
+              <li>Exportáld az adataidat a Lovable Cloud-ból (Cloud &rarr; Database &rarr; Export CSV)</li>
+              <li>Futtasd le a migrációs SQL fájlokat az új Supabase projektben</li>
+              <li>Frissítsd a .env fájlban a Supabase URL-t és API kulcsot az újakra</li>
+              <li>Teszteld, hogy minden működik</li>
+            </ol>
+          </div>
+
+          <TutorialTipBox variant="pro" icon="&#x1f4a1;" title="Melyiket válaszd?">
+            <p><strong>Ha nincs backend/adatbázis</strong> (egyszerű bemutatkozó oldal): az <strong>1. opció</strong> a legegyszerűbb &mdash; Netlify vagy Vercel, 10 perc, teljesen ingyenes.</p>
+            <p className="mt-1"><strong>Ha van backend</strong> (űrlap, bejelentkezés, webshop): a <strong>3. opciót</strong> is végig kell csinálni. Ez már bonyolultabb, de a Lovable dokumentáció részletesen leírja a lépéseket.</p>
+          </TutorialTipBox>
+
+          <TutorialTipBox variant="warning" icon="&#x26a0;&#xfe0f;" title="Fontos tudnivaló">
+            <p>Ha lemondod a Lovable Pro-t, az oldalad <strong>a Lovable ingyenes aldomainen (projektneved.lovable.app) továbbra is elérhető marad</strong>. Ami megszűnik: a saját domain bekötés és az AI szerkesztési kreditek. Tehát ha nem akarod tovább fejleszteni és nem baj, hogy lovable.app címen van, akár fizetés nélkül is bent hagyhatod!</p>
+          </TutorialTipBox>
         </div>
 
         {/* CTA */}
