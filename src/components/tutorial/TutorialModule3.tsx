@@ -124,7 +124,7 @@ const TutorialModule3 = () => {
         </div>
 
         <div className="tutorial-cta-card tutorial-fade-up">
-          <h3 className="text-xl font-bold font-heading mb-2 relative">\u{1F680} Keszen allsz kiprobalni?</h3>
+          <h3 className="text-xl font-bold font-heading mb-2 relative">{"🚀"} Keszen allsz kiprobalni?</h3>
           <p className="text-muted-foreground mb-6 relative mx-auto">Hozd letre ingyenes fiokodat a Lovable.dev-en es kezdj el epiteni!</p>
           <a
             href={LOVABLE_URL}
