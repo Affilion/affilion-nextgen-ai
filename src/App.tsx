@@ -39,6 +39,7 @@ const App = () => (
             <Route path="/ai-club/success" element={<AiClubSuccess />} />
             <Route path="/ai-club/discord-callback" element={<AiClubDiscordCallback />} />
             <Route path="/csatlakozas" element={<Csatlakozas />} />
+            <Route path="/webgyar-tutorial" element={<WebGyarTutorial />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
