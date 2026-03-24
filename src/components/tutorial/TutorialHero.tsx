@@ -1,4 +1,5 @@
 import { Layers, Clock, Users, Zap, Play } from "lucide-react";
+import { useState } from "react";
 
 const LOVABLE_URL = "https://lovable.dev/invite/PBZ4OPL";
 
