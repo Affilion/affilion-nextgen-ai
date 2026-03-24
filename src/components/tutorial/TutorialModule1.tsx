@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import TutorialAccordion from "./TutorialAccordion";
 import TutorialTipBox from "./TutorialTipBox";
 import TutorialCostCalculator from "./TutorialCostCalculator";
-import { Check } from "lucide-react";
+
 
 const checklistItems = [
   "Mi a célom a weboldallal? (bemutatkozás, szolgáltatás, portfólió, webshop?)",
@@ -150,9 +150,7 @@ const TutorialModule1 = () => {
                 onClick={() => toggleCheck(i)}
                 className={`flex items-start gap-3 py-2.5 border-b border-white/[0.04] text-sm cursor-pointer transition-colors ${checked.has(i) ? "checked" : "text-muted-foreground"}`}
               >
-                <span className="tutorial-check-box">
-                  {checked.has(i) && <Check size={12} className="text-white" />}
-                </span>
+                <span className="tutorial-check-box" />
                 {item}
               </li>
             ))}
@@ -175,7 +173,7 @@ const TutorialModule1 = () => {
                 "~3-5 óra szabad idő",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-3 text-muted-foreground">
-                  <Check size={18} className="text-green-400 flex-shrink-0" />
+                  <span className="text-green-400 flex-shrink-0 text-base">&#x2714;&#xfe0f;</span>
                   {item}
                 </li>
               ))}
