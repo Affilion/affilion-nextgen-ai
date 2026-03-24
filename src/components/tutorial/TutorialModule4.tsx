@@ -159,17 +159,17 @@ Az oldalon legyen:
         {/* Tippek */}
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Tippek a hatékony építéshez</h3>
-          <TutorialAccordion title="Lepesenként építkezz">
-            <p className="text-muted-foreground">Ne akarj egyszerre mindent! Először készítsd el az alapstrukturaat, aztaan finomítsd a részleteket. Lepesenként kérd az AI-t, hogy adjon hozzá vagy módosítson.</p>
+          <TutorialAccordion title="Lépésenként építkezz">
+            <p className="text-muted-foreground">Ne akarj egyszerre mindent! Először készítsd el az alapstruktúrát, aztán finomítsd a részleteket. Lépésenként kérd az AI-t, hogy adjon hozzá vagy módosítson.</p>
           </TutorialAccordion>
           <TutorialAccordion title="Mobil-barát design">
             <p className="text-muted-foreground">A látogatóid nagy része mobilról fog jönni! A Lovable automatikusan reszponzív kódot generál, de mindig ellenőrizd a mobil előnézetet. Ha valami nem stimmel, írd be: &bdquo;Fix the mobile layout for the services section&rdquo;.</p>
           </TutorialAccordion>
           <TutorialAccordion title="Figma import">
-            <p className="text-muted-foreground">Ha van Figma design-od, egyszerűen importálhatod a Lovable-be! Használd a Figma import funkciót, es az AI a design alapján generálja a kódot. Ez különösen hasznos, ha van designed, vagy ha sablonból indulsz.</p>
+            <p className="text-muted-foreground">Ha van Figma design-od, egyszerűen importálhatod a Lovable-be! Használd a Figma import funkciót, és az AI a design alapján generálja a kódot. Ez különösen hasznos, ha van designed, vagy ha sablonból indulsz.</p>
           </TutorialAccordion>
           <TutorialAccordion title="Verziókezelés (History)">
-            <p className="text-muted-foreground">A Lovable minden változatot ment. Ha valami nem tetszik, bármikor visszaléphetsz. Használd ezt bátran: próbálj ki merész változtatásokat &mdash; ha nem jo, egyszerűen visszaállsz!</p>
+            <p className="text-muted-foreground">A Lovable minden változatot ment. Ha valami nem tetszik, bármikor visszaléphetsz. Használd ezt bátran: próbálj ki merész változtatásokat &mdash; ha nem jó, egyszerűen visszaállsz!</p>
           </TutorialAccordion>
         </div>
       </div>

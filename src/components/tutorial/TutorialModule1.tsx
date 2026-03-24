@@ -40,11 +40,11 @@ const TutorialModule1 = () => {
         {/* Mi az a weboldal? */}
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Mi az a weboldal?</h3>
-          <p className="text-muted-foreground mb-4 leading-relaxed">Egy weboldal egyszerűen fájlok gyűjteménye, amelyeket egy szerver (számítógép) szolgáltat ki az interneten, es a böngésződ (Chrome, Firefox, Safari) megjeleníti. Nézzük még az alapvető fogalmakat:</p>
+          <p className="text-muted-foreground mb-4 leading-relaxed">Egy weboldal egyszerűen fájlok gyűjteménye, amelyeket egy szerver (számítógép) szolgáltat ki az interneten, és a böngésződ (Chrome, Firefox, Safari) megjeleníti. Nézzük meg az alapvető fogalmakat:</p>
 
           <TutorialAccordion title="Domain név — a weboldalad címe">
             <p className="text-muted-foreground mb-2">A domain név az az egyedi cím, amit az emberek beírnak a böngészőjükbe, hogy eljussanak a weboldaladra. Például: <strong className="text-foreground">példa.hu</strong> vagy <strong className="text-foreground">uzletem.com</strong>.</p>
-            <p className="text-muted-foreground">Gondolj ra úgy, mint a házad postai címére &mdash; ez alapján találják még az internetezők a weboldalad.</p>
+            <p className="text-muted-foreground">Gondolj rá úgy, mint a házad postai címére &mdash; ez alapján találják meg az internetezők a weboldalad.</p>
           </TutorialAccordion>
 
           <TutorialAccordion title="Hosting (tárhelyszolgáltatás) — ahol a weboldalad „lakik”">
@@ -52,20 +52,20 @@ const TutorialModule1 = () => {
           </TutorialAccordion>
 
           <TutorialAccordion title="Frontend vs. Backend — mit lát a felhasználó?">
-            <p className="text-muted-foreground mb-2"><strong className="text-foreground">Frontend</strong>: Minden, amit a látogató lát és használ &mdash; a design, a gombok, a szövegek, a képek. Ez a &bdquo;vitrin&rdquo;.</p>
-            <p className="text-muted-foreground mb-2"><strong className="text-foreground">Backend</strong>: A háttérben futó logika &mdash; adatbázis, felhasználó-kezelés, űrlap-feldolgozás. Ez a &bdquo;raktár és iroda&rdquo;.</p>
-            <p className="text-muted-foreground">A Lovable mindkettőt képes létrehozni: a frontend-et React-tel, a backend-et pedig Supabase integrációval.</p>
+            <p className="text-muted-foreground mb-2"><strong className="text-foreground">Frontend</strong> (az oldal &bdquo;arca&rdquo;): Minden, amit a látogató lát és használ &mdash; a design, a gombok, a szövegek, a képek, a menü, az animációk. Amikor megnyitsz egy weboldalt a böngésződben, az, amit látsz, az a frontend. Gondolj rá úgy, mint egy üzlet kirakata &mdash; ezt látja mindenki, aki belép.</p>
+            <p className="text-muted-foreground mb-2"><strong className="text-foreground">Backend</strong> (a &bdquo;hátsó iroda&rdquo;): A háttérben futó logika, amit a látogató nem lát &mdash; adatbázis, felhasználó-kezelés (bejelentkezés/regisztráció), űrlap-feldolgozás, fizetés kezelése. Ha nincs szükséged bejelentkezésre vagy adatbázisra, akkor backend nélkül is elkészítheted a weboldalad!</p>
+            <p className="text-muted-foreground">A Lovable mindkettőt képes létrehozni: a frontend-et React-tel (ez készíti el amit látsz), a backend-et pedig Supabase integrációval (ha szükséged van rá).</p>
           </TutorialAccordion>
         </div>
 
         {/* Fontos fogalmak */}
         <div className="mb-8 tutorial-fade-up">
           <h3 className="text-xl font-bold font-heading mb-3">Fontos fogalmak egyszerűen</h3>
-          <p className="text-muted-foreground mb-4">Mielőtt továbbmennénk, ismerd még ezeket az alapfogalmakat &mdash; mindegyiket hétköznapi nyelven magyarázzuk el:</p>
+          <p className="text-muted-foreground mb-4">Mielőtt továbbmennénk, ismerd meg ezeket az alapfogalmakat &mdash; mindegyiket hétköznapi nyelven magyarázzuk el:</p>
 
           <div className="glass-card mb-4">
-            <h4 className="font-heading font-semibold mb-3">🔒 SSL/HTTPS &mdash; A lakat ikon a bongészoben</h4>
-            <p className="text-muted-foreground leading-relaxed">Képzeld el, hogy küldöl egy képeslapot (HTTP) &mdash; bárki olvashatja útközben. Most képzeld el, hogy zárt, leragasztott borítékban küldöd (HTTPS) &mdash; csak a címzett nyithatja ki. Az <strong className="text-foreground">SSL tanúsítvány</strong> pontosan ezt csinaja: titkosítja a weboldal és a látogató közötti kommunikációt. A böngésző ezért mutat egy kis <strong className="text-foreground">lakat ikont</strong> 🔒 a biztonságos oldalaknál. Jó hír: a <strong className="text-foreground">Lovable automatikusan biztosít SSL-t</strong> &mdash; nem kell vele foglalkoznod!</p>
+            <h4 className="font-heading font-semibold mb-3">🔒 SSL/HTTPS &mdash; A lakat ikon a böngészőben</h4>
+            <p className="text-muted-foreground leading-relaxed">Képzeld el, hogy küldöl egy képeslapot (HTTP) &mdash; bárki olvashatja útközben. Most képzeld el, hogy zárt, leragasztott borítékban küldöd (HTTPS) &mdash; csak a címzett nyithatja ki. Az <strong className="text-foreground">SSL tanúsítvány</strong> pontosan ezt csinálja: titkosítja a weboldal és a látogató közötti kommunikációt. A böngésző ezért mutat egy kis <strong className="text-foreground">lakat ikont</strong> 🔒 a biztonságos oldalaknál. Jó hír: a <strong className="text-foreground">Lovable automatikusan biztosít SSL-t</strong> &mdash; nem kell vele foglalkoznod!</p>
           </div>
 
           <div className="glass-card mb-4">
