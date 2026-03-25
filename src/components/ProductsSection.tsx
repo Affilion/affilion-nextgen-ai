@@ -119,7 +119,7 @@ const ProductsSection = () => {
 
         {products.length > 3 ? (
           <div className="relative">
-            <Carousel setApi={setCarouselApi} opts={{ align: "start", loop: true }} className="w-full">
+            <Carousel setApi={setCarouselApi} opts={{ align: "start", loop: true }} className="w-full overflow-visible">
               <CarouselContent className="-ml-6">
                 {products.map((p, i) => {
                   const purchased = purchasedIds.has(p.id);
