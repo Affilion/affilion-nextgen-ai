@@ -21,6 +21,7 @@ interface Product {
   price: number;
   image_url: string | null;
   coming_soon: boolean;
+  featured: boolean;
 }
 
 const ProductsSection = () => {
@@ -36,7 +37,7 @@ const ProductsSection = () => {
     const fetchProducts = async () => {
       const { data } = await supabase
         .from("products")
-        .select("id, name, description, price, image_url, coming_soon")
+        .select("id, name, description, price, image_url, coming_soon, featured")
         .eq("is_active", true)
         .order("sort_order", { ascending: true });
       setProducts((data || []) as Product[]);
@@ -132,7 +133,12 @@ const ProductsSection = () => {
                         onClick={() => purchased && setActivePlayer({ productId: p.id, productName: p.name })}
                         className={purchased ? "cursor-pointer h-full" : "h-full"}
                       >
-                        <GlassCard className="flex flex-col h-full" parallaxStrength={25}>
+                        <GlassCard className={`flex flex-col h-full ${p.featured ? "ring-2 ring-primary shadow-[0_0_25px_hsl(var(--primary)/0.4)] relative" : ""}`} parallaxStrength={25}>
+                          {p.featured && (
+                            <div className="absolute top-3 right-3 z-10 px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary/20 text-primary border border-primary/40 backdrop-blur-sm flex items-center gap-1">
+                              ⭐ KIEMELT
+                            </div>
+                          )}
                           <div className="relative overflow-hidden aspect-square bg-muted/20">
                             {p.image_url ? (
                               <img src={p.image_url} alt={p.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
@@ -198,7 +204,12 @@ const ProductsSection = () => {
                   onClick={() => purchased && setActivePlayer({ productId: p.id, productName: p.name })}
                   className={purchased ? "cursor-pointer" : ""}
                 >
-                  <GlassCard className="flex flex-col h-full" parallaxStrength={25}>
+                  <GlassCard className={`flex flex-col h-full ${p.featured ? "ring-2 ring-primary shadow-[0_0_25px_hsl(var(--primary)/0.4)] relative" : ""}`} parallaxStrength={25}>
+                    {p.featured && (
+                      <div className="absolute top-3 right-3 z-10 px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary/20 text-primary border border-primary/40 backdrop-blur-sm flex items-center gap-1">
+                        ⭐ KIEMELT
+                      </div>
+                    )}
                     <div className="relative overflow-hidden aspect-square bg-muted/20">
                       {p.image_url ? (
                         <img src={p.image_url} alt={p.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
