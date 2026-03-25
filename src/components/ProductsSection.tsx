@@ -21,6 +21,7 @@ interface Product {
   price: number;
   image_url: string | null;
   coming_soon: boolean;
+  featured: boolean;
 }
 
 const ProductsSection = () => {
@@ -36,7 +37,7 @@ const ProductsSection = () => {
     const fetchProducts = async () => {
       const { data } = await supabase
         .from("products")
-        .select("id, name, description, price, image_url, coming_soon")
+        .select("id, name, description, price, image_url, coming_soon, featured")
         .eq("is_active", true)
         .order("sort_order", { ascending: true });
       setProducts((data || []) as Product[]);
