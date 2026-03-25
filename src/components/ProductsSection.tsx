@@ -106,7 +106,7 @@ const ProductsSection = () => {
   if (products.length === 0) return null;
 
   return (
-    <section id="termekek" className="py-24 px-4" style={{ perspective: "1000px" }}>
+    <section id="termekek" className="py-24 px-4 overflow-visible"  style={{ perspective: "1000px" }}>
       <div className="container mx-auto max-w-6xl">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -119,8 +119,8 @@ const ProductsSection = () => {
 
         {products.length > 3 ? (
           <div className="relative">
-            <Carousel setApi={setCarouselApi} opts={{ align: "start", loop: true }} className="w-full">
-              <CarouselContent className="-ml-6">
+            <Carousel setApi={setCarouselApi} opts={{ align: "start", loop: true }} className="w-full overflow-visible">
+              <CarouselContent className="-ml-6 pb-4">
                 {products.map((p, i) => {
                   const purchased = purchasedIds.has(p.id);
                   return (
@@ -133,7 +133,7 @@ const ProductsSection = () => {
                         onClick={() => purchased && setActivePlayer({ productId: p.id, productName: p.name })}
                         className={purchased ? "cursor-pointer h-full" : "h-full"}
                       >
-                        <GlassCard className={`flex flex-col h-full ${p.featured ? "ring-2 ring-primary shadow-[0_0_25px_hsl(var(--primary)/0.4)] relative" : ""}`} parallaxStrength={25}>
+                        <GlassCard className={`flex flex-col h-full ${p.featured ? "ring-1 ring-primary/70 shadow-[0_0_15px_hsl(var(--primary)/0.2)] relative" : ""}`} parallaxStrength={25}>
                           {p.featured && (
                             <div className="absolute top-3 right-3 z-10 px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary/20 text-primary border border-primary/40 backdrop-blur-sm flex items-center gap-1">
                               ⭐ KIEMELT
@@ -204,7 +204,7 @@ const ProductsSection = () => {
                   onClick={() => purchased && setActivePlayer({ productId: p.id, productName: p.name })}
                   className={purchased ? "cursor-pointer" : ""}
                 >
-                  <GlassCard className={`flex flex-col h-full ${p.featured ? "ring-2 ring-primary shadow-[0_0_25px_hsl(var(--primary)/0.4)] relative" : ""}`} parallaxStrength={25}>
+                  <GlassCard className={`flex flex-col h-full ${p.featured ? "ring-1 ring-primary/70 shadow-[0_0_15px_hsl(var(--primary)/0.2)] relative" : ""}`} parallaxStrength={25}>
                     {p.featured && (
                       <div className="absolute top-3 right-3 z-10 px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary/20 text-primary border border-primary/40 backdrop-blur-sm flex items-center gap-1">
                         ⭐ KIEMELT
