@@ -5,7 +5,7 @@ import { useAdmin } from "@/hooks/useAdmin";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import { ArrowLeft, Users, Image, Video, FileText, Link, Trash2, Plus, Save, Pencil, Mail, Download, ShoppingBag, Upload, Music } from "lucide-react";
+import { ArrowLeft, Users, Image, Video, FileText, Link, Trash2, Plus, Save, Pencil, Mail, Download, ShoppingBag, Upload, Music, ChevronUp, ChevronDown, Star } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -268,9 +268,11 @@ const ProductsPanel = () => {
     sort_order: number | null;
     is_active: boolean | null;
     coming_soon: boolean;
+    featured: boolean;
   };
 
   const [items, setItems] = useState<Product[]>([]);
+  const [movingId, setMovingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   // New product form
@@ -436,6 +438,27 @@ const ProductsPanel = () => {
     }
     await fetchItems();
     toast({ title: "Termék törölve!" });
+  };
+
+  const handleMove = async (itemId: string, direction: "up" | "down") => {
+    const idx = items.findIndex((i) => i.id === itemId);
+    if ((direction === "up" && idx === 0) || (direction === "down" && idx === items.length - 1)) return;
+    setMovingId(itemId);
+    const swapIdx = direction === "up" ? idx - 1 : idx + 1;
+    const a = items[idx];
+    const b = items[swapIdx];
+    await Promise.all([
+      supabase.from("products").update({ sort_order: swapIdx }).eq("id", a.id),
+      supabase.from("products").update({ sort_order: idx }).eq("id", b.id),
+    ]);
+    await fetchItems();
+    setMovingId(null);
+  };
+
+  const handleToggleFeatured = async (itemId: string, current: boolean) => {
+    await supabase.from("products").update({ featured: !current }).eq("id", itemId);
+    await fetchItems();
+    toast({ title: !current ? "Termék kiemelve!" : "Kiemelés eltávolítva!" });
   };
 
   return (
