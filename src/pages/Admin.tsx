@@ -527,7 +527,7 @@ const ProductsPanel = () => {
           const isEditing = editingId === item.id;
 
           return (
-            <div key={item.id} className={`hyper-glass rounded-xl overflow-hidden ${!item.is_active ? "opacity-50" : ""}`}>
+            <div key={item.id} className={`hyper-glass rounded-xl overflow-hidden ${!item.is_active ? "opacity-50" : ""} ${item.featured ? "ring-2 ring-primary" : ""}`}>
               {item.image_url ? (
                 <img src={item.image_url} alt={item.name} className="w-full h-48 object-cover" />
               ) : (
@@ -588,15 +588,42 @@ const ProductsPanel = () => {
                             />
                             Hamarosan
                           </label>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Button size="icon" variant="outline" onClick={() => handleStartEdit(item)} aria-label="Szerkesztés">
-                          <Pencil size={16} />
-                        </Button>
-                        <Button size="icon" variant="outline" onClick={() => handleDelete(item.id)} aria-label="Törlés">
-                          <Trash2 size={16} />
-                        </Button>
+                         )}
+                        <label className="flex items-center gap-2 text-xs text-muted-foreground cursor-pointer">
+                          <Switch
+                            checked={item.featured}
+                            onCheckedChange={() => handleToggleFeatured(item.id, item.featured)}
+                          />
+                          <Star size={12} className={item.featured ? "text-primary" : ""} /> Kiemelt
+                        </label>
+                       </div>
+                      <div className="flex flex-col items-center gap-1">
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={() => handleMove(item.id, "up")}
+                            disabled={movingId !== null || items.indexOf(item) === 0}
+                            className="p-1 rounded hover:bg-muted/50 text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors"
+                            aria-label="Fel"
+                          >
+                            <ChevronUp size={16} />
+                          </button>
+                          <button
+                            onClick={() => handleMove(item.id, "down")}
+                            disabled={movingId !== null || items.indexOf(item) === items.length - 1}
+                            className="p-1 rounded hover:bg-muted/50 text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors"
+                            aria-label="Le"
+                          >
+                            <ChevronDown size={16} />
+                          </button>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button size="icon" variant="outline" onClick={() => handleStartEdit(item)} aria-label="Szerkesztés">
+                            <Pencil size={16} />
+                          </Button>
+                          <Button size="icon" variant="outline" onClick={() => handleDelete(item.id)} aria-label="Törlés">
+                            <Trash2 size={16} />
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </>
