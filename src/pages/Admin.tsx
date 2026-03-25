@@ -262,6 +262,7 @@ const ProductsPanel = () => {
     name: string;
     description: string | null;
     price: number;
+    original_price: number | null;
     image_url: string | null;
     stripe_price_id: string;
     notion_url: string | null;
@@ -294,6 +295,7 @@ const ProductsPanel = () => {
   const [editFile, setEditFile] = useState<File | null>(null);
   const [editIsActive, setEditIsActive] = useState(true);
   const [editComingSoon, setEditComingSoon] = useState(false);
+  const [editOriginalPrice, setEditOriginalPrice] = useState("");
   const [savingId, setSavingId] = useState<string | null>(null);
 
   const fetchItems = async () => {
@@ -368,6 +370,7 @@ const ProductsPanel = () => {
     setEditName(item.name);
     setEditDesc(item.description || "");
     setEditPrice(String(item.price));
+    setEditOriginalPrice(item.original_price ? String(item.original_price) : "");
     setEditStripePriceId(item.stripe_price_id);
     setEditNotionUrl(item.notion_url || "");
     setEditFile(null);
@@ -397,6 +400,7 @@ const ProductsPanel = () => {
           name: editName.trim(),
           description: editDesc.trim() || null,
           price: parseInt(editPrice),
+          original_price: editOriginalPrice.trim() ? parseInt(editOriginalPrice) : null,
           stripe_price_id: editStripePriceId.trim(),
           notion_url: editNotionUrl.trim() || null,
           is_active: editIsActive,
@@ -541,7 +545,8 @@ const ProductsPanel = () => {
                   <>
                     <Input value={editName} onChange={(e) => setEditName(e.target.value)} placeholder="Név" className="bg-muted/50 border-border" />
                     <Textarea value={editDesc} onChange={(e) => setEditDesc(e.target.value)} placeholder="Leírás" className="bg-muted/50 border-border" />
-                    <Input value={editPrice} onChange={(e) => setEditPrice(e.target.value)} placeholder="Ár (HUF)" type="number" className="bg-muted/50 border-border" />
+                    <Input value={editPrice} onChange={(e) => setEditPrice(e.target.value)} placeholder="Aktuális ár (HUF)" type="number" className="bg-muted/50 border-border" />
+                    <Input value={editOriginalPrice} onChange={(e) => setEditOriginalPrice(e.target.value)} placeholder="Eredeti ár (HUF) – ha üres, nincs kedvezmény" type="number" className="bg-muted/50 border-border" />
                     <Input value={editStripePriceId} onChange={(e) => setEditStripePriceId(e.target.value)} placeholder="Stripe Price ID" className="bg-muted/50 border-border" />
                     <Input value={editNotionUrl} onChange={(e) => setEditNotionUrl(e.target.value)} placeholder="Notion URL" className="bg-muted/50 border-border" />
                     <input type="file" accept="image/*" onChange={(e) => setEditFile(e.target.files?.[0] || null)} className="text-sm text-muted-foreground" />
@@ -560,7 +565,13 @@ const ProductsPanel = () => {
                   <>
                     <div>
                       <span className="text-sm font-medium text-foreground">{item.name}</span>
-                      <p className="text-xs text-muted-foreground mt-1">{item.price.toLocaleString("hu")} Ft</p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {item.original_price && item.original_price > item.price ? (
+                          <><span className="line-through">{item.original_price.toLocaleString("hu")} Ft</span> → <span className="text-primary font-semibold">{item.price.toLocaleString("hu")} Ft</span></>
+                        ) : (
+                          <>{item.price.toLocaleString("hu")} Ft</>
+                        )}
+                      </p>
                       <p className="text-xs text-muted-foreground mt-0.5 truncate">Stripe: {item.stripe_price_id}</p>
                     </div>
                     <div className="flex items-center justify-between">

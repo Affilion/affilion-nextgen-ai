@@ -198,6 +198,7 @@ export type Database = {
           is_active: boolean | null
           name: string
           notion_url: string | null
+          original_price: number | null
           price: number
           sort_order: number | null
           stripe_price_id: string
@@ -213,6 +214,7 @@ export type Database = {
           is_active?: boolean | null
           name: string
           notion_url?: string | null
+          original_price?: number | null
           price: number
           sort_order?: number | null
           stripe_price_id: string
@@ -228,6 +230,7 @@ export type Database = {
           is_active?: boolean | null
           name?: string
           notion_url?: string | null
+          original_price?: number | null
           price?: number
           sort_order?: number | null
           stripe_price_id?: string
