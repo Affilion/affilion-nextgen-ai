@@ -262,6 +262,7 @@ const ProductsPanel = () => {
     name: string;
     description: string | null;
     price: number;
+    original_price: number | null;
     image_url: string | null;
     stripe_price_id: string;
     notion_url: string | null;
@@ -294,6 +295,7 @@ const ProductsPanel = () => {
   const [editFile, setEditFile] = useState<File | null>(null);
   const [editIsActive, setEditIsActive] = useState(true);
   const [editComingSoon, setEditComingSoon] = useState(false);
+  const [editOriginalPrice, setEditOriginalPrice] = useState("");
   const [savingId, setSavingId] = useState<string | null>(null);
 
   const fetchItems = async () => {
@@ -368,6 +370,7 @@ const ProductsPanel = () => {
     setEditName(item.name);
     setEditDesc(item.description || "");
     setEditPrice(String(item.price));
+    setEditOriginalPrice(item.original_price ? String(item.original_price) : "");
     setEditStripePriceId(item.stripe_price_id);
     setEditNotionUrl(item.notion_url || "");
     setEditFile(null);
@@ -397,6 +400,7 @@ const ProductsPanel = () => {
           name: editName.trim(),
           description: editDesc.trim() || null,
           price: parseInt(editPrice),
+          original_price: editOriginalPrice.trim() ? parseInt(editOriginalPrice) : null,
           stripe_price_id: editStripePriceId.trim(),
           notion_url: editNotionUrl.trim() || null,
           is_active: editIsActive,
