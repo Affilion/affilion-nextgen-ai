@@ -155,20 +155,16 @@ const ProductsSection = () => {
                           <div className="p-6 flex flex-col flex-1">
                             <h3 className="text-lg font-bold text-foreground mb-2">{p.name}</h3>
                             <p className="text-sm text-muted-foreground mb-4 flex-1">{p.description}</p>
-                            <div className="flex items-center justify-between">
-                              <div className="flex flex-col">
-                                {p.original_price && p.original_price > p.price && (
-                                  <span className="text-sm text-muted-foreground line-through">{formatPrice(p.original_price)}</span>
-                                )}
-                                <div className="flex items-center gap-2">
-                                  <span className="text-xl font-bold glow-text">{formatPrice(p.price)}</span>
-                                  {p.original_price && p.original_price > p.price && (
-                                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 animate-pulse">
-                                      -{Math.round(((p.original_price - p.price) / p.original_price) * 100)}%
-                                    </span>
-                                  )}
-                                </div>
+                            {p.original_price && p.original_price > p.price && (
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="text-sm text-muted-foreground line-through">{formatPrice(p.original_price)}</span>
+                                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 animate-pulse">
+                                  -{Math.round(((p.original_price - p.price) / p.original_price) * 100)}%
+                                </span>
                               </div>
+                            )}
+                            <div className="flex items-center justify-between">
+                              <span className="text-xl font-bold glow-text">{formatPrice(p.price)}</span>
                               {purchased ? (
                                 <span className="text-sm font-semibold text-primary flex items-center gap-1">
                                   <CheckCircle className="w-4 h-4" /> Megvásárolva
@@ -238,20 +234,16 @@ const ProductsSection = () => {
                     <div className="p-6 flex flex-col flex-1">
                       <h3 className="text-lg font-bold text-foreground mb-2">{p.name}</h3>
                       <p className="text-sm text-muted-foreground mb-4 flex-1">{p.description}</p>
-                        <div className="flex items-center justify-between">
-                          <div className="flex flex-col">
-                            {p.original_price && p.original_price > p.price && (
-                              <span className="text-sm text-muted-foreground line-through">{formatPrice(p.original_price)}</span>
-                            )}
-                            <div className="flex items-center gap-2">
-                              <span className="text-xl font-bold glow-text">{formatPrice(p.price)}</span>
-                              {p.original_price && p.original_price > p.price && (
-                                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 animate-pulse">
-                                  -{Math.round(((p.original_price - p.price) / p.original_price) * 100)}%
-                                </span>
-                              )}
-                            </div>
+                        {p.original_price && p.original_price > p.price && (
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-sm text-muted-foreground line-through">{formatPrice(p.original_price)}</span>
+                            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 animate-pulse">
+                              -{Math.round(((p.original_price - p.price) / p.original_price) * 100)}%
+                            </span>
                           </div>
+                        )}
+                        <div className="flex items-center justify-between">
+                          <span className="text-xl font-bold glow-text">{formatPrice(p.price)}</span>
                         {purchased ? (
                           <span className="text-sm font-semibold text-primary flex items-center gap-1">
                             <CheckCircle className="w-4 h-4" /> Megvásárolva
