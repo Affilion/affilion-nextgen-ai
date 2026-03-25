@@ -1,4 +1,5 @@
 import TutorialTipBox from "./TutorialTipBox";
+import TutorialVideoPlaceholder from "./TutorialVideoPlaceholder";
 import { DNSPanelMockup } from "./TutorialUIMockup";
 
 const LOVABLE_URL = "https://lovable.dev/invite/PBZ4OPL";
@@ -73,6 +74,10 @@ const TutorialModule2 = () => {
 
           <DNSPanelMockup />
           <span className="block text-center text-xs text-muted-foreground italic mt-3 mb-2">Illusztráció &mdash; a Rackhost DNS kezelőfelülete hasonlóan néz ki</span>
+
+          <div className="mt-8">
+            <TutorialVideoPlaceholder title="Domain regisztráció lépésről lépésre" />
+          </div>
         </div>
       </div>
     </section>
