@@ -115,7 +115,7 @@ const TutorialModule2 = () => {
           <span className="block text-center text-xs text-muted-foreground italic mt-3 mb-2">Illusztráció &mdash; a Rackhost DNS kezelőfelülete hasonlóan néz ki</span>
 
           <div className="mt-8">
-            <TutorialVideoPlaceholder title="Domain regisztráció lépésről lépésre" />
+            <Module2Video />
           </div>
         </div>
       </div>
