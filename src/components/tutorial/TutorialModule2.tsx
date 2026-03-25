@@ -1,6 +1,45 @@
+import { useState } from "react";
+import { Play } from "lucide-react";
 import TutorialTipBox from "./TutorialTipBox";
-import TutorialVideoPlaceholder from "./TutorialVideoPlaceholder";
 import { DNSPanelMockup } from "./TutorialUIMockup";
+
+const MODULE2_VIDEO_ID = "4Wa-1NegJa4";
+
+const Module2Video = () => {
+  const [playing, setPlaying] = useState(false);
+  const origin = typeof window !== "undefined" ? encodeURIComponent(window.location.origin) : "";
+
+  return (
+    <div className="tutorial-hero-video" id="module2-video">
+      <div className="tutorial-hero-video-inner" style={{ padding: 0, overflow: "hidden" }}>
+        {playing ? (
+          <iframe
+            className="w-full h-full absolute inset-0"
+            src={`https://www.youtube-nocookie.com/embed/${MODULE2_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1${origin ? `&origin=${origin}` : ""}`}
+            title="Domain regisztráció lépésről lépésre"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        ) : (
+          <div className="relative w-full h-full cursor-pointer group" onClick={() => setPlaying(true)}>
+            <img
+              src={`https://img.youtube.com/vi/${MODULE2_VIDEO_ID}/maxresdefault.jpg`}
+              alt="Domain regisztráció lépésről lépésre"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="tutorial-hero-video-play">
+                <Play size={28} className="text-primary ml-1" fill="hsl(var(--primary))" fillOpacity={0.3} />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const LOVABLE_URL = "https://lovable.dev/invite/PBZ4OPL";
 
