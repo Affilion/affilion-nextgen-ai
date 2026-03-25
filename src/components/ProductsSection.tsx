@@ -106,7 +106,7 @@ const ProductsSection = () => {
   if (products.length === 0) return null;
 
   return (
-    <section id="termekek" className="py-24 px-4" style={{ perspective: "1000px" }}>
+    <section id="termekek" className="py-24 px-4 overflow-visible"  style={{ perspective: "1000px" }}>
       <div className="container mx-auto max-w-6xl">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
