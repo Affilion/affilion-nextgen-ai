@@ -192,6 +192,7 @@ export type Database = {
           coming_soon: boolean
           created_at: string
           description: string | null
+          featured: boolean
           id: string
           image_url: string | null
           is_active: boolean | null
@@ -206,6 +207,7 @@ export type Database = {
           coming_soon?: boolean
           created_at?: string
           description?: string | null
+          featured?: boolean
           id: string
           image_url?: string | null
           is_active?: boolean | null
@@ -220,6 +222,7 @@ export type Database = {
           coming_soon?: boolean
           created_at?: string
           description?: string | null
+          featured?: boolean
           id?: string
           image_url?: string | null
           is_active?: boolean | null
