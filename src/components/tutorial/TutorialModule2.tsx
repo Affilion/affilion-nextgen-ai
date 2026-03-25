@@ -1,4 +1,5 @@
 import TutorialTipBox from "./TutorialTipBox";
+import TutorialVideoPlaceholder from "./TutorialVideoPlaceholder";
 import { DNSPanelMockup } from "./TutorialUIMockup";
 
 const LOVABLE_URL = "https://lovable.dev/invite/PBZ4OPL";
