@@ -545,7 +545,8 @@ const ProductsPanel = () => {
                   <>
                     <Input value={editName} onChange={(e) => setEditName(e.target.value)} placeholder="Név" className="bg-muted/50 border-border" />
                     <Textarea value={editDesc} onChange={(e) => setEditDesc(e.target.value)} placeholder="Leírás" className="bg-muted/50 border-border" />
-                    <Input value={editPrice} onChange={(e) => setEditPrice(e.target.value)} placeholder="Ár (HUF)" type="number" className="bg-muted/50 border-border" />
+                    <Input value={editPrice} onChange={(e) => setEditPrice(e.target.value)} placeholder="Aktuális ár (HUF)" type="number" className="bg-muted/50 border-border" />
+                    <Input value={editOriginalPrice} onChange={(e) => setEditOriginalPrice(e.target.value)} placeholder="Eredeti ár (HUF) – ha üres, nincs kedvezmény" type="number" className="bg-muted/50 border-border" />
                     <Input value={editStripePriceId} onChange={(e) => setEditStripePriceId(e.target.value)} placeholder="Stripe Price ID" className="bg-muted/50 border-border" />
                     <Input value={editNotionUrl} onChange={(e) => setEditNotionUrl(e.target.value)} placeholder="Notion URL" className="bg-muted/50 border-border" />
                     <input type="file" accept="image/*" onChange={(e) => setEditFile(e.target.files?.[0] || null)} className="text-sm text-muted-foreground" />
@@ -564,7 +565,13 @@ const ProductsPanel = () => {
                   <>
                     <div>
                       <span className="text-sm font-medium text-foreground">{item.name}</span>
-                      <p className="text-xs text-muted-foreground mt-1">{item.price.toLocaleString("hu")} Ft</p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {item.original_price && item.original_price > item.price ? (
+                          <><span className="line-through">{item.original_price.toLocaleString("hu")} Ft</span> → <span className="text-primary font-semibold">{item.price.toLocaleString("hu")} Ft</span></>
+                        ) : (
+                          <>{item.price.toLocaleString("hu")} Ft</>
+                        )}
+                      </p>
                       <p className="text-xs text-muted-foreground mt-0.5 truncate">Stripe: {item.stripe_price_id}</p>
                     </div>
                     <div className="flex items-center justify-between">
