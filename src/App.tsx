@@ -16,6 +16,7 @@ import AiClubSuccess from "./pages/AiClubSuccess";
 import AiClubDiscordCallback from "./pages/AiClubDiscordCallback";
 import Csatlakozas from "./pages/Csatlakozas";
 import WebGyarTutorial from "@/pages/WebGyarTutorial";
+import Eszkoztarak from "@/pages/Eszkoztarak";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/ai-club/discord-callback" element={<AiClubDiscordCallback />} />
             <Route path="/csatlakozas" element={<Csatlakozas />} />
             <Route path="/webgyar-tutorial" element={<WebGyarTutorial />} />
+            <Route path="/eszkoztarak" element={<Eszkoztarak />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
