@@ -26,6 +26,36 @@ const resetBodyLock = () => {
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
+  const [contactSending, setContactSending] = useState(false);
+  const [contactSent, setContactSent] = useState(false);
+  const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" });
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!contactForm.name.trim() || !contactForm.email.trim() || !contactForm.message.trim()) {
+      toast({ title: "Kérlek töltsd ki az összes mezőt!", variant: "destructive" });
+      return;
+    }
+    setContactSending(true);
+    const { error } = await supabase.from("contact_messages").insert({
+      name: contactForm.name.trim(),
+      email: contactForm.email.trim(),
+      message: contactForm.message.trim(),
+    });
+    if (error) {
+      toast({ title: "Hiba történt az üzenet küldésekor", variant: "destructive" });
+      setContactSending(false);
+      return;
+    }
+    setContactSent(true);
+    setContactSending(false);
+    setContactForm({ name: "", email: "", message: "" });
+    setTimeout(() => {
+      setContactSent(false);
+      setContactOpen(false);
+    }, 3000);
+  };
   const { user } = useAuth();
   const { isAdmin } = useAdmin();
   const navigate = useNavigate();
