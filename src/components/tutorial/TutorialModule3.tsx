@@ -17,7 +17,7 @@ const Module3Video = () => {
         {playing ? (
           <iframe
             className="w-full h-full absolute inset-0"
-            src={`https://www.youtube-nocookie.com/embed/${MODULE3_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1${origin ? `&origin=${origin}` : ""}`}
+            src={`https://www.youtube-nocookie.com/embed/${MODULE3_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1&vq=hd1080${origin ? `&origin=${origin}` : ""}`}
             title="Hogyan hozd létre az első projekted a Lovable-ben"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
