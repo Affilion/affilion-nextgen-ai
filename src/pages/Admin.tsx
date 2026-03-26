@@ -937,7 +937,7 @@ const ExperimentsPanel = () => {
         .from("experiments")
         .update({
           title: editTitle.trim(),
-          video_id: editVideoId.trim(),
+          video_id: extractedId,
           badge: editBadge.trim() || null,
         })
         .eq("id", itemId);
