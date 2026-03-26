@@ -49,8 +49,10 @@ const WaitlistSection = () => {
               Saját weboldal <span className="glow-text">1 nap alatt</span>, AI segítségével
             </h2>
             <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
-              Most bevezető áron szerezheted meg!{" "}
-              <span className="text-primary font-semibold">17 990 Ft</span> helyett később 27 990 Ft – ne hagyd ki!
+              Most bevezető áron:{" "}
+              <span className="text-primary font-semibold">17 990 Ft</span>
+              <br />
+              Az ár hamarosan 27 990 Ft-ra emelkedik
             </p>
 
             {submitted ? (
