@@ -61,7 +61,6 @@ async function createSzamlazzInvoice(
   const fullAddress = `${addressLine}${addressLine2}`;
 
   const today = new Date().toISOString().split("T")[0];
-  const today = new Date().toISOString().split("T")[0];
   // AAM = Alanyi adómentes (KATA egyéni vállalkozó, ÁFA-mentes)
   const xmlBody = `<?xml version="1.0" encoding="UTF-8"?>
 <xmlszamla xmlns="http://www.szamlazz.hu/xmlszamla" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.szamlazz.hu/xmlszamla https://www.szamlazz.hu/szamla/docs/xsds/agent/xmlszamla.xsd">
