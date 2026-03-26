@@ -7,11 +7,11 @@ import { supabase } from "@/integrations/supabase/client";
 import defaultLogo from "@/assets/logo.jpg";
 
 const links = [
+  { label: "Kurzus", sectionId: "kurzus" },
   { label: "Munkáim", sectionId: "munkak" },
   { label: "Videók", sectionId: "youtube" },
   { label: "Kreatív Stúdió", sectionId: "prompt-labor" },
   { label: "Termékek", sectionId: "termekek" },
-  { label: "Kurzus", sectionId: "kurzus" },
   { label: "AI Csoport", sectionId: "__link__/csatlakozas" },
 ];
 
