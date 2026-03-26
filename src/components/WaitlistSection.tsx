@@ -98,13 +98,23 @@ const WaitlistSection = () => {
                   <GlassCard className="p-6 md:p-8 text-left border border-primary/20">
                     <button
                       onClick={() => setShowInfo(false)}
-                      className="absolute top-4 right-4 text-muted-foreground hover:text-primary transition-colors"
+                      className="absolute top-4 right-4 text-muted-foreground hover:text-primary transition-colors z-10"
                     >
                       <X size={20} />
                     </button>
-                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed pr-6">
-                      Ebben a kurzusban lépésről lépésre megmutatom, hogyan készítheted el a saját modern, gyors és versenyképes weboldaladat akár pár óra alatt, anélkül, hogy vagyonokat fizetnél webfejlesztőnek. A legmodernebb technológiák és AI-alapú megoldások segítségével végigvezetlek a teljes folyamaton, a tervezéstől egészen a kész, működő weboldalig. Nemcsak maga az oldal elkészítése van benne, hanem az összes előmunka és utómunka is, amire valóban szükséged lesz ahhoz, hogy ne csak egy szép dizájnt kapj, hanem egy használható, jól beállított, saját domain név alatt futó weboldalt. A kurzus minden fontos lépést érthetően, gyakorlatiasan mutat meg, így akkor is végig tudsz menni rajta, ha eddig még soha nem építettél weboldalt. A cél az, hogy a végére ne csak egy félkész projekted legyen, hanem egy valódi, optimálisan beállított, működő weboldalad, amit büszkén használhatsz vállalkozáshoz, szolgáltatáshoz vagy saját márkádhoz.
-                    </p>
+                    <h3 className="text-lg font-semibold text-foreground mb-4">Mit tartalmaz a kurzus?</h3>
+                    <div className="space-y-3 text-sm md:text-base text-muted-foreground leading-relaxed pr-6">
+                      <p>Ebben a kurzusban lépésről lépésre megmutatom, hogyan készítheted el a saját modern, gyors és versenyképes weboldaladat akár pár óra alatt, anélkül, hogy vagyonokat fizetnél webfejlesztőnek.</p>
+                      <p>A legmodernebb technológiák és AI-alapú megoldások segítségével végigvezetlek a teljes folyamaton, a tervezéstől egészen a kész, működő weboldalig.</p>
+                      <p>Nemcsak maga az oldal elkészítése van benne, hanem az összes előmunka és utómunka is, amire valóban szükséged lesz ahhoz, hogy ne csak egy szép dizájnt kapj, hanem egy használható, jól beállított, saját domain név alatt futó weboldalt.</p>
+                      <p>A kurzus minden fontos lépést érthetően, gyakorlatiasan mutat meg, így akkor is végig tudsz menni rajta, ha eddig még soha nem építettél weboldalt.</p>
+                      <p className="text-foreground font-medium">A cél az, hogy a végére ne csak egy félkész projekted legyen, hanem egy valódi, optimálisan beállított, működő weboldalad, amit büszkén használhatsz vállalkozáshoz, szolgáltatáshoz vagy saját márkádhoz.</p>
+                    </div>
+                    <img
+                      src={kurzusCover}
+                      alt="Weboldal pár óra alatt kurzus"
+                      className="mt-6 rounded-lg w-full max-w-md mx-auto"
+                    />
                   </GlassCard>
                 </motion.div>
               )}
