@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import kurzusCover from "@/assets/kurzus-cover.png";
 import { motion, AnimatePresence } from "framer-motion";
@@ -18,7 +18,7 @@ const WaitlistSection = () => {
   const [alreadyOwned, setAlreadyOwned] = useState(false);
 
   // Check if user already owns this product
-  useState(() => {
+  useEffect(() => {
     if (!user) return;
     supabase
       .from("purchases")
@@ -30,7 +30,7 @@ const WaitlistSection = () => {
       .then(({ data }) => {
         if (data && data.length > 0) setAlreadyOwned(true);
       });
-  });
+  }, [user]);
 
   const handleBuy = async () => {
     if (!user) {
