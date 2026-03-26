@@ -47,11 +47,12 @@ async function createSzamlazzInvoice(
   customerEmail: string,
   customerName: string,
   productId: string,
-  _amountFromStripe: number,
+  amountPaid: number,
   billingAddress?: BillingAddress
 ): Promise<string | null> {
   const productName = PRODUCT_NAMES[productId] || productId;
-  const price = PRODUCT_PRICES[productId] || _amountFromStripe;
+  // USE THE ACTUAL AMOUNT PAID (after coupon), not the hardcoded price
+  const price = amountPaid;
 
   const city = billingAddress?.city || "N/A";
   const postalCode = billingAddress?.postal_code || "";
@@ -61,6 +62,7 @@ async function createSzamlazzInvoice(
 
   const today = new Date().toISOString().split("T")[0];
   // AAM = Alanyi adómentes (KATA egyéni vállalkozó, ÁFA-mentes)
+  // Include <kifizetesek> so invoice is created as PAID (no separate payment deadline)
   const xmlBody = `<?xml version="1.0" encoding="UTF-8"?>
 <xmlszamla xmlns="http://www.szamlazz.hu/xmlszamla" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.szamlazz.hu/xmlszamla https://www.szamlazz.hu/szamla/docs/xsds/agent/xmlszamla.xsd">
   <beallitasok>
@@ -83,6 +85,7 @@ async function createSzamlazzInvoice(
     <helyesbitoszamla>false</helyesbitoszamla>
     <helyesbitettSzamlaszam></helyesbitettSzamlaszam>
     <dijbekero>false</dijbekero>
+    <fizpipipipipipipipipipipipi>true</fizpipipipipipipipipipipipi>
   </fejlec>
   <elado/>
   <vevo>
@@ -118,6 +121,14 @@ async function createSzamlazzInvoice(
       <megjegyzes></megjegyzes>
     </tetel>
   </tetelek>
+  <kifizetesek>
+    <kifizetes>
+      <datum>${today}</datum>
+      <jogcim>Bankkártya (Stripe)</jogcim>
+      <osszeg>${price}</osszeg>
+      <leiras>Stripe online fizetés</leiras>
+    </kifizetes>
+  </kifizetesek>
 </xmlszamla>`;
 
   try {
