@@ -40,7 +40,7 @@ const ContactWidget = () => {
   };
 
   return (
-    <div className="fixed bottom-8 right-24 z-50">
+    <div className="fixed bottom-8 right-24 z-50 hidden md:block">
       <AnimatePresence>
         {isOpen && (
           <motion.div
