@@ -6,7 +6,6 @@ import { useAdmin } from "@/hooks/useAdmin";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import defaultLogo from "@/assets/logo.jpg";
-import defaultLogo from "@/assets/logo.jpg";
 
 const links = [
   { label: "Kurzus", sectionId: "kurzus" },
