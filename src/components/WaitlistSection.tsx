@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import GlassCard from "./GlassCard";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -77,7 +77,7 @@ const WaitlistSection = () => {
                   {error && <p className="text-xs text-destructive text-left">{error}</p>}
                 </div>
                 <button type="submit" disabled={loading} className="neon-button flex items-center justify-center gap-2 disabled:opacity-50">
-                  <Send size={16} />
+                  <ShoppingCart size={16} />
                   {loading ? "Küldés..." : "Megvásárolom"}
                 </button>
               </form>
