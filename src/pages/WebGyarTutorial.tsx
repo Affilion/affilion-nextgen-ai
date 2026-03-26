@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
-import { ArrowLeft, Menu } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Menu, Lock } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import "@/styles/tutorial.css";
 
 import TutorialSidebar from "@/components/tutorial/TutorialSidebar";
@@ -32,10 +34,36 @@ const MODULE_IDS = [
 ];
 
 const WebGyarTutorial = () => {
+  const { user, loading: authLoading } = useAuth();
+  const navigate = useNavigate();
+  const [hasAccess, setHasAccess] = useState<boolean | null>(null);
   const [activeModule, setActiveModule] = useState("module-0");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    if (authLoading) return;
+    if (!user) {
+      navigate("/auth");
+      return;
+    }
+    const checkAccess = async () => {
+      const { data } = await supabase
+        .from("purchases")
+        .select("id")
+        .eq("user_id", user.id)
+        .eq("product_id", "webgyar-tutorial")
+        .eq("status", "completed")
+        .limit(1);
+      if (data && data.length > 0) {
+        setHasAccess(true);
+      } else {
+        setHasAccess(false);
+      }
+    };
+    checkAccess();
+  }, [user, authLoading, navigate]);
 
   /* ---- Scroll-based active module tracking + progress bar ---- */
   const handleScroll = useCallback(() => {
@@ -44,7 +72,6 @@ const WebGyarTutorial = () => {
     setScrollProgress(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0);
     setShowScrollTop(scrollTop > 600);
 
-    // Find the module closest to the top of the viewport
     let current = MODULE_IDS[0];
     for (const id of MODULE_IDS) {
       const el = document.getElementById(id);
@@ -78,6 +105,31 @@ const WebGyarTutorial = () => {
     document.querySelectorAll(".tutorial-fade-up").forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
+
+  if (authLoading || hasAccess === null) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-muted-foreground text-lg">Betöltés...</div>
+      </div>
+    );
+  }
+
+  if (!hasAccess) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center px-4">
+        <div className="text-center max-w-md">
+          <Lock className="w-16 h-16 text-muted-foreground mx-auto mb-6" />
+          <h1 className="text-2xl font-bold text-foreground mb-4">Hozzáférés megtagadva</h1>
+          <p className="text-muted-foreground mb-8">
+            Ez a kurzus csak megvásárlás után érhető el. Vásárold meg a főoldalon, és azonnal hozzáférsz!
+          </p>
+          <Link to="/#kurzus" className="neon-button inline-flex items-center gap-2 px-6 py-3">
+            Kurzus megvásárlása
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background flex flex-col overflow-x-hidden">
