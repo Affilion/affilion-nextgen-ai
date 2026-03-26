@@ -251,7 +251,10 @@ serve(async (req) => {
             customerEmail,
             customerName,
             productId,
-            (session.amount_total || 0) / 100,
+            const currency = (session.currency || "huf").toLowerCase();
+            const isZeroDecimal = ZERO_DECIMAL_CURRENCIES.includes(currency);
+            const stripeAmount = session.amount_total || 0;
+            const amountInCurrency = isZeroDecimal ? stripeAmount : stripeAmount / 100;
             billingAddress
           );
 
