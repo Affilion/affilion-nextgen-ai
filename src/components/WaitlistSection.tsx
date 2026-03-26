@@ -69,7 +69,7 @@ const WaitlistSection = () => {
               <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto items-center justify-center">
                 <button
                   type="button"
-                  onClick={() => setShowInfo(true)}
+                  onClick={() => setShowInfo(!showInfo)}
                   className="flex items-center justify-center gap-2 px-5 py-3 text-sm rounded-lg border border-glass-border/40 bg-muted/30 text-muted-foreground hover:text-primary hover:border-primary/40 transition-all"
                 >
                   <Info size={16} />
