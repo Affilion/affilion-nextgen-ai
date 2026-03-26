@@ -65,31 +65,6 @@ const WebGyarTutorial = () => {
     checkAccess();
   }, [user, authLoading, navigate]);
 
-  if (authLoading || hasAccess === null) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-muted-foreground text-lg">Betöltés...</div>
-      </div>
-    );
-  }
-
-  if (!hasAccess) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center px-4">
-        <div className="text-center max-w-md">
-          <Lock className="w-16 h-16 text-muted-foreground mx-auto mb-6" />
-          <h1 className="text-2xl font-bold text-foreground mb-4">Hozzáférés megtagadva</h1>
-          <p className="text-muted-foreground mb-8">
-            Ez a kurzus csak megvásárlás után érhető el. Vásárold meg a főoldalon, és azonnal hozzáférsz!
-          </p>
-          <Link to="/#kurzus" className="neon-button inline-flex items-center gap-2 px-6 py-3">
-            Kurzus megvásárlása
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
   /* ---- Scroll-based active module tracking + progress bar ---- */
   const handleScroll = useCallback(() => {
     const scrollTop = window.scrollY;
@@ -97,7 +72,6 @@ const WebGyarTutorial = () => {
     setScrollProgress(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0);
     setShowScrollTop(scrollTop > 600);
 
-    // Find the module closest to the top of the viewport
     let current = MODULE_IDS[0];
     for (const id of MODULE_IDS) {
       const el = document.getElementById(id);
@@ -131,6 +105,31 @@ const WebGyarTutorial = () => {
     document.querySelectorAll(".tutorial-fade-up").forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
+
+  if (authLoading || hasAccess === null) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-muted-foreground text-lg">Betöltés...</div>
+      </div>
+    );
+  }
+
+  if (!hasAccess) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center px-4">
+        <div className="text-center max-w-md">
+          <Lock className="w-16 h-16 text-muted-foreground mx-auto mb-6" />
+          <h1 className="text-2xl font-bold text-foreground mb-4">Hozzáférés megtagadva</h1>
+          <p className="text-muted-foreground mb-8">
+            Ez a kurzus csak megvásárlás után érhető el. Vásárold meg a főoldalon, és azonnal hozzáférsz!
+          </p>
+          <Link to="/#kurzus" className="neon-button inline-flex items-center gap-2 px-6 py-3">
+            Kurzus megvásárlása
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background flex flex-col overflow-x-hidden">
