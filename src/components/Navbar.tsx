@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, LogIn, LogOut, User, BookOpen, Shield, MessageCircle } from "lucide-react";
+import { Menu, X, LogIn, LogOut, User, BookOpen, Shield, MessageCircle, Send, CheckCircle } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdmin } from "@/hooks/useAdmin";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
+import defaultLogo from "@/assets/logo.jpg";
 import defaultLogo from "@/assets/logo.jpg";
 
 const links = [
