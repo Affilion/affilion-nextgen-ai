@@ -47,11 +47,12 @@ async function createSzamlazzInvoice(
   customerEmail: string,
   customerName: string,
   productId: string,
-  _amountFromStripe: number,
+  amountPaid: number,
   billingAddress?: BillingAddress
 ): Promise<string | null> {
   const productName = PRODUCT_NAMES[productId] || productId;
-  const price = PRODUCT_PRICES[productId] || _amountFromStripe;
+  // USE THE ACTUAL AMOUNT PAID (after coupon), not the hardcoded price
+  const price = amountPaid;
 
   const city = billingAddress?.city || "N/A";
   const postalCode = billingAddress?.postal_code || "";
@@ -250,6 +251,7 @@ serve(async (req) => {
           const isZeroDecimal = ZERO_DECIMAL_CURRENCIES.includes(currency);
           const stripeAmount = session.amount_total || 0;
           const amountInCurrency = isZeroDecimal ? stripeAmount : stripeAmount / 100;
+          console.log(`[WEBHOOK] Invoice amount: ${amountInCurrency} ${currency} (Stripe raw: ${stripeAmount})`);
 
           const invoiceId = await createSzamlazzInvoice(
             agentKey,
@@ -267,9 +269,8 @@ serve(async (req) => {
               .eq("stripe_session_id", session.id);
             console.log(`[WEBHOOK] Invoice created: ${invoiceId}`);
 
-            // 3. Mark invoice as paid (Stripe already charged)
-            const price = PRODUCT_PRICES[productId] || amountInCurrency;
-            const paidOk = await markInvoiceAsPaid(agentKey, invoiceId, price);
+            // Mark invoice as paid immediately (Stripe already charged the card)
+            const paidOk = await markInvoiceAsPaid(agentKey, invoiceId, amountInCurrency);
             if (paidOk) {
               console.log(`[WEBHOOK] Invoice ${invoiceId} marked as paid`);
             }
