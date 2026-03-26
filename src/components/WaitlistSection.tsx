@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import { ShoppingCart, Info } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ShoppingCart, Info, X } from "lucide-react";
 import GlassCard from "./GlassCard";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -10,7 +9,7 @@ const WaitlistSection = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const [showInfo, setShowInfo] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,34 +65,49 @@ const WaitlistSection = () => {
                 Sikeres feliratkozás! 🎉 Hamarosan értesítünk.
               </motion.div>
             ) : (
-              <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto items-center">
+              <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto items-center justify-center">
                 <button
                   type="button"
-                  onClick={() => navigate("/sajat-weboldal-kurzus")}
+                  onClick={() => setShowInfo(true)}
                   className="flex items-center justify-center gap-2 px-5 py-3 text-sm rounded-lg border border-glass-border/40 bg-muted/30 text-muted-foreground hover:text-primary hover:border-primary/40 transition-all"
                 >
                   <Info size={16} />
                   Több infó a kurzusról
                 </button>
-                <form onSubmit={handleSubmit} className="flex-1 flex flex-col sm:flex-row gap-4 w-full">
-                  <div className="flex-1 space-y-1">
-                    <input
-                      type="email"
-                      required
-                      placeholder="pelda@email.com"
-                      value={email}
-                      onChange={(e) => { setEmail(e.target.value); setError(""); }}
-                      className="w-full rounded-lg border border-glass-border/40 bg-muted/30 px-5 py-4 text-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                    />
-                    {error && <p className="text-xs text-destructive text-left">{error}</p>}
-                  </div>
-                  <button type="submit" disabled={loading} className="neon-button flex items-center justify-center gap-2 disabled:opacity-50 px-6 py-4 text-lg">
-                    <ShoppingCart size={18} />
-                    {loading ? "Küldés..." : "Megvásárolom"}
-                  </button>
-                </form>
+                <button
+                  type="button"
+                  onClick={() => {/* TODO: Stripe payment */}}
+                  className="neon-button flex items-center justify-center gap-2 px-6 py-4 text-lg"
+                >
+                  <ShoppingCart size={18} />
+                  Megvásárolom
+                </button>
               </div>
             )}
+
+            <AnimatePresence>
+              {showInfo && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ duration: 0.3 }}
+                  className="mt-8 relative"
+                >
+                  <GlassCard className="p-6 md:p-8 text-left border border-primary/20">
+                    <button
+                      onClick={() => setShowInfo(false)}
+                      className="absolute top-4 right-4 text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <X size={20} />
+                    </button>
+                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed pr-6">
+                      Ebben a kurzusban lépésről lépésre megmutatom, hogyan készítheted el a saját modern, gyors és versenyképes weboldaladat akár pár óra alatt, anélkül, hogy vagyonokat fizetnél webfejlesztőnek. A legmodernebb technológiák és AI-alapú megoldások segítségével végigvezetlek a teljes folyamaton, a tervezéstől egészen a kész, működő weboldalig. Nemcsak maga az oldal elkészítése van benne, hanem az összes előmunka és utómunka is, amire valóban szükséged lesz ahhoz, hogy ne csak egy szép dizájnt kapj, hanem egy használható, jól beállított, saját domain név alatt futó weboldalt. A kurzus minden fontos lépést érthetően, gyakorlatiasan mutat meg, így akkor is végig tudsz menni rajta, ha eddig még soha nem építettél weboldalt. A cél az, hogy a végére ne csak egy félkész projekted legyen, hanem egy valódi, optimálisan beállított, működő weboldalad, amit büszkén használhatsz vállalkozáshoz, szolgáltatáshoz vagy saját márkádhoz.
+                    </p>
+                  </GlassCard>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </GlassCard>
         </motion.div>
       </div>
