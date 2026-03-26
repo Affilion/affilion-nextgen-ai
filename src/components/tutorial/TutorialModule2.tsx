@@ -15,7 +15,7 @@ const Module2Video = () => {
         {playing ? (
           <iframe
             className="w-full h-full absolute inset-0"
-            src={`https://www.youtube-nocookie.com/embed/${MODULE2_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1${origin ? `&origin=${origin}` : ""}`}
+            src={`https://www.youtube-nocookie.com/embed/${MODULE2_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1&vq=hd1080${origin ? `&origin=${origin}` : ""}`}
             title="Domain regisztráció lépésről lépésre"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
