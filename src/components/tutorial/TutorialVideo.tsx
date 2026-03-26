@@ -28,10 +28,9 @@ const TutorialVideo = ({ videoId, title, id }: TutorialVideoProps) => {
     "modestbranding=1",
     "playsinline=1",
     "showinfo=0",
-    "iv_load_policy=3",   // hide annotations
-    "disablekb=1",        // disable keyboard (prevents info shortcuts)
-    "vq=hd1080",          // force HD quality
-    "cc_load_policy=0",   // hide captions by default
+    "iv_load_policy=3",
+    "vq=hd1080",
+    "cc_load_policy=0",
     origin ? `origin=${origin}` : "",
   ]
     .filter(Boolean)
@@ -40,12 +39,12 @@ const TutorialVideo = ({ videoId, title, id }: TutorialVideoProps) => {
   return (
     <div className="tutorial-hero-video" id={id}>
       <div
-        className="tutorial-hero-video-inner"
+        className="tutorial-hero-video-inner relative"
         style={{ padding: 0, overflow: "hidden" }}
         onContextMenu={(e) => e.preventDefault()}
       >
         {playing ? (
-          <div className="absolute inset-0 w-full h-full">
+          <>
             <iframe
               className="w-full h-full absolute inset-0"
               src={`https://www.youtube-nocookie.com/embed/${videoId}?${embedParams}`}
@@ -54,17 +53,11 @@ const TutorialVideo = ({ videoId, title, id }: TutorialVideoProps) => {
               allowFullScreen
               referrerPolicy="no-referrer"
             />
-            {/* Top overlay — blocks title + YouTube link at the top */}
-            <div
-              className="absolute top-0 left-0 right-0 h-[52px] z-10"
-              style={{ pointerEvents: "auto" }}
-            />
-            {/* Bottom-right overlay — blocks YouTube logo watermark */}
-            <div
-              className="absolute bottom-[42px] right-0 w-[140px] h-[36px] z-10"
-              style={{ pointerEvents: "auto" }}
-            />
-          </div>
+            {/* Transparent overlay on top-right to block YT logo link — only covers the small area */}
+            <div className="absolute top-2 right-2 w-[90px] h-[32px] z-10 cursor-default" />
+            {/* Bottom-right overlay — blocks YouTube watermark logo */}
+            <div className="absolute bottom-[42px] right-2 w-[120px] h-[28px] z-10 cursor-default" />
+          </>
         ) : (
           <div
             className="relative w-full h-full cursor-pointer group"
