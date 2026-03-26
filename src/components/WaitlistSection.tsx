@@ -1,4 +1,5 @@
 import { useState } from "react";
+import kurzusCover from "@/assets/kurzus-cover.png";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, Info, X } from "lucide-react";
 import GlassCard from "./GlassCard";
