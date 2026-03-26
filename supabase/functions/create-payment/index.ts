@@ -63,6 +63,7 @@ serve(async (req) => {
       line_items: [{ price: product.stripe_price_id, quantity: 1 }],
       mode: "payment",
       automatic_tax: { enabled: false },
+      allow_promotion_codes: true,
       billing_address_collection: "required",
       metadata: {
         user_id: user.id,
