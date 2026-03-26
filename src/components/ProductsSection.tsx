@@ -131,7 +131,15 @@ const ProductsSection = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: i * 0.15 }}
-                        onClick={() => purchased && setActivePlayer({ productId: p.id, productName: p.name })}
+                        onClick={() => {
+                          if (purchased) {
+                            if (p.id === 'webgyar-tutorial') {
+                              navigate('/sajat-weboldal-kurzus');
+                            } else {
+                              setActivePlayer({ productId: p.id, productName: p.name });
+                            }
+                          }
+                        }}
                         className={purchased ? "cursor-pointer h-full" : "h-full"}
                       >
                         <GlassCard className={`flex flex-col h-full ${p.featured ? "ring-1 ring-primary/70 shadow-[0_0_15px_hsl(var(--primary)/0.2)] relative" : ""}`} parallaxStrength={25}>
@@ -210,7 +218,15 @@ const ProductsSection = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.15 }}
-                  onClick={() => purchased && setActivePlayer({ productId: p.id, productName: p.name })}
+                  onClick={() => {
+                    if (purchased) {
+                      if (p.id === 'webgyar-tutorial') {
+                        navigate('/sajat-weboldal-kurzus');
+                      } else {
+                        setActivePlayer({ productId: p.id, productName: p.name });
+                      }
+                    }
+                  }}
                   className={purchased ? "cursor-pointer" : ""}
                 >
                   <GlassCard className={`flex flex-col h-full ${p.featured ? "ring-1 ring-primary/70 shadow-[0_0_15px_hsl(var(--primary)/0.2)] relative" : ""}`} parallaxStrength={25}>
