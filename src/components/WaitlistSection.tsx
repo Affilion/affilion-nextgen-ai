@@ -76,7 +76,7 @@ const WaitlistSection = () => {
                 </div>
                 <button type="submit" disabled={loading} className="neon-button flex items-center justify-center gap-2 disabled:opacity-50">
                   <Send size={16} />
-                  {loading ? "Küldés..." : "Feliratkozom"}
+                  {loading ? "Küldés..." : "Megvásárolom"}
                 </button>
               </form>
             )}
