@@ -11,13 +11,18 @@ const PRODUCT_NAMES: Record<string, string> = {
   "prompt-pack": "100 AI Prompt Pack",
   "suno-guide": "Suno AI Dalszövegírási Titkok",
   "auto-guide": "AI Automatizációs Útmutató",
+  "webgyar-tutorial": "Készítsd el saját weblapodat pár óra alatt",
 };
 
 const PRODUCT_PRICES: Record<string, number> = {
   "prompt-pack": 2990,
   "suno-guide": 3990,
   "auto-guide": 4990,
+  "webgyar-tutorial": 17990,
 };
+
+// HUF is a zero-decimal currency in Stripe (amount_total is already in HUF, not in fillér)
+const ZERO_DECIMAL_CURRENCIES = ["huf", "jpy", "krw", "bif", "clp", "djf", "gnf", "kmf", "mga", "pyg", "rwf", "ugx", "vnd", "vuv", "xaf", "xof", "xpf"];
 
 function escapeXml(str: string): string {
   return str
@@ -241,12 +246,17 @@ serve(async (req) => {
         // 2. Create invoice via Számlázz.hu (AAM - alanyi adómentes)
         const agentKey = Deno.env.get("SZAMLAZZ_AGENT_KEY");
         if (agentKey) {
+          const currency = (session.currency || "huf").toLowerCase();
+          const isZeroDecimal = ZERO_DECIMAL_CURRENCIES.includes(currency);
+          const stripeAmount = session.amount_total || 0;
+          const amountInCurrency = isZeroDecimal ? stripeAmount : stripeAmount / 100;
+
           const invoiceId = await createSzamlazzInvoice(
             agentKey,
             customerEmail,
             customerName,
             productId,
-            (session.amount_total || 0) / 100,
+            amountInCurrency,
             billingAddress
           );
 
@@ -258,7 +268,7 @@ serve(async (req) => {
             console.log(`[WEBHOOK] Invoice created: ${invoiceId}`);
 
             // 3. Mark invoice as paid (Stripe already charged)
-            const price = PRODUCT_PRICES[productId] || (session.amount_total || 0) / 100;
+            const price = PRODUCT_PRICES[productId] || amountInCurrency;
             const paidOk = await markInvoiceAsPaid(agentKey, invoiceId, price);
             if (paidOk) {
               console.log(`[WEBHOOK] Invoice ${invoiceId} marked as paid`);
