@@ -42,6 +42,18 @@ serve(async (req) => {
     if (productError || !product) throw new Error("Érvénytelen termék.");
     if (!product.is_active) throw new Error("Ez a termék jelenleg nem elérhető.");
 
+    // Check if user already purchased this product
+    const { data: existingPurchase } = await supabaseAdmin
+      .from("purchases")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("product_id", productId)
+      .eq("status", "completed")
+      .limit(1);
+    if (existingPurchase && existingPurchase.length > 0) {
+      throw new Error("Ez a termék már meg van vásárolva.");
+    }
+
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
       apiVersion: "2025-08-27.basil",
     });

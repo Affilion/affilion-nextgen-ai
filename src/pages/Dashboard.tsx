@@ -212,11 +212,13 @@ const Dashboard = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.15 + i * 0.1 }}
                       onClick={() => {
-                        if (hasPrompts) {
+                        if (product.id === "webgyar-tutorial") {
+                          navigate("/sajat-weboldal-kurzus");
+                        } else if (hasPrompts) {
                           setActivePlayer({ productId: product.id, productName: product.name });
                         }
                       }}
-                      className={`group ${hasPrompts ? "cursor-pointer" : ""}`}
+                      className={`group ${hasPrompts || product.id === "webgyar-tutorial" ? "cursor-pointer" : ""}`}
                     >
                       <div className="hyper-glass rounded-xl overflow-hidden transition-all duration-300 hover:border-primary/30 hover:shadow-[0_0_30px_hsl(var(--primary)/0.15)]">
                         <div className="relative aspect-[16/10] overflow-hidden">
@@ -241,7 +243,9 @@ const Dashboard = () => {
                           <h4 className="font-bold text-foreground mb-1 group-hover:text-primary transition-colors">{product.name}</h4>
                           <p className="text-xs text-muted-foreground mb-3">{product.description}</p>
                           <div className="flex items-center gap-2 text-xs text-primary font-semibold">
-                            {hasPrompts ? (
+                            {product.id === "webgyar-tutorial" ? (
+                              <><BookOpen size={14} /> Megnyitás</>
+                            ) : hasPrompts ? (
                               <><Music size={14} /> Prompt Player megnyitása</>
                             ) : (
                               <><BookOpen size={14} /> Megnyitás</>

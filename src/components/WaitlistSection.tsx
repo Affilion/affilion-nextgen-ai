@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import kurzusCover from "@/assets/kurzus-cover.png";
 import { motion, AnimatePresence } from "framer-motion";
@@ -15,6 +15,22 @@ const WaitlistSection = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const [alreadyOwned, setAlreadyOwned] = useState(false);
+
+  // Check if user already owns this product
+  useEffect(() => {
+    if (!user) return;
+    supabase
+      .from("purchases")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("product_id", COURSE_PRODUCT_ID)
+      .eq("status", "completed")
+      .limit(1)
+      .then(({ data }) => {
+        if (data && data.length > 0) setAlreadyOwned(true);
+      });
+  }, [user]);
 
   const handleBuy = async () => {
     if (!user) {
@@ -23,6 +39,11 @@ const WaitlistSection = () => {
         description: "A vásárláshoz kérlek jelentkezz be.",
       });
       navigate("/auth");
+      return;
+    }
+
+    if (alreadyOwned) {
+      navigate("/tartalmaim");
       return;
     }
 
@@ -81,7 +102,7 @@ const WaitlistSection = () => {
                 className="neon-button flex items-center justify-center gap-2 px-6 py-4 text-lg disabled:opacity-50"
               >
                 <ShoppingCart size={18} />
-                {loading ? "Feldolgozás..." : "Megvásárolom"}
+                {alreadyOwned ? "Megnyitás – Tartalmaim" : loading ? "Feldolgozás..." : "Megvásárolom"}
               </button>
             </div>
             <AnimatePresence>
