@@ -1,7 +1,45 @@
+import { useState } from "react";
+import { Play } from "lucide-react";
 import TutorialAccordion from "./TutorialAccordion";
 import TutorialPromptBox from "./TutorialPromptBox";
 import TutorialTipBox from "./TutorialTipBox";
-import TutorialVideoPlaceholder from "./TutorialVideoPlaceholder";
+
+const MODULE6_VIDEO_ID = "6q6DQPKPBM4";
+
+const Module6Video = () => {
+  const [playing, setPlaying] = useState(false);
+  const origin = typeof window !== "undefined" ? encodeURIComponent(window.location.origin) : "";
+
+  return (
+    <div className="tutorial-hero-video" id="module6-video">
+      <div className="tutorial-hero-video-inner" style={{ padding: 0, overflow: "hidden" }}>
+        {playing ? (
+          <iframe
+            className="w-full h-full absolute inset-0"
+            src={`https://www.youtube-nocookie.com/embed/${MODULE6_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1${origin ? `&origin=${origin}` : ""}`}
+            title="Domain bekötés lépésről lépésre"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        ) : (
+          <div className="relative w-full h-full cursor-pointer group" onClick={() => setPlaying(true)}>
+            <img
+              src={`https://img.youtube.com/vi/${MODULE6_VIDEO_ID}/maxresdefault.jpg`}
+              alt="Domain bekötés lépésről lépésre"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="tutorial-hero-video-play">
+                <Play size={28} className="text-white ml-1" />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const TutorialModule6 = () => {
   return (
@@ -242,7 +280,7 @@ const TutorialModule6 = () => {
         </div>
 
         <div className="mb-8 tutorial-fade-up">
-          <TutorialVideoPlaceholder title="Domain bekötés lépésről lépésre" />
+          <Module6Video />
         </div>
 
         <div className="mb-8 tutorial-fade-up">
