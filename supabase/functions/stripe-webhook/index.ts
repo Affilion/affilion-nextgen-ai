@@ -251,6 +251,7 @@ serve(async (req) => {
           const isZeroDecimal = ZERO_DECIMAL_CURRENCIES.includes(currency);
           const stripeAmount = session.amount_total || 0;
           const amountInCurrency = isZeroDecimal ? stripeAmount : stripeAmount / 100;
+          console.log(`[WEBHOOK] Invoice amount: ${amountInCurrency} ${currency} (Stripe raw: ${stripeAmount})`);
 
           const invoiceId = await createSzamlazzInvoice(
             agentKey,
