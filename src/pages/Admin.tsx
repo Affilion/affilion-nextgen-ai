@@ -870,6 +870,16 @@ const PortfolioPanel = () => {
 };
 
 /* ── Experiments Panel ── */
+const extractYouTubeId = (input: string): string => {
+  const trimmed = input.trim();
+  // Match various YouTube URL formats
+  const match = trimmed.match(/(?:youtube\.com\/(?:watch\?.*v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+  if (match) return match[1];
+  // If it's already an 11-char ID, return as-is
+  if (/^[\w-]{11}$/.test(trimmed)) return trimmed;
+  return trimmed;
+};
+
 const ExperimentsPanel = () => {
   type ExperimentItem = { id: string; title: string; video_id: string; badge: string | null; sort_order: number | null };
 
