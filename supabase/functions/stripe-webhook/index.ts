@@ -66,7 +66,7 @@ async function createSzamlazzInvoice(
 <xmlszamla xmlns="http://www.szamlazz.hu/xmlszamla" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.szamlazz.hu/xmlszamla https://www.szamlazz.hu/szamla/docs/xsds/agent/xmlszamla.xsd">
   <beallitasok>
     <szamlaagentkulcs>${agentKey}</szamlaagentkulcs>
-    <eszamla>true</eszamla>
+    <eszamla>false</eszamla>
     <szamlaLetoltes>false</szamlaLetoltes>
   </beallitasok>
   <fejlec>
