@@ -276,14 +276,7 @@ serve(async (req) => {
               .from("purchases")
               .update({ szamlazz_invoice_id: invoiceId })
               .eq("stripe_session_id", session.id);
-            console.log(`[WEBHOOK] Invoice created: ${invoiceId}`);
-
-            // 3. Mark invoice as paid (Stripe already charged)
-            const price = PRODUCT_PRICES[productId] || amountInCurrency;
-            const paidOk = await markInvoiceAsPaid(agentKey, invoiceId, price);
-            if (paidOk) {
-              console.log(`[WEBHOOK] Invoice ${invoiceId} marked as paid`);
-            }
+            console.log(`[WEBHOOK] Invoice created and marked as paid: ${invoiceId}`);
           }
         } else {
           console.warn("[WEBHOOK] SZAMLAZZ_AGENT_KEY not set, skipping invoice");
