@@ -927,8 +927,9 @@ const ExperimentsPanel = () => {
   };
 
   const handleSaveEdit = async (itemId: string) => {
-    if (!editTitle.trim() || !editVideoId.trim()) {
-      return toast({ title: "Cím és videó ID kötelező!", variant: "destructive" });
+    const extractedId = extractYouTubeId(editVideoId);
+    if (!editTitle.trim() || !extractedId) {
+      return toast({ title: "Cím és videó link kötelező!", variant: "destructive" });
     }
     setSavingId(itemId);
     try {
