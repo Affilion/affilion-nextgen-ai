@@ -246,15 +246,17 @@ serve(async (req) => {
         // 2. Create invoice via Számlázz.hu (AAM - alanyi adómentes)
         const agentKey = Deno.env.get("SZAMLAZZ_AGENT_KEY");
         if (agentKey) {
+          const currency = (session.currency || "huf").toLowerCase();
+          const isZeroDecimal = ZERO_DECIMAL_CURRENCIES.includes(currency);
+          const stripeAmount = session.amount_total || 0;
+          const amountInCurrency = isZeroDecimal ? stripeAmount : stripeAmount / 100;
+
           const invoiceId = await createSzamlazzInvoice(
             agentKey,
             customerEmail,
             customerName,
             productId,
-            const currency = (session.currency || "huf").toLowerCase();
-            const isZeroDecimal = ZERO_DECIMAL_CURRENCIES.includes(currency);
-            const stripeAmount = session.amount_total || 0;
-            const amountInCurrency = isZeroDecimal ? stripeAmount : stripeAmount / 100;
+            amountInCurrency,
             billingAddress
           );
 
@@ -266,7 +268,7 @@ serve(async (req) => {
             console.log(`[WEBHOOK] Invoice created: ${invoiceId}`);
 
             // 3. Mark invoice as paid (Stripe already charged)
-            const price = PRODUCT_PRICES[productId] || (session.amount_total || 0) / 100;
+            const price = PRODUCT_PRICES[productId] || amountInCurrency;
             const paidOk = await markInvoiceAsPaid(agentKey, invoiceId, price);
             if (paidOk) {
               console.log(`[WEBHOOK] Invoice ${invoiceId} marked as paid`);
