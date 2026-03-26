@@ -902,9 +902,10 @@ const ExperimentsPanel = () => {
   useEffect(() => { fetchItems(); }, []);
 
   const handleAdd = async () => {
-    if (!title || !videoId) return toast({ title: "Cím és videó ID kötelező!", variant: "destructive" });
+    const extractedId = extractYouTubeId(videoId);
+    if (!title || !extractedId) return toast({ title: "Cím és videó link kötelező!", variant: "destructive" });
     setLoading(true);
-    await supabase.from("experiments").insert({ title, video_id: videoId, sort_order: items.length });
+    await supabase.from("experiments").insert({ title, video_id: extractedId, sort_order: items.length });
     setTitle(""); setVideoId("");
     await fetchItems();
     setLoading(false);
