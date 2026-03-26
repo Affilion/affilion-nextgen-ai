@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { optimizeImageForUpload } from "@/lib/imageOptimization";
 
-type Tab = "users" | "products" | "portfolio" | "experiments" | "prompts" | "content" | "waitlist" | "prompt-manager" | "ai-club" | "messages";
+type Tab = "users" | "products" | "portfolio" | "experiments" | "prompts" | "content" | "waitlist" | "prompt-manager" | "ai-club" | "course-buyers" | "messages";
 type UploadFolder = "portfolio" | "prompts" | "products";
 
 const uploadCmsImage = async (file: File, folder: UploadFolder) => {
@@ -71,6 +71,7 @@ const Admin = () => {
     { id: "content", label: "Tartalom URL-ek", icon: <Link size={16} /> },
     { id: "waitlist", label: "Várólista", icon: <Mail size={16} /> },
     { id: "ai-club", label: "AI Club Előfizetők", icon: <Users size={16} /> },
+    { id: "course-buyers", label: "Kurzus Vásárlók", icon: <ShoppingBag size={16} /> },
     { id: "messages", label: "Üzenetek", icon: <MessageCircle size={16} /> },
   ];
 
@@ -113,6 +114,7 @@ const Admin = () => {
             {activeTab === "content" && <ContentPanel />}
             {activeTab === "waitlist" && <WaitlistPanel />}
             {activeTab === "ai-club" && <AiClubPanel />}
+            {activeTab === "course-buyers" && <CourseBuyersPanel />}
             {activeTab === "messages" && <MessagesPanel />}
           </motion.div>
         </div>
@@ -1642,6 +1644,92 @@ const AiClubPanel = () => {
           {displayed.length > 0 && (
             <div className="p-4 border-t border-border text-sm text-muted-foreground">
               Összesen: {displayed.length} {subTab === "active" ? "aktív" : "inaktív"} előfizető
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+/* ── Course Buyers Panel ── */
+const CourseBuyersPanel = () => {
+  const [buyers, setBuyers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchBuyers = async () => {
+    setLoading(true);
+    const { data } = await supabase
+      .from("purchases")
+      .select("*")
+      .eq("product_id", "webgyar-tutorial")
+      .eq("status", "completed")
+      .order("created_at", { ascending: false });
+    setBuyers(data || []);
+    setLoading(false);
+  };
+
+  useEffect(() => { fetchBuyers(); }, []);
+
+  const fmtAmt = (amt: number, cur: string) =>
+    cur === "huf" ? `${amt.toLocaleString("hu")} Ft` : `${amt} ${cur.toUpperCase()}`;
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold text-foreground">Kurzus Vásárlók – Weboldal 0-ról AI-val</h2>
+        <Button onClick={fetchBuyers} disabled={loading} variant="outline" className="gap-2">
+          <Download size={14} /> Frissítés
+        </Button>
+      </div>
+
+      {loading ? (
+        <div className="flex justify-center py-12">
+          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : (
+        <div className="hyper-glass rounded-xl overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border text-left text-muted-foreground">
+                  <th className="p-4">Név</th>
+                  <th className="p-4">Email</th>
+                  <th className="p-4">Fizetett összeg</th>
+                  <th className="p-4">Vásárlás dátuma</th>
+                  <th className="p-4">Számla</th>
+                  <th className="p-4">Státusz</th>
+                </tr>
+              </thead>
+              <tbody>
+                {buyers.length === 0 ? (
+                  <tr><td colSpan={6} className="p-8 text-center text-muted-foreground">Még nincs vásárló.</td></tr>
+                ) : (
+                  buyers.map((b) => (
+                    <tr key={b.id} className="border-b border-border/50 hover:bg-muted/20">
+                      <td className="p-4 text-foreground">{b.customer_name || "–"}</td>
+                      <td className="p-4 text-foreground">{b.customer_email || "–"}</td>
+                      <td className="p-4 text-foreground font-medium">{fmtAmt(b.amount, b.currency)}</td>
+                      <td className="p-4 text-muted-foreground">{new Date(b.created_at).toLocaleDateString("hu")}</td>
+                      <td className="p-4">
+                        {b.szamlazz_invoice_id ? (
+                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400">Kiállítva</span>
+                        ) : (
+                          <span className="text-muted-foreground">–</span>
+                        )}
+                      </td>
+                      <td className="p-4">
+                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400">Fizetve</span>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+          {buyers.length > 0 && (
+            <div className="p-4 border-t border-border text-sm text-muted-foreground">
+              Összesen: {buyers.length} vásárló
             </div>
           )}
         </div>
