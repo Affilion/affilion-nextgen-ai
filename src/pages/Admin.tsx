@@ -977,7 +977,7 @@ const ExperimentsPanel = () => {
                 {isEditing ? (
                   <>
                     <Input value={editTitle} onChange={(e) => setEditTitle(e.target.value)} placeholder="Cím" className="bg-muted/50 border-border" />
-                    <Input value={editVideoId} onChange={(e) => setEditVideoId(e.target.value)} placeholder="YouTube Video ID" className="bg-muted/50 border-border" />
+                    <Input value={editVideoId} onChange={(e) => setEditVideoId(e.target.value)} placeholder="YouTube videó link" className="bg-muted/50 border-border" />
                     <Input value={editBadge} onChange={(e) => setEditBadge(e.target.value)} placeholder="Badge (pl: AFFILION AI)" className="bg-muted/50 border-border" />
                     <div className="flex items-center gap-2">
                       <Button size="sm" onClick={() => handleSaveEdit(item.id)} disabled={savingId === item.id} className="neon-button border-0">
