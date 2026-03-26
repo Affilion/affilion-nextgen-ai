@@ -34,10 +34,61 @@ const MODULE_IDS = [
 ];
 
 const WebGyarTutorial = () => {
+  const { user, loading: authLoading } = useAuth();
+  const navigate = useNavigate();
+  const [hasAccess, setHasAccess] = useState<boolean | null>(null);
   const [activeModule, setActiveModule] = useState("module-0");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    if (authLoading) return;
+    if (!user) {
+      navigate("/auth");
+      return;
+    }
+    const checkAccess = async () => {
+      const { data } = await supabase
+        .from("purchases")
+        .select("id")
+        .eq("user_id", user.id)
+        .eq("product_id", "webgyar-tutorial")
+        .eq("status", "completed")
+        .limit(1);
+      if (data && data.length > 0) {
+        setHasAccess(true);
+      } else {
+        setHasAccess(false);
+      }
+    };
+    checkAccess();
+  }, [user, authLoading, navigate]);
+
+  if (authLoading || hasAccess === null) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-muted-foreground text-lg">Betöltés...</div>
+      </div>
+    );
+  }
+
+  if (!hasAccess) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center px-4">
+        <div className="text-center max-w-md">
+          <Lock className="w-16 h-16 text-muted-foreground mx-auto mb-6" />
+          <h1 className="text-2xl font-bold text-foreground mb-4">Hozzáférés megtagadva</h1>
+          <p className="text-muted-foreground mb-8">
+            Ez a kurzus csak megvásárlás után érhető el. Vásárold meg a főoldalon, és azonnal hozzáférsz!
+          </p>
+          <Link to="/#kurzus" className="neon-button inline-flex items-center gap-2 px-6 py-3">
+            Kurzus megvásárlása
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   /* ---- Scroll-based active module tracking + progress bar ---- */
   const handleScroll = useCallback(() => {
