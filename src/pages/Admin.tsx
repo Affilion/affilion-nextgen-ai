@@ -5,7 +5,7 @@ import { useAdmin } from "@/hooks/useAdmin";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import { ArrowLeft, Users, Image, Video, FileText, Link, Trash2, Plus, Save, Pencil, Mail, Download, ShoppingBag, Upload, Music, ChevronUp, ChevronDown, Star, MessageCircle, Eye } from "lucide-react";
+import { ArrowLeft, Users, Image, Video, FileText, Link, Trash2, Plus, Save, Pencil, Mail, Download, ShoppingBag, Upload, Music, ChevronUp, ChevronDown, Star, MessageCircle, Eye, CheckCircle2 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -1672,6 +1672,13 @@ const MessagesPanel = () => {
     setMessages((prev) => prev.map((m) => (m.id === id ? { ...m, is_read: !currentRead } : m)));
   };
 
+  const deleteMessage = async (id: string) => {
+    if (!window.confirm("Biztosan törölni szeretnéd ezt az üzenetet?")) return;
+    await supabase.from("contact_messages").delete().eq("id", id);
+    setMessages((prev) => prev.filter((m) => m.id !== id));
+    toast({ title: "Üzenet törölve" });
+  };
+
   if (loading) return <div className="flex justify-center py-12"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" /></div>;
 
   return (
@@ -1689,17 +1696,27 @@ const MessagesPanel = () => {
                     <span className="font-semibold text-sm text-foreground">{msg.name}</span>
                     <a href={`mailto:${msg.email}`} className="text-xs text-primary hover:underline">{msg.email}</a>
                     {!msg.is_read && <span className="px-2 py-0.5 rounded-full bg-primary/20 text-primary text-[10px] font-bold">ÚJ</span>}
+                    {msg.is_read && <span className="px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 text-[10px] font-bold flex items-center gap-1"><CheckCircle2 size={10} /> MEGVÁLASZOLVA</span>}
                   </div>
                   <p className="text-sm text-muted-foreground whitespace-pre-wrap">{msg.message}</p>
                   <span className="text-[10px] text-muted-foreground/60 mt-2 block">{new Date(msg.created_at).toLocaleString("hu-HU")}</span>
                 </div>
-                <button
-                  onClick={() => toggleRead(msg.id, msg.is_read)}
-                  className="shrink-0 p-2 rounded-lg hover:bg-accent/20 transition-colors"
-                  title={msg.is_read ? "Megjelölés olvasatlanként" : "Megjelölés olvasottként"}
-                >
-                  <Eye size={16} className={msg.is_read ? "text-muted-foreground" : "text-primary"} />
-                </button>
+                <div className="flex items-center gap-1 shrink-0">
+                  <button
+                    onClick={() => toggleRead(msg.id, msg.is_read)}
+                    className="p-2 rounded-lg hover:bg-accent/20 transition-colors"
+                    title={msg.is_read ? "Megjelölés olvasatlanként" : "Megjelölés megválaszoltként"}
+                  >
+                    <CheckCircle2 size={16} className={msg.is_read ? "text-green-400" : "text-muted-foreground"} />
+                  </button>
+                  <button
+                    onClick={() => deleteMessage(msg.id)}
+                    className="p-2 rounded-lg hover:bg-red-500/20 transition-colors"
+                    title="Üzenet törlése"
+                  >
+                    <Trash2 size={16} className="text-muted-foreground hover:text-red-400" />
+                  </button>
+                </div>
               </div>
             </div>
           ))}
