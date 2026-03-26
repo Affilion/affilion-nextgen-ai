@@ -40,7 +40,7 @@ const ContactWidget = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 right-20 z-50">
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -124,16 +124,16 @@ const ContactWidget = () => {
         onClick={() => setIsOpen((o) => !o)}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-accent shadow-lg shadow-primary/30 flex items-center justify-center text-primary-foreground transition-all hover:shadow-xl hover:shadow-primary/40"
+        className="w-11 h-11 rounded-full bg-gradient-to-br from-primary to-accent shadow-lg shadow-primary/30 flex items-center justify-center text-primary-foreground transition-all hover:shadow-xl hover:shadow-primary/40"
       >
         <AnimatePresence mode="wait">
           {isOpen ? (
             <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-              <X size={22} />
+              <X size={18} />
             </motion.div>
           ) : (
             <motion.div key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-              <MessageCircle size={22} />
+              <MessageCircle size={18} />
             </motion.div>
           )}
         </AnimatePresence>
