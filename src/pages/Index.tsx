@@ -41,11 +41,11 @@ const Index = () => {
       <Navbar />
       <main>
         <HeroSection />
+        <WaitlistSection />
         <PortfolioSection />
         <YouTubeSection />
         <PromptLabSection />
         <ProductsSection />
-        <WaitlistSection />
       </main>
       <Footer />
       <ScrollToTop />
