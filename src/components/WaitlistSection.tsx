@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Info } from "lucide-react";
 import GlassCard from "./GlassCard";
 import { supabase } from "@/integrations/supabase/client";
 
