@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
-import { ArrowLeft, Menu } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Menu, Lock } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import "@/styles/tutorial.css";
 
 import TutorialSidebar from "@/components/tutorial/TutorialSidebar";
