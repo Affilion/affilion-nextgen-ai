@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Info } from "lucide-react";
 import GlassCard from "./GlassCard";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -9,6 +10,7 @@ const WaitlistSection = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,23 +66,33 @@ const WaitlistSection = () => {
                 Sikeres feliratkozás! 🎉 Hamarosan értesítünk.
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
-                <div className="flex-1 space-y-1">
-                  <input
-                    type="email"
-                    required
-                    placeholder="pelda@email.com"
-                    value={email}
-                    onChange={(e) => { setEmail(e.target.value); setError(""); }}
-                    className="w-full rounded-lg border border-glass-border/40 bg-muted/30 px-5 py-4 text-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                  />
-                  {error && <p className="text-xs text-destructive text-left">{error}</p>}
-                </div>
-                <button type="submit" disabled={loading} className="neon-button flex items-center justify-center gap-2 disabled:opacity-50 px-6 py-4 text-lg">
-                  <ShoppingCart size={18} />
-                  {loading ? "Küldés..." : "Megvásárolom"}
+              <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto items-center">
+                <button
+                  type="button"
+                  onClick={() => navigate("/sajat-weboldal-kurzus")}
+                  className="flex items-center justify-center gap-2 px-5 py-3 text-sm rounded-lg border border-glass-border/40 bg-muted/30 text-muted-foreground hover:text-primary hover:border-primary/40 transition-all"
+                >
+                  <Info size={16} />
+                  Több infó a kurzusról
                 </button>
-              </form>
+                <form onSubmit={handleSubmit} className="flex-1 flex flex-col sm:flex-row gap-4 w-full">
+                  <div className="flex-1 space-y-1">
+                    <input
+                      type="email"
+                      required
+                      placeholder="pelda@email.com"
+                      value={email}
+                      onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                      className="w-full rounded-lg border border-glass-border/40 bg-muted/30 px-5 py-4 text-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                    />
+                    {error && <p className="text-xs text-destructive text-left">{error}</p>}
+                  </div>
+                  <button type="submit" disabled={loading} className="neon-button flex items-center justify-center gap-2 disabled:opacity-50 px-6 py-4 text-lg">
+                    <ShoppingCart size={18} />
+                    {loading ? "Küldés..." : "Megvásárolom"}
+                  </button>
+                </form>
+              </div>
             )}
           </GlassCard>
         </motion.div>
