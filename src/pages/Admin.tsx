@@ -870,6 +870,16 @@ const PortfolioPanel = () => {
 };
 
 /* ── Experiments Panel ── */
+const extractYouTubeId = (input: string): string => {
+  const trimmed = input.trim();
+  // Match various YouTube URL formats
+  const match = trimmed.match(/(?:youtube\.com\/(?:watch\?.*v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+  if (match) return match[1];
+  // If it's already an 11-char ID, return as-is
+  if (/^[\w-]{11}$/.test(trimmed)) return trimmed;
+  return trimmed;
+};
+
 const ExperimentsPanel = () => {
   type ExperimentItem = { id: string; title: string; video_id: string; badge: string | null; sort_order: number | null };
 
@@ -892,9 +902,10 @@ const ExperimentsPanel = () => {
   useEffect(() => { fetchItems(); }, []);
 
   const handleAdd = async () => {
-    if (!title || !videoId) return toast({ title: "Cím és videó ID kötelező!", variant: "destructive" });
+    const extractedId = extractYouTubeId(videoId);
+    if (!title || !extractedId) return toast({ title: "Cím és videó link kötelező!", variant: "destructive" });
     setLoading(true);
-    await supabase.from("experiments").insert({ title, video_id: videoId, sort_order: items.length });
+    await supabase.from("experiments").insert({ title, video_id: extractedId, sort_order: items.length });
     setTitle(""); setVideoId("");
     await fetchItems();
     setLoading(false);
@@ -916,8 +927,9 @@ const ExperimentsPanel = () => {
   };
 
   const handleSaveEdit = async (itemId: string) => {
-    if (!editTitle.trim() || !editVideoId.trim()) {
-      return toast({ title: "Cím és videó ID kötelező!", variant: "destructive" });
+    const extractedId = extractYouTubeId(editVideoId);
+    if (!editTitle.trim() || !extractedId) {
+      return toast({ title: "Cím és videó link kötelező!", variant: "destructive" });
     }
     setSavingId(itemId);
     try {
@@ -925,7 +937,7 @@ const ExperimentsPanel = () => {
         .from("experiments")
         .update({
           title: editTitle.trim(),
-          video_id: editVideoId.trim(),
+          video_id: extractedId,
           badge: editBadge.trim() || null,
         })
         .eq("id", itemId);
@@ -951,7 +963,7 @@ const ExperimentsPanel = () => {
       <div className="hyper-glass rounded-xl p-6 space-y-4">
         <h3 className="font-bold text-foreground flex items-center gap-2"><Plus size={16} /> Új AI Kísérlet</h3>
         <Input placeholder="Cím" value={title} onChange={(e) => setTitle(e.target.value)} className="bg-muted/50 border-border" />
-        <Input placeholder="YouTube Video ID (pl: dQw4w9WgXcQ)" value={videoId} onChange={(e) => setVideoId(e.target.value)} className="bg-muted/50 border-border" />
+        <Input placeholder="YouTube videó link (pl: https://www.youtube.com/watch?v=dQw4w9WgXcQ)" value={videoId} onChange={(e) => setVideoId(e.target.value)} className="bg-muted/50 border-border" />
         <Button onClick={handleAdd} disabled={loading} className="neon-button border-0">{loading ? "Mentés..." : "Hozzáadás"}</Button>
       </div>
 
@@ -965,7 +977,7 @@ const ExperimentsPanel = () => {
                 {isEditing ? (
                   <>
                     <Input value={editTitle} onChange={(e) => setEditTitle(e.target.value)} placeholder="Cím" className="bg-muted/50 border-border" />
-                    <Input value={editVideoId} onChange={(e) => setEditVideoId(e.target.value)} placeholder="YouTube Video ID" className="bg-muted/50 border-border" />
+                    <Input value={editVideoId} onChange={(e) => setEditVideoId(e.target.value)} placeholder="YouTube videó link" className="bg-muted/50 border-border" />
                     <Input value={editBadge} onChange={(e) => setEditBadge(e.target.value)} placeholder="Badge (pl: AFFILION AI)" className="bg-muted/50 border-border" />
                     <div className="flex items-center gap-2">
                       <Button size="sm" onClick={() => handleSaveEdit(item.id)} disabled={savingId === item.id} className="neon-button border-0">
