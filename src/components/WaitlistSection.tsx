@@ -108,7 +108,7 @@ const WaitlistSection = () => {
                       <p>A legmodernebb technológiák és AI-alapú megoldások segítségével végigvezetlek a teljes folyamaton, a tervezéstől egészen a kész, működő weboldalig.</p>
                       <p>Nemcsak maga az oldal elkészítése van benne, hanem az összes előmunka és utómunka is, amire valóban szükséged lesz ahhoz, hogy ne csak egy szép dizájnt kapj, hanem egy használható, jól beállított, saját domain név alatt futó weboldalt.</p>
                       <p>A kurzus minden fontos lépést érthetően, gyakorlatiasan mutat meg, így akkor is végig tudsz menni rajta, ha eddig még soha nem építettél weboldalt.</p>
-                      <p className="text-foreground font-medium">A cél az, hogy a végére ne csak egy félkész projekted legyen, hanem egy valódi, optimálisan beállított, működő weboldalad, amit büszkén használhatsz vállalkozáshoz, szolgáltatáshoz vagy saját márkádhoz.</p>
+                      <p className="text-foreground font-bold">A cél az, hogy a végére ne csak egy félkész projekted legyen, hanem egy valódi, optimálisan beállított, működő weboldalad, amit büszkén használhatsz vállalkozáshoz, szolgáltatáshoz vagy saját márkádhoz.</p>
                     </div>
                     <img
                       src={kurzusCover}
