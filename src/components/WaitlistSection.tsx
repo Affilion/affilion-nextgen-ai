@@ -103,7 +103,7 @@ const WaitlistSection = () => {
                       <X size={20} />
                     </button>
                     <h3 className="text-lg font-semibold text-foreground mb-4">Mit tartalmaz a kurzus?</h3>
-                    <div className="space-y-3 text-sm md:text-base text-foreground/80 leading-relaxed pr-6">
+                    <div className="space-y-3 text-sm md:text-base text-foreground leading-relaxed pr-6">
                       <p>Ebben a kurzusban lépésről lépésre megmutatom, hogyan készítheted el a saját modern, gyors és versenyképes weboldaladat akár pár óra alatt, anélkül, hogy vagyonokat fizetnél webfejlesztőnek.</p>
                       <p>A legmodernebb technológiák és AI-alapú megoldások segítségével végigvezetlek a teljes folyamaton, a tervezéstől egészen a kész, működő weboldalig.</p>
                       <p>Nemcsak maga az oldal elkészítése van benne, hanem az összes előmunka és utómunka is, amire valóban szükséged lesz ahhoz, hogy ne csak egy szép dizájnt kapj, hanem egy használható, jól beállított, saját domain név alatt futó weboldalt.</p>
