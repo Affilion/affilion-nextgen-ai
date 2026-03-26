@@ -11,7 +11,7 @@ const PRODUCT_NAMES: Record<string, string> = {
   "prompt-pack": "100 AI Prompt Pack",
   "suno-guide": "Suno AI Dalszövegírási Titkok",
   "auto-guide": "AI Automatizációs Útmutató",
-  "webgyar-tutorial": "Készítsd el saját weblapodat pár óra alatt",
+  "webgyar-tutorial": "Weboldal 0-ról AI-val",
 };
 
 const PRODUCT_PRICES: Record<string, number> = {
