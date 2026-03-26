@@ -100,7 +100,7 @@ const WebGyarTutorial = () => {
           </Link>
 
           <h1 className="text-lg font-bold glow-text font-heading hidden sm:block">
-            WebGyár Tutorial
+            Weboldal 0-ról AI-val
           </h1>
 
           <button
