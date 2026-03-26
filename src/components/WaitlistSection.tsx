@@ -1,15 +1,19 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import kurzusCover from "@/assets/kurzus-cover.png";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, Info, X } from "lucide-react";
 import GlassCard from "./GlassCard";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "@/hooks/use-toast";
+
+const COURSE_PRODUCT_ID = "webgyar-tutorial";
 
 const WaitlistSection = () => {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [showInfo, setShowInfo] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
