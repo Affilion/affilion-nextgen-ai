@@ -963,7 +963,7 @@ const ExperimentsPanel = () => {
       <div className="hyper-glass rounded-xl p-6 space-y-4">
         <h3 className="font-bold text-foreground flex items-center gap-2"><Plus size={16} /> Új AI Kísérlet</h3>
         <Input placeholder="Cím" value={title} onChange={(e) => setTitle(e.target.value)} className="bg-muted/50 border-border" />
-        <Input placeholder="YouTube Video ID (pl: dQw4w9WgXcQ)" value={videoId} onChange={(e) => setVideoId(e.target.value)} className="bg-muted/50 border-border" />
+        <Input placeholder="YouTube videó link (pl: https://www.youtube.com/watch?v=dQw4w9WgXcQ)" value={videoId} onChange={(e) => setVideoId(e.target.value)} className="bg-muted/50 border-border" />
         <Button onClick={handleAdd} disabled={loading} className="neon-button border-0">{loading ? "Mentés..." : "Hozzáadás"}</Button>
       </div>
 
