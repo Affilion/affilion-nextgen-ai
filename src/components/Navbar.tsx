@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, LogIn, LogOut, User, BookOpen, Shield } from "lucide-react";
+import { Menu, X, LogIn, LogOut, User, BookOpen, Shield, MessageCircle, Send, CheckCircle } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdmin } from "@/hooks/useAdmin";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 import defaultLogo from "@/assets/logo.jpg";
 
 const links = [
@@ -25,6 +26,36 @@ const resetBodyLock = () => {
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
+  const [contactSending, setContactSending] = useState(false);
+  const [contactSent, setContactSent] = useState(false);
+  const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" });
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!contactForm.name.trim() || !contactForm.email.trim() || !contactForm.message.trim()) {
+      toast({ title: "Kérlek töltsd ki az összes mezőt!", variant: "destructive" });
+      return;
+    }
+    setContactSending(true);
+    const { error } = await supabase.from("contact_messages").insert({
+      name: contactForm.name.trim(),
+      email: contactForm.email.trim(),
+      message: contactForm.message.trim(),
+    });
+    if (error) {
+      toast({ title: "Hiba történt az üzenet küldésekor", variant: "destructive" });
+      setContactSending(false);
+      return;
+    }
+    setContactSent(true);
+    setContactSending(false);
+    setContactForm({ name: "", email: "", message: "" });
+    setTimeout(() => {
+      setContactSent(false);
+      setContactOpen(false);
+    }, 3000);
+  };
   const { user } = useAuth();
   const { isAdmin } = useAdmin();
   const navigate = useNavigate();
@@ -220,6 +251,63 @@ const Navbar = () => {
               <LogIn size={14} /> Belépés
             </button>
           )}
+
+          {/* Contact section */}
+          <div className="border-t border-border/20 pt-3 mt-1">
+            <button
+              onClick={() => setContactOpen((o) => !o)}
+              className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"
+            >
+              <MessageCircle size={14} /> Üzenj nekünk
+            </button>
+            {contactOpen && (
+              <div className="mt-3">
+                {contactSent ? (
+                  <div className="flex items-center gap-2 text-sm text-green-400 py-2">
+                    <CheckCircle size={16} /> Üzenet elküldve!
+                  </div>
+                ) : (
+                  <form onSubmit={handleContactSubmit} className="flex flex-col gap-2">
+                    <input
+                      type="text"
+                      placeholder="Neved"
+                      value={contactForm.name}
+                      onChange={(e) => setContactForm((f) => ({ ...f, name: e.target.value }))}
+                      maxLength={100}
+                      className="w-full rounded-lg border border-border/30 bg-background/50 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                    />
+                    <input
+                      type="email"
+                      placeholder="Email címed"
+                      value={contactForm.email}
+                      onChange={(e) => setContactForm((f) => ({ ...f, email: e.target.value }))}
+                      maxLength={255}
+                      className="w-full rounded-lg border border-border/30 bg-background/50 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                    />
+                    <textarea
+                      placeholder="Üzeneted..."
+                      value={contactForm.message}
+                      onChange={(e) => setContactForm((f) => ({ ...f, message: e.target.value }))}
+                      maxLength={1000}
+                      rows={3}
+                      className="w-full rounded-lg border border-border/30 bg-background/50 px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-primary/50 resize-none"
+                    />
+                    <button
+                      type="submit"
+                      disabled={contactSending}
+                      className="w-full flex items-center justify-center gap-2 rounded-lg bg-primary text-primary-foreground py-2 text-sm font-semibold hover:bg-primary/90 disabled:opacity-50 transition-all"
+                    >
+                      {contactSending ? (
+                        <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
+                      ) : (
+                        <><Send size={14} /> Küldés</>
+                      )}
+                    </button>
+                  </form>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </nav>
