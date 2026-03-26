@@ -92,19 +92,24 @@ const WebGyarTutorial = () => {
 
   /* ---- Intersection Observer for fade-up animations ---- */
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      },
-      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
-    );
-    document.querySelectorAll(".tutorial-fade-up").forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+    if (!hasAccess) return;
+    // Small delay to ensure DOM is ready after render
+    const timeout = setTimeout(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+      );
+      document.querySelectorAll(".tutorial-fade-up").forEach((el) => observer.observe(el));
+      return () => observer.disconnect();
+    }, 100);
+    return () => clearTimeout(timeout);
+  }, [hasAccess]);
 
   if (authLoading || hasAccess === null) {
     return (
