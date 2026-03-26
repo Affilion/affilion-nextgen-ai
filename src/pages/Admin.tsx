@@ -5,14 +5,14 @@ import { useAdmin } from "@/hooks/useAdmin";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import { ArrowLeft, Users, Image, Video, FileText, Link, Trash2, Plus, Save, Pencil, Mail, Download, ShoppingBag, Upload, Music, ChevronUp, ChevronDown, Star } from "lucide-react";
+import { ArrowLeft, Users, Image, Video, FileText, Link, Trash2, Plus, Save, Pencil, Mail, Download, ShoppingBag, Upload, Music, ChevronUp, ChevronDown, Star, MessageCircle, Eye } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { optimizeImageForUpload } from "@/lib/imageOptimization";
 
-type Tab = "users" | "products" | "portfolio" | "experiments" | "prompts" | "content" | "waitlist" | "prompt-manager" | "ai-club";
+type Tab = "users" | "products" | "portfolio" | "experiments" | "prompts" | "content" | "waitlist" | "prompt-manager" | "ai-club" | "messages";
 type UploadFolder = "portfolio" | "prompts" | "products";
 
 const uploadCmsImage = async (file: File, folder: UploadFolder) => {
@@ -71,6 +71,7 @@ const Admin = () => {
     { id: "content", label: "Tartalom URL-ek", icon: <Link size={16} /> },
     { id: "waitlist", label: "Várólista", icon: <Mail size={16} /> },
     { id: "ai-club", label: "AI Club Előfizetők", icon: <Users size={16} /> },
+    { id: "messages", label: "Üzenetek", icon: <MessageCircle size={16} /> },
   ];
 
   return (
@@ -112,6 +113,7 @@ const Admin = () => {
             {activeTab === "content" && <ContentPanel />}
             {activeTab === "waitlist" && <WaitlistPanel />}
             {activeTab === "ai-club" && <AiClubPanel />}
+            {activeTab === "messages" && <MessagesPanel />}
           </motion.div>
         </div>
       </div>
@@ -1642,6 +1644,65 @@ const AiClubPanel = () => {
               Összesen: {displayed.length} {subTab === "active" ? "aktív" : "inaktív"} előfizető
             </div>
           )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+/* ─── Messages Panel ─── */
+const MessagesPanel = () => {
+  const [messages, setMessages] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchMessages = async () => {
+    setLoading(true);
+    const { data } = await supabase
+      .from("contact_messages")
+      .select("*")
+      .order("created_at", { ascending: false });
+    setMessages(data || []);
+    setLoading(false);
+  };
+
+  useEffect(() => { fetchMessages(); }, []);
+
+  const toggleRead = async (id: string, currentRead: boolean) => {
+    await supabase.from("contact_messages").update({ is_read: !currentRead }).eq("id", id);
+    setMessages((prev) => prev.map((m) => (m.id === id ? { ...m, is_read: !currentRead } : m)));
+  };
+
+  if (loading) return <div className="flex justify-center py-12"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" /></div>;
+
+  return (
+    <div className="space-y-4">
+      <h2 className="text-xl font-bold text-foreground flex items-center gap-2"><MessageCircle size={20} /> Beérkezett üzenetek</h2>
+      {messages.length === 0 ? (
+        <p className="text-muted-foreground text-sm">Még nem érkezett üzenet.</p>
+      ) : (
+        <div className="space-y-3">
+          {messages.map((msg) => (
+            <div key={msg.id} className={`rounded-xl border p-4 transition-all ${msg.is_read ? "border-border/20 bg-card/30 opacity-70" : "border-primary/30 bg-card/60"}`}>
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3 mb-1">
+                    <span className="font-semibold text-sm text-foreground">{msg.name}</span>
+                    <a href={`mailto:${msg.email}`} className="text-xs text-primary hover:underline">{msg.email}</a>
+                    {!msg.is_read && <span className="px-2 py-0.5 rounded-full bg-primary/20 text-primary text-[10px] font-bold">ÚJ</span>}
+                  </div>
+                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">{msg.message}</p>
+                  <span className="text-[10px] text-muted-foreground/60 mt-2 block">{new Date(msg.created_at).toLocaleString("hu-HU")}</span>
+                </div>
+                <button
+                  onClick={() => toggleRead(msg.id, msg.is_read)}
+                  className="shrink-0 p-2 rounded-lg hover:bg-accent/20 transition-colors"
+                  title={msg.is_read ? "Megjelölés olvasatlanként" : "Megjelölés olvasottként"}
+                >
+                  <Eye size={16} className={msg.is_read ? "text-muted-foreground" : "text-primary"} />
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>

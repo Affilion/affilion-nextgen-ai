@@ -10,6 +10,7 @@ import ProductsSection from "@/components/ProductsSection";
 import WaitlistSection from "@/components/WaitlistSection";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
+import ContactWidget from "@/components/ContactWidget";
 
 const Index = () => {
   const location = useLocation();
@@ -49,6 +50,7 @@ const Index = () => {
       </main>
       <Footer />
       <ScrollToTop />
+      <ContactWidget />
     </>
   );
 };
