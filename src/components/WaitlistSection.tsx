@@ -37,20 +37,20 @@ const WaitlistSection = () => {
   };
 
   return (
-    <section id="kurzus" className="py-24 px-4" style={{ perspective: "1000px" }}>
-      <div className="container mx-auto max-w-2xl">
+    <section id="kurzus" className="py-28 px-4" style={{ perspective: "1000px" }}>
+      <div className="container mx-auto max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <GlassCard className="p-8 md:p-12 text-center">
-            <h2 className="section-title mb-4">
+          <GlassCard className="p-10 md:p-16 text-center">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 font-heading">
               Saját weboldal <span className="glow-text">1 nap alatt</span>, AI segítségével
             </h2>
-            <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
+            <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-xl mx-auto">
               <span className="text-primary font-semibold">A kurzus most</span> bevezető áron:{" "}
-              <span className="text-primary font-semibold">17 990 Ft</span>
+              <span className="text-primary font-bold text-xl md:text-2xl">17 990 Ft</span>
               <br />
               Az ár hamarosan 27 990 Ft-ra emelkedik
             </p>
@@ -64,7 +64,7 @@ const WaitlistSection = () => {
                 Sikeres feliratkozás! 🎉 Hamarosan értesítünk.
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
                 <div className="flex-1 space-y-1">
                   <input
                     type="email"
@@ -72,12 +72,12 @@ const WaitlistSection = () => {
                     placeholder="pelda@email.com"
                     value={email}
                     onChange={(e) => { setEmail(e.target.value); setError(""); }}
-                    className="w-full rounded-lg border border-glass-border/40 bg-muted/30 px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                    className="w-full rounded-lg border border-glass-border/40 bg-muted/30 px-5 py-4 text-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                   />
                   {error && <p className="text-xs text-destructive text-left">{error}</p>}
                 </div>
-                <button type="submit" disabled={loading} className="neon-button flex items-center justify-center gap-2 disabled:opacity-50">
-                  <ShoppingCart size={16} />
+                <button type="submit" disabled={loading} className="neon-button flex items-center justify-center gap-2 disabled:opacity-50 px-6 py-4 text-lg">
+                  <ShoppingCart size={18} />
                   {loading ? "Küldés..." : "Megvásárolom"}
                 </button>
               </form>
