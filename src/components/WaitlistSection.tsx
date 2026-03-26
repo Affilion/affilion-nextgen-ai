@@ -16,30 +16,34 @@ const WaitlistSection = () => {
   const [loading, setLoading] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email.trim()) return;
-
-    setLoading(true);
-    setError("");
-
-    const { error: dbError } = await supabase
-      .from("waitlist_subscribers")
-      .insert({ email: email.trim().toLowerCase() });
-
-    if (dbError) {
-      if (dbError.code === "23505") {
-        setError("Ez az e-mail cím már feliratkozott!");
-      } else {
-        setError("Hiba történt, próbáld újra később.");
-      }
-      setLoading(false);
+  const handleBuy = async () => {
+    if (!user) {
+      toast({
+        title: "Bejelentkezés szükséges",
+        description: "A vásárláshoz kérlek jelentkezz be.",
+      });
+      navigate("/auth");
       return;
     }
 
-    setSubmitted(true);
-    setEmail("");
-    setLoading(false);
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("create-payment", {
+        body: { productId: COURSE_PRODUCT_ID },
+      });
+      if (error) throw error;
+      if (data?.url) {
+        window.open(data.url, "_blank");
+      }
+    } catch (err: any) {
+      toast({
+        title: "Hiba történt",
+        description: err.message || "Nem sikerült a fizetés indítása.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -61,35 +65,25 @@ const WaitlistSection = () => {
               Az ár hamarosan 27 990 Ft-ra emelkedik
             </p>
 
-            {submitted ? (
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className="text-primary font-semibold text-lg"
+            <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto items-center justify-center">
+              <button
+                type="button"
+                onClick={() => setShowInfo(!showInfo)}
+                className="flex items-center justify-center gap-2 px-5 py-3 text-sm rounded-lg border border-glass-border/40 bg-muted/30 text-muted-foreground hover:text-primary hover:border-primary/40 transition-all"
               >
-                Sikeres feliratkozás! 🎉 Hamarosan értesítünk.
-              </motion.div>
-            ) : (
-              <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto items-center justify-center">
-                <button
-                  type="button"
-                  onClick={() => setShowInfo(!showInfo)}
-                  className="flex items-center justify-center gap-2 px-5 py-3 text-sm rounded-lg border border-glass-border/40 bg-muted/30 text-muted-foreground hover:text-primary hover:border-primary/40 transition-all"
-                >
-                  <Info size={16} />
-                  Több infó a kurzusról
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {/* TODO: Stripe payment */}}
-                  className="neon-button flex items-center justify-center gap-2 px-6 py-4 text-lg"
-                >
-                  <ShoppingCart size={18} />
-                  Megvásárolom
-                </button>
-              </div>
-            )}
-
+                <Info size={16} />
+                Több infó a kurzusról
+              </button>
+              <button
+                type="button"
+                onClick={handleBuy}
+                disabled={loading}
+                className="neon-button flex items-center justify-center gap-2 px-6 py-4 text-lg disabled:opacity-50"
+              >
+                <ShoppingCart size={18} />
+                {loading ? "Feldolgozás..." : "Megvásárolom"}
+              </button>
+            </div>
             <AnimatePresence>
               {showInfo && (
                 <motion.div
