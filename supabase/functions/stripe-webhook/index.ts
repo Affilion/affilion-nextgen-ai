@@ -11,13 +11,18 @@ const PRODUCT_NAMES: Record<string, string> = {
   "prompt-pack": "100 AI Prompt Pack",
   "suno-guide": "Suno AI Dalszövegírási Titkok",
   "auto-guide": "AI Automatizációs Útmutató",
+  "webgyar-tutorial": "Készítsd el saját weblapodat pár óra alatt",
 };
 
 const PRODUCT_PRICES: Record<string, number> = {
   "prompt-pack": 2990,
   "suno-guide": 3990,
   "auto-guide": 4990,
+  "webgyar-tutorial": 17990,
 };
+
+// HUF is a zero-decimal currency in Stripe (amount_total is already in HUF, not in fillér)
+const ZERO_DECIMAL_CURRENCIES = ["huf", "jpy", "krw", "bif", "clp", "djf", "gnf", "kmf", "mga", "pyg", "rwf", "ugx", "vnd", "vuv", "xaf", "xof", "xpf"];
 
 function escapeXml(str: string): string {
   return str
