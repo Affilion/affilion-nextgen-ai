@@ -61,8 +61,8 @@ async function createSzamlazzInvoice(
   const fullAddress = `${addressLine}${addressLine2}`;
 
   const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split("T")[0];
   // AAM = Alanyi adómentes (KATA egyéni vállalkozó, ÁFA-mentes)
-  // Include <kifizetesek> so invoice is created as PAID (no separate payment deadline)
   const xmlBody = `<?xml version="1.0" encoding="UTF-8"?>
 <xmlszamla xmlns="http://www.szamlazz.hu/xmlszamla" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.szamlazz.hu/xmlszamla https://www.szamlazz.hu/szamla/docs/xsds/agent/xmlszamla.xsd">
   <beallitasok>
@@ -85,7 +85,6 @@ async function createSzamlazzInvoice(
     <helyesbitoszamla>false</helyesbitoszamla>
     <helyesbitettSzamlaszam></helyesbitettSzamlaszam>
     <dijbekero>false</dijbekero>
-    <fizpipipipipipipipipipipipi>true</fizpipipipipipipipipipipipi>
   </fejlec>
   <elado/>
   <vevo>
@@ -121,14 +120,6 @@ async function createSzamlazzInvoice(
       <megjegyzes></megjegyzes>
     </tetel>
   </tetelek>
-  <kifizetesek>
-    <kifizetes>
-      <datum>${today}</datum>
-      <jogcim>Bankkártya (Stripe)</jogcim>
-      <osszeg>${price}</osszeg>
-      <leiras>Stripe online fizetés</leiras>
-    </kifizetes>
-  </kifizetesek>
 </xmlszamla>`;
 
   try {
@@ -276,7 +267,13 @@ serve(async (req) => {
               .from("purchases")
               .update({ szamlazz_invoice_id: invoiceId })
               .eq("stripe_session_id", session.id);
-            console.log(`[WEBHOOK] Invoice created and marked as paid: ${invoiceId}`);
+            console.log(`[WEBHOOK] Invoice created: ${invoiceId}`);
+
+            // Mark invoice as paid immediately (Stripe already charged the card)
+            const paidOk = await markInvoiceAsPaid(agentKey, invoiceId, amountInCurrency);
+            if (paidOk) {
+              console.log(`[WEBHOOK] Invoice ${invoiceId} marked as paid`);
+            }
           }
         } else {
           console.warn("[WEBHOOK] SZAMLAZZ_AGENT_KEY not set, skipping invoice");
