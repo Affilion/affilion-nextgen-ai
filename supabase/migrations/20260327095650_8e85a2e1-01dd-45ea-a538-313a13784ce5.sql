@@ -1,0 +1,1 @@
+UPDATE purchases SET amount = 17990 WHERE customer_email = 'gabor.connecttel@gmail.com' AND product_id = 'webgyar-tutorial' AND amount = 1799000;
