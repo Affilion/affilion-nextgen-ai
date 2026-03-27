@@ -21,6 +21,35 @@ serve(async (req) => {
     const body = await req.json();
     const { action } = body;
 
+    // Handle granting role (admin gift)
+    if (action === "grant_role") {
+      const { discord_user_id } = body;
+      if (!discord_user_id) {
+        return new Response(JSON.stringify({ error: "Missing discord_user_id" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      const botToken = Deno.env.get("DISCORD_BOT_TOKEN") || "";
+      const guildId = "1484597652749553734";
+      const roleId = "1484598151812878516";
+
+      const addRoleRes = await fetch(
+        `https://discord.com/api/v10/guilds/${guildId}/members/${discord_user_id}/roles/${roleId}`,
+        {
+          method: "PUT",
+          headers: { Authorization: `Bot ${botToken}` },
+        }
+      );
+      console.log(`[DISCORD-AUTH] Grant role to ${discord_user_id} status: ${addRoleRes.status}`);
+      await addRoleRes.text();
+
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     // Handle role removal
     if (action === "remove_role") {
       const { discord_user_id } = body;
