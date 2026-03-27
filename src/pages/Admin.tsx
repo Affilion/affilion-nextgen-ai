@@ -1671,10 +1671,9 @@ const CourseBuyersPanel = () => {
 
   useEffect(() => { fetchBuyers(); }, []);
 
-  // Stripe stores HUF in fillér (two-decimal) since 2024 API
+  // Amount is already stored in display currency (HUF, not fillér)
   const fmtAmt = (amt: number, cur: string) => {
-    const display = cur === "huf" ? Math.round(amt / 100) : amt;
-    return cur === "huf" ? `${display.toLocaleString("hu")} Ft` : `${display} ${cur.toUpperCase()}`;
+    return cur === "huf" ? `${amt.toLocaleString("hu")} Ft` : `${amt} ${cur.toUpperCase()}`;
   };
 
   return (

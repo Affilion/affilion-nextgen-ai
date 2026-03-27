@@ -226,7 +226,13 @@ serve(async (req) => {
       console.log(`[WEBHOOK] Billing address:`, JSON.stringify(billingAddress));
 
       if (userId && productId) {
-        // 1. Save purchase to database
+        // 1. Convert amount from Stripe's smallest unit to display currency
+        const currency = (session.currency || "huf").toLowerCase();
+        const isZeroDecimal = ZERO_DECIMAL_CURRENCIES.includes(currency);
+        const stripeAmount = session.amount_total || 0;
+        const amountInCurrency = isZeroDecimal ? stripeAmount : Math.round(stripeAmount / 100);
+
+        // 2. Save purchase to database (amount stored in display currency, e.g. HUF not fillér)
         const { error: insertError } = await supabase.from("purchases").insert({
           user_id: userId,
           product_id: productId,
@@ -234,8 +240,8 @@ serve(async (req) => {
           stripe_payment_intent_id: session.payment_intent as string,
           customer_email: customerEmail,
           customer_name: customerName,
-          amount: session.amount_total || 0,
-          currency: session.currency || "huf",
+          amount: amountInCurrency,
+          currency: currency,
           status: "completed",
         });
 
@@ -248,10 +254,6 @@ serve(async (req) => {
         // 2. Create invoice via Számlázz.hu (AAM - alanyi adómentes)
         const agentKey = Deno.env.get("SZAMLAZZ_AGENT_KEY");
         if (agentKey) {
-          const currency = (session.currency || "huf").toLowerCase();
-          const isZeroDecimal = ZERO_DECIMAL_CURRENCIES.includes(currency);
-          const stripeAmount = session.amount_total || 0;
-          const amountInCurrency = isZeroDecimal ? stripeAmount : stripeAmount / 100;
           console.log(`[WEBHOOK] Invoice amount: ${amountInCurrency} ${currency} (Stripe raw: ${stripeAmount})`);
 
           const invoiceId = await createSzamlazzInvoice(
