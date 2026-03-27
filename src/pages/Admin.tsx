@@ -132,9 +132,6 @@ const UsersPanel = () => {
   const [giftingUserId, setGiftingUserId] = useState<string | null>(null);
   const [selectedProductId, setSelectedProductId] = useState("");
   const [giftLoading, setGiftLoading] = useState(false);
-  const [discordGiftUserId, setDiscordGiftUserId] = useState<string | null>(null);
-  const [discordIdInput, setDiscordIdInput] = useState("");
-  const [discordGiftLoading, setDiscordGiftLoading] = useState(false);
 
   const fetchData = async () => {
     const [{ data: profiles }, { data: purchases }, { data: prods }, { data: discordLinks }] = await Promise.all([
@@ -183,38 +180,6 @@ const UsersPanel = () => {
     }
   };
 
-  const handleDiscordGift = async (userEmail: string) => {
-    if (!discordIdInput.trim()) return;
-    setDiscordGiftLoading(true);
-    try {
-      // Save to discord_links
-      const { error: upsertErr } = await supabase.from("discord_links").upsert(
-        { email: userEmail, discord_user_id: discordIdInput.trim(), discord_username: null },
-        { onConflict: "email" }
-      );
-      if (upsertErr) throw upsertErr;
-
-      // Assign Discord role via edge function
-      const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
-      const res = await fetch(`https://${projectId}.supabase.co/functions/v1/discord-auth`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "grant_role", discord_user_id: discordIdInput.trim() }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Hiba a Discord rang kiosztásánál");
-
-      toast({ title: "Discord AI Club rang kiosztva! 🎉" });
-      setDiscordGiftUserId(null);
-      setDiscordIdInput("");
-      await fetchData();
-    } catch (err) {
-      toast({ title: "Hiba", description: err instanceof Error ? err.message : "Ismeretlen hiba", variant: "destructive" });
-    } finally {
-      setDiscordGiftLoading(false);
-    }
-  };
-
   if (loading) return <div className="text-muted-foreground">Betöltés...</div>;
 
   return (
@@ -257,12 +222,10 @@ const UsersPanel = () => {
                     </span>
                   ) : (
                     <span className="text-muted-foreground">–</span>
-                   )}
+                  )}
                 </td>
                 <td className="p-4">
-                  <div className="flex flex-col gap-1">
-                    {/* Termék ajándékozás */}
-                    {giftingUserId === u.user_id ? (
+                  {giftingUserId === u.user_id ? (
                     <div className="flex items-center gap-2">
                       <select
                         value={selectedProductId}
@@ -286,28 +249,6 @@ const UsersPanel = () => {
                       <Plus size={14} /> Ajándék
                     </Button>
                   )}
-                    {/* Discord rang ajándékozás */}
-                    {!(u.email && discordEmails.has(u.email)) && (
-                      discordGiftUserId === u.user_id ? (
-                        <div className="flex items-center gap-2">
-                          <Input
-                            placeholder="Discord User ID"
-                            value={discordIdInput}
-                            onChange={(e) => setDiscordIdInput(e.target.value)}
-                            className="text-xs h-7 w-40"
-                          />
-                          <Button size="sm" onClick={() => handleDiscordGift(u.email)} disabled={!discordIdInput.trim() || discordGiftLoading} className="neon-button border-0 text-xs h-7">
-                            {discordGiftLoading ? "..." : "Add"}
-                          </Button>
-                          <Button size="sm" variant="ghost" onClick={() => { setDiscordGiftUserId(null); setDiscordIdInput(""); }} className="text-xs h-7">✕</Button>
-                        </div>
-                      ) : (
-                        <Button size="sm" variant="ghost" onClick={() => setDiscordGiftUserId(u.user_id)} className="text-xs gap-1">
-                          <Users size={14} /> Discord rang
-                        </Button>
-                      )
-                    )}
-                  </div>
                 </td>
               </tr>
             ))}
@@ -317,7 +258,6 @@ const UsersPanel = () => {
     </div>
   );
 };
-
 
 /* ── Products Panel ── */
 const ProductsPanel = () => {
