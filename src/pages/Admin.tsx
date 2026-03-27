@@ -315,6 +315,7 @@ const UsersPanel = () => {
         </table>
       </div>
     </div>
+  );
 };
 
 
