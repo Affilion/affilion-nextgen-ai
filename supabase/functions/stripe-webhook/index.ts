@@ -22,7 +22,8 @@ const PRODUCT_PRICES: Record<string, number> = {
 };
 
 // HUF is a zero-decimal currency in Stripe (amount_total is already in HUF, not in fillér)
-const ZERO_DECIMAL_CURRENCIES = ["huf", "jpy", "krw", "bif", "clp", "djf", "gnf", "kmf", "mga", "pyg", "rwf", "ugx", "vnd", "vuv", "xaf", "xof", "xpf"];
+// HUF was reclassified to two-decimal in Stripe API 2024+; do NOT include it here
+const ZERO_DECIMAL_CURRENCIES = ["jpy", "krw", "bif", "clp", "djf", "gnf", "kmf", "mga", "pyg", "rwf", "ugx", "vnd", "vuv", "xaf", "xof", "xpf"];
 
 function escapeXml(str: string): string {
   return str
