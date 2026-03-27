@@ -254,10 +254,6 @@ serve(async (req) => {
         // 2. Create invoice via Számlázz.hu (AAM - alanyi adómentes)
         const agentKey = Deno.env.get("SZAMLAZZ_AGENT_KEY");
         if (agentKey) {
-          const currency = (session.currency || "huf").toLowerCase();
-          const isZeroDecimal = ZERO_DECIMAL_CURRENCIES.includes(currency);
-          const stripeAmount = session.amount_total || 0;
-          const amountInCurrency = isZeroDecimal ? stripeAmount : stripeAmount / 100;
           console.log(`[WEBHOOK] Invoice amount: ${amountInCurrency} ${currency} (Stripe raw: ${stripeAmount})`);
 
           const invoiceId = await createSzamlazzInvoice(
