@@ -132,6 +132,9 @@ const UsersPanel = () => {
   const [giftingUserId, setGiftingUserId] = useState<string | null>(null);
   const [selectedProductId, setSelectedProductId] = useState("");
   const [giftLoading, setGiftLoading] = useState(false);
+  const [discordGiftUserId, setDiscordGiftUserId] = useState<string | null>(null);
+  const [discordIdInput, setDiscordIdInput] = useState("");
+  const [discordGiftLoading, setDiscordGiftLoading] = useState(false);
 
   const fetchData = async () => {
     const [{ data: profiles }, { data: purchases }, { data: prods }, { data: discordLinks }] = await Promise.all([
