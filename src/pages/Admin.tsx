@@ -286,7 +286,36 @@ const UsersPanel = () => {
                       <Plus size={14} /> Ajándék
                     </Button>
                   )}
+                    {/* Discord rang ajándékozás */}
+                    {!(u.email && discordEmails.has(u.email)) && (
+                      discordGiftUserId === u.user_id ? (
+                        <div className="flex items-center gap-2">
+                          <Input
+                            placeholder="Discord User ID"
+                            value={discordIdInput}
+                            onChange={(e) => setDiscordIdInput(e.target.value)}
+                            className="text-xs h-7 w-40"
+                          />
+                          <Button size="sm" onClick={() => handleDiscordGift(u.email)} disabled={!discordIdInput.trim() || discordGiftLoading} className="neon-button border-0 text-xs h-7">
+                            {discordGiftLoading ? "..." : "Add"}
+                          </Button>
+                          <Button size="sm" variant="ghost" onClick={() => { setDiscordGiftUserId(null); setDiscordIdInput(""); }} className="text-xs h-7">✕</Button>
+                        </div>
+                      ) : (
+                        <Button size="sm" variant="ghost" onClick={() => setDiscordGiftUserId(u.user_id)} className="text-xs gap-1">
+                          <Users size={14} /> Discord rang
+                        </Button>
+                      )
+                    )}
+                  </div>
                 </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
               </tr>
             ))}
           </tbody>
