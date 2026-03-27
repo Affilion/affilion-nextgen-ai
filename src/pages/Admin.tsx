@@ -315,15 +315,8 @@ const UsersPanel = () => {
         </table>
       </div>
     </div>
-  );
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
 };
+
 
 /* ── Products Panel ── */
 const ProductsPanel = () => {
