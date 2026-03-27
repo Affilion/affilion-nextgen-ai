@@ -183,6 +183,38 @@ const UsersPanel = () => {
     }
   };
 
+  const handleDiscordGift = async (userEmail: string) => {
+    if (!discordIdInput.trim()) return;
+    setDiscordGiftLoading(true);
+    try {
+      // Save to discord_links
+      const { error: upsertErr } = await supabase.from("discord_links").upsert(
+        { email: userEmail, discord_user_id: discordIdInput.trim(), discord_username: null },
+        { onConflict: "email" }
+      );
+      if (upsertErr) throw upsertErr;
+
+      // Assign Discord role via edge function
+      const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
+      const res = await fetch(`https://${projectId}.supabase.co/functions/v1/discord-auth`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "grant_role", discord_user_id: discordIdInput.trim() }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Hiba a Discord rang kiosztásánál");
+
+      toast({ title: "Discord AI Club rang kiosztva! 🎉" });
+      setDiscordGiftUserId(null);
+      setDiscordIdInput("");
+      await fetchData();
+    } catch (err) {
+      toast({ title: "Hiba", description: err instanceof Error ? err.message : "Ismeretlen hiba", variant: "destructive" });
+    } finally {
+      setDiscordGiftLoading(false);
+    }
+  };
+
   if (loading) return <div className="text-muted-foreground">Betöltés...</div>;
 
   return (
