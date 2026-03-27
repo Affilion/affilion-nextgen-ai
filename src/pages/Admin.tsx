@@ -1671,8 +1671,11 @@ const CourseBuyersPanel = () => {
 
   useEffect(() => { fetchBuyers(); }, []);
 
-  const fmtAmt = (amt: number, cur: string) =>
-    cur === "huf" ? `${amt.toLocaleString("hu")} Ft` : `${amt} ${cur.toUpperCase()}`;
+  // Stripe stores HUF in fillér (two-decimal) since 2024 API
+  const fmtAmt = (amt: number, cur: string) => {
+    const display = cur === "huf" ? Math.round(amt / 100) : amt;
+    return cur === "huf" ? `${display.toLocaleString("hu")} Ft` : `${display} ${cur.toUpperCase()}`;
+  };
 
   return (
     <div className="space-y-6">
