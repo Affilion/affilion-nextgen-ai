@@ -257,10 +257,12 @@ const UsersPanel = () => {
                     </span>
                   ) : (
                     <span className="text-muted-foreground">–</span>
-                  )}
+                   )}
                 </td>
                 <td className="p-4">
-                  {giftingUserId === u.user_id ? (
+                  <div className="flex flex-col gap-1">
+                    {/* Termék ajándékozás */}
+                    {giftingUserId === u.user_id ? (
                     <div className="flex items-center gap-2">
                       <select
                         value={selectedProductId}
